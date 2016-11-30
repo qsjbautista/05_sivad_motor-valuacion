@@ -1,0 +1,13 @@
+# ===================================================================
+# Propiedades especificas de la aplicacion (microservicio)
+# ===================================================================
+info:
+  arquetipo:
+    version: #nmp.arquetipo.version#
+  microservicio:
+    nombre: #name#
+    version: #version#
+    descripcion: #description#
+  spring-boot:
+    version: #parent.version#
+

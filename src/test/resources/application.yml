@@ -1,0 +1,54 @@
+# ===================================================================
+# Configuración Spring Boot.
+#
+# Esta configuración es utilizada para pruebas de unidad/integración.
+# ===================================================================
+
+# ===================================================================
+# Propiedades estandar de Spring.
+# Referencia completa en:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+spring:
+    application:
+        name: sivad-motor-valuacion
+    datasource:
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:h2:mem:motor_valuacion;DB_CLOSE_DELAY=-1
+        name:
+        username:
+        password:
+    jpa:
+        database-platform: mx.com.nmp.ms.arquetipo.db.h2.FixedH2Dialect
+        database: H2
+        open-in-view: false
+        show-sql: true
+        hibernate:
+            ddl-auto: create-drop
+            naming:
+                strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
+        properties:
+            hibernate.cache.use_second_level_cache: false
+            hibernate.cache.use_query_cache: false
+            hibernate.generate_statistics: true
+            hibernate.hbm2ddl.auto: create-drop
+    properties:
+        jadira.usertype.databaseZone: jvm
+        jadira.usertype.javaZone: jvm
+    mvc:
+        favicon:
+            enabled: false
+
+security:
+    basic:
+        enabled: false
+
+server:
+    port: 10344
+    address: localhost
+
+# ===================================================================
+# Propiedades especificas de la aplicacion
+# ===================================================================
+
