@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="0a8b2135-f817-44a4-9ccb-6a74a7095fdd" activeEnvironment="Default" name="ValuacionDiamantes" resourceRoot="${projectDir}" soapui-version="5.2.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="65cad50f-8460-483d-8035-c6f89251c41a" wsaVersion="NONE" name="ValuadorDiamantesEndpointServiceSoapBinding" type="wsdl" bindingName="{http://ws.api.valuacion.sivad.ms.nmp.com.mx/}ValuadorDiamantesEndpointServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/soap-api/ValuadorDiamantes?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/soap-api/ValuadorDiamantes?wsdl"><con:part><con:url>http://localhost:8080/soap-api/ValuadorDiamantes?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="ValuadorDiamantesEndpointService" targetNamespace="http://ws.api.valuacion.sivad.ms.nmp.com.mx/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://ws.api.valuacion.sivad.ms.nmp.com.mx/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns3="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/">
+  <wsdl:import location="http://localhost:8080/soap-api/ValuadorDiamantes?wsdl=ValuadorDiamantesService.wsdl" namespace="http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/"></wsdl:import>
+  <wsdl:binding name="ValuadorDiamantesEndpointServiceSoapBinding" type="ns1:ValuadorDiamantesService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="valuarPrendaNMP">
+      <soap:operation soapAction="http://nmp.com.mx/ms/valuacion/ws/diamantes/valuarPrendaNMP" style="document"/>
+      <wsdl:input name="valuarPrendaNMP">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="valuarPrendaNMPResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="valuarPrendaBasico">
+      <soap:operation soapAction="http://nmp.com.mx/ms/valuacion/ws/diamantes/valuarPrendaBasico" style="document"/>
+      <wsdl:input name="valuarPrendaBasico">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="valuarPrendaBasicoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ValuadorDiamantesEndpointService">
+    <wsdl:port binding="tns:ValuadorDiamantesEndpointServiceSoapBinding" name="ValuadorDiamantesEndpointPort">
+      <soap:address location="http://localhost:8080/soap-api/ValuadorDiamantes"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:8080/soap-api/ValuadorDiamantes?wsdl=ValuadorDiamantesService.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="ValuadorDiamantesService" targetNamespace="http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns2="http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/datatypes/" xmlns:ns1="http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/datatypes/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/datatypes/">
+      <xs:element name="valuarPrendaBasicoRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="prenda" type="tns:Prenda"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="valuarPrendaBasicoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="prendaValuada" type="tns:Prenda"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="valuarPrendaNMPRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="prenda" type="tns:Prenda"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="valuarPrendaNMPResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="prendaValuada" type="tns:Prenda"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="Prenda">
+        <xs:sequence>
+          <xs:element name="ramo" type="xs:string"/>
+          <xs:element name="subramo" type="xs:string"/>
+          <xs:element name="avaluo" nillable="true" type="tns:Avaluo"/>
+          <xs:element maxOccurs="unbounded" name="piezas" type="tns:Pieza"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Avaluo">
+        <xs:sequence>
+          <xs:element default="0.0" name="valorMinimo" type="xs:decimal"/>
+          <xs:element default="0.0" name="valorPromedio" type="xs:decimal"/>
+          <xs:element default="0.0" name="valorMaximo" type="xs:decimal"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Pieza">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="diamantes" type="tns:Diamante"/>
+          <xs:element name="alhaja" type="tns:Alhaja"/>
+          <xs:element name="complemento" type="tns:Complemento"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Diamante">
+        <xs:sequence>
+          <xs:element default="0" name="numeroDePiezas" type="xs:int"/>
+          <xs:element name="colorGIA" type="xs:string"/>
+          <xs:element name="claridad" type="xs:string"/>
+          <xs:element default="0.0" name="quilataje" type="xs:decimal"/>
+          <xs:element name="certificado" nillable="true" type="xs:string"/>
+          <xs:element default="0.0" name="valorExperto" type="xs:decimal"/>
+          <xs:element name="corte" type="xs:string"/>
+          <xs:element name="avaluo" type="tns:Avaluo"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Alhaja">
+        <xs:sequence>
+          <xs:element name="metal" type="xs:string"/>
+          <xs:element name="color" nillable="true" type="xs:string"/>
+          <xs:element name="calidad" nillable="true" type="xs:string"/>
+          <xs:element default="0.0" name="peso" type="xs:decimal"/>
+          <xs:element default="0.0" name="incremento" type="xs:decimal"/>
+          <xs:element default="0.0" name="desplazamiento" type="xs:decimal"/>
+          <xs:element name="rango" nillable="true" type="xs:string"/>
+          <xs:element name="avaluo" type="tns:Avaluo"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Complemento">
+        <xs:sequence>
+          <xs:element default="0" name="numeroDePiezas" type="xs:int"/>
+          <xs:element default="0.0" name="valorExperto" type="xs:decimal"/>
+          <xs:element name="avaluo" type="tns:Avaluo"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="valuarPrendaBasicoResponse">
+    <wsdl:part element="ns2:valuarPrendaBasicoResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="valuarPrendaBasico">
+    <wsdl:part element="ns2:valuarPrendaBasicoRequest" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="valuarPrendaNMP">
+    <wsdl:part element="ns2:valuarPrendaNMPRequest" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="valuarPrendaNMPResponse">
+    <wsdl:part element="ns2:valuarPrendaNMPResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ValuadorDiamantesService">
+    <wsdl:operation name="valuarPrendaNMP">
+      <wsdl:input message="ns1:valuarPrendaNMP" name="valuarPrendaNMP"></wsdl:input>
+      <wsdl:output message="ns1:valuarPrendaNMPResponse" name="valuarPrendaNMPResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="valuarPrendaBasico">
+      <wsdl:input message="ns1:valuarPrendaBasico" name="valuarPrendaBasico"></wsdl:input>
+      <wsdl:output message="ns1:valuarPrendaBasicoResponse" name="valuarPrendaBasicoResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/soap-api/ValuadorDiamantes</con:endpoint></con:endpoints><con:operation id="5ffacfe0-9f18-4698-93ca-70f037bcb64d" isOneWay="false" action="http://nmp.com.mx/ms/valuacion/ws/diamantes/valuarPrendaBasico" name="valuarPrendaBasico" bindingOperationName="valuarPrendaBasico" type="Request-Response" outputName="valuarPrendaBasicoResponse" inputName="valuarPrendaBasico" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="847bb4c1-038f-4598-92e6-261754e56b32" name="Request Dummy"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/soap-api/ValuadorDiamantes</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dat="http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/datatypes/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dat:valuarPrendaBasicoRequest>
+         <dat:prenda>
+            <dat:ramo>?</dat:ramo>
+            <dat:subramo>?</dat:subramo>
+            <dat:avaluo>
+               <dat:valorMinimo>0.0</dat:valorMinimo>
+               <dat:valorPromedio>0.0</dat:valorPromedio>
+               <dat:valorMaximo>0.0</dat:valorMaximo>
+            </dat:avaluo>
+            <!--1 or more repetitions:-->
+            <dat:piezas>
+               <!--1 or more repetitions:-->
+               <dat:diamantes>
+                  <dat:numeroDePiezas>0</dat:numeroDePiezas>
+                  <dat:colorGIA>?</dat:colorGIA>
+                  <dat:claridad>?</dat:claridad>
+                  <dat:quilataje>0.0</dat:quilataje>
+                  <dat:certificado>?</dat:certificado>
+                  <dat:valorExperto>0.0</dat:valorExperto>
+                  <dat:corte>?</dat:corte>
+                  <dat:avaluo>
+                     <dat:valorMinimo>0.0</dat:valorMinimo>
+                     <dat:valorPromedio>0.0</dat:valorPromedio>
+                     <dat:valorMaximo>0.0</dat:valorMaximo>
+                  </dat:avaluo>
+               </dat:diamantes>
+               <dat:alhaja>
+                  <dat:metal>?</dat:metal>
+                  <dat:color>?</dat:color>
+                  <dat:calidad>?</dat:calidad>
+                  <dat:peso>0.0</dat:peso>
+                  <dat:incremento>0.0</dat:incremento>
+                  <dat:desplazamiento>0.0</dat:desplazamiento>
+                  <dat:rango>?</dat:rango>
+                  <dat:avaluo>
+                     <dat:valorMinimo>0.0</dat:valorMinimo>
+                     <dat:valorPromedio>0.0</dat:valorPromedio>
+                     <dat:valorMaximo>0.0</dat:valorMaximo>
+                  </dat:avaluo>
+               </dat:alhaja>
+               <dat:complemento>
+                  <dat:numeroDePiezas>0</dat:numeroDePiezas>
+                  <dat:valorExperto>0.0</dat:valorExperto>
+                  <dat:avaluo>
+                     <dat:valorMinimo>0.0</dat:valorMinimo>
+                     <dat:valorPromedio>0.0</dat:valorPromedio>
+                     <dat:valorMaximo>0.0</dat:valorMaximo>
+                  </dat:avaluo>
+               </dat:complemento>
+            </dat:piezas>
+         </dat:prenda>
+      </dat:valuarPrendaBasicoRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://nmp.com.mx/ms/valuacion/ws/diamantes/valuarPrendaBasico"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="b455f8d4-aa22-464c-abf7-993efe16acf9" isOneWay="false" action="http://nmp.com.mx/ms/valuacion/ws/diamantes/valuarPrendaNMP" name="valuarPrendaNMP" bindingOperationName="valuarPrendaNMP" type="Request-Response" outputName="valuarPrendaNMPResponse" inputName="valuarPrendaNMP" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="dc9ab332-6b03-4852-819c-0782f27346b5" name="Request Dummy"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/soap-api/ValuadorDiamantes</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dat="http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/datatypes/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dat:valuarPrendaNMPRequest>
+         <dat:prenda>
+            <dat:ramo>?</dat:ramo>
+            <dat:subramo>?</dat:subramo>
+            <dat:avaluo>
+               <dat:valorMinimo>0.0</dat:valorMinimo>
+               <dat:valorPromedio>0.0</dat:valorPromedio>
+               <dat:valorMaximo>0.0</dat:valorMaximo>
+            </dat:avaluo>
+            <!--1 or more repetitions:-->
+            <dat:piezas>
+               <!--1 or more repetitions:-->
+               <dat:diamantes>
+                  <dat:numeroDePiezas>0</dat:numeroDePiezas>
+                  <dat:colorGIA>?</dat:colorGIA>
+                  <dat:claridad>?</dat:claridad>
+                  <dat:quilataje>0.0</dat:quilataje>
+                  <dat:certificado>?</dat:certificado>
+                  <dat:valorExperto>0.0</dat:valorExperto>
+                  <dat:corte>?</dat:corte>
+                  <dat:avaluo>
+                     <dat:valorMinimo>0.0</dat:valorMinimo>
+                     <dat:valorPromedio>0.0</dat:valorPromedio>
+                     <dat:valorMaximo>0.0</dat:valorMaximo>
+                  </dat:avaluo>
+               </dat:diamantes>
+               <dat:alhaja>
+                  <dat:metal>?</dat:metal>
+                  <dat:color>?</dat:color>
+                  <dat:calidad>?</dat:calidad>
+                  <dat:peso>0.0</dat:peso>
+                  <dat:incremento>0.0</dat:incremento>
+                  <dat:desplazamiento>0.0</dat:desplazamiento>
+                  <dat:rango>?</dat:rango>
+                  <dat:avaluo>
+                     <dat:valorMinimo>0.0</dat:valorMinimo>
+                     <dat:valorPromedio>0.0</dat:valorPromedio>
+                     <dat:valorMaximo>0.0</dat:valorMaximo>
+                  </dat:avaluo>
+               </dat:alhaja>
+               <dat:complemento>
+                  <dat:numeroDePiezas>0</dat:numeroDePiezas>
+                  <dat:valorExperto>0.0</dat:valorExperto>
+                  <dat:avaluo>
+                     <dat:valorMinimo>0.0</dat:valorMinimo>
+                     <dat:valorPromedio>0.0</dat:valorPromedio>
+                     <dat:valorMaximo>0.0</dat:valorMaximo>
+                  </dat:avaluo>
+               </dat:complemento>
+            </dat:piezas>
+         </dat:prenda>
+      </dat:valuarPrendaNMPRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://nmp.com.mx/ms/valuacion/ws/diamantes/valuarPrendaNMP"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>

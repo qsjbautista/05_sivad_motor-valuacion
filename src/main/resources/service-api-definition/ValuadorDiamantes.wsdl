@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding ="utf-8"?>
+<!--
+(c) Nacional Monte de Piedad
+2016-11-30
+Valuador Diamantes
+ -->
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:valuacion="http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/"
+                  xmlns:datatypes="http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/datatypes/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  targetNamespace="http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+
+    <wsdl:types>
+        <s:schema xmlns="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/datatypes/"
+                  attributeFormDefault="qualified"
+                  elementFormDefault="qualified">
+            <s:include schemaLocation="ValuadorDiamantes.xsd"/>
+        </s:schema>
+    </wsdl:types>
+
+    <wsdl:message name="ValuarPrendaBasicoIn">
+        <wsdl:part name="parameters" element="datatypes:valuarPrendaBasicoRequest"/>
+    </wsdl:message>
+    <wsdl:message name="ValuarPrendaBasicoOut">
+        <wsdl:part name="parameters" element="datatypes:valuarPrendaBasicoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ValuarPrendaNMPIn">
+        <wsdl:part name="parameters" element="datatypes:valuarPrendaNMPRequest"/>
+    </wsdl:message>
+    <wsdl:message name="ValuarPrendaNMPOut">
+        <wsdl:part name="parameters" element="datatypes:valuarPrendaNMPResponse"/>
+    </wsdl:message>
+
+    <wsdl:portType name="ValuadorDiamantesService">
+        <wsdl:operation name="valuarPrendaBasico">
+            <wsdl:input message="valuacion:ValuarPrendaBasicoIn" />
+            <wsdl:output message="valuacion:ValuarPrendaBasicoOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="valuarPrendaNMP">
+            <wsdl:input message="valuacion:ValuarPrendaNMPIn" />
+            <wsdl:output message="valuacion:ValuarPrendaNMPOut"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="ValuadorService" type="valuacion:ValuadorDiamantesService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="valuarPrendaBasico">
+            <soap:operation soapAction="http://nmp.com.mx/ms/valuacion/ws/diamantes/valuarPrendaBasico" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="valuarPrendaNMP">
+            <soap:operation soapAction="http://nmp.com.mx/ms/valuacion/ws/diamantes/valuarPrendaNMP" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="ValuadorDiamantes">
+        <wsdl:port name="ValuadorDiamantesService" binding="valuacion:ValuadorService">
+            <soap:address location="http://localhost:8080/soap-api/ValuadorDiamantesService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

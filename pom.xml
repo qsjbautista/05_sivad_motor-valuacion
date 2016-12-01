@@ -318,6 +318,50 @@
                     </formats>
                 </configuration>
             </plugin>
+            <!-- Generate Java-Classes inkl. JAXB-Bindings from WSDL & imported XSD -->
+            <!-- See Doku at http://www.mojohaus.org/jaxws-maven-plugin/usage.html -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+                <version>2.4.1</version>
+                <executions>
+                    <execution>
+                        <id>wsdl-valuacion-diamantes</id>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <!-- See http://www.mojohaus.org/jaxws-maven-plugin/wsimport-mojo.html -->
+                            <wsdlUrls>
+                                <wsdlUrl>src/main/resources/service-api-definition/ValuadorDiamantes.wsdl</wsdlUrl>
+                            </wsdlUrls>
+                            <sourceDestDir>target/generated-sources/wsdlimport/ValuadorDiamantes</sourceDestDir>
+                            <!-- For accessing the imported schema, see https://netbeans.org/bugzilla/show_bug.cgi?id=241570 -->
+                            <vmArgs>
+                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+                            </vmArgs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>target/generated-sources/wsdlimport/ValuadorDiamantes</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 
