@@ -1,3 +1,12 @@
+spring:
+  jpa:
+    properties:
+      hibernate.cache.use_second_level_cache: true
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: true
+      hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
+      hibernate.cache.use_minimal_puts: true
+
 # ===================================================================
 # Propiedades especificas de la aplicacion (microservicio)
 # ===================================================================
@@ -11,3 +20,5 @@ info:
   spring-boot:
     version: #parent.version#
 
+cxf:
+  path: /soap-api
