@@ -1,0 +1,8 @@
+valuacion:
+  referencia:
+    alhaja:
+        wsdlLocation:
+    diamante:
+        wsdlLocation:
+  avaluo:
+    redondeo: DOS_DECIMALES_ROUND_HALF_UP

@@ -7,7 +7,7 @@
  */
 package mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo;
 
-import mx.com.nmp.ms.sivad.valuacion.dominio.estrategia.RedondeoEstrategiaUtil;
+import mx.com.nmp.ms.sivad.valuacion.infrastructure.estrategia.RedondeoEstrategiaUtil;
 
 import java.math.BigDecimal;
 import java.util.Objects;

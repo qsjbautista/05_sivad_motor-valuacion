@@ -5,8 +5,10 @@
  * <p><b>Quarksoft Copyrigth © 2016</b></p>
  *
  */
-package mx.com.nmp.ms.sivad.valuacion.dominio.estrategia;
+package mx.com.nmp.ms.sivad.valuacion.infrastructure.estrategia;
 
+import mx.com.nmp.ms.sivad.valuacion.dominio.estrategia.RedondeoEstrategia;
+import mx.com.nmp.ms.sivad.valuacion.dominio.estrategia.RedondeoEstrategias;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;

@@ -7,7 +7,7 @@
  */
 package mx.com.nmp.ms.sivad.valuacion.dominio.vo;
 
-import mx.com.nmp.ms.sivad.valuacion.dominio.estrategia.RedondeoEstrategiaUtil;
+import mx.com.nmp.ms.sivad.valuacion.infrastructure.estrategia.RedondeoEstrategiaUtil;
 import mx.com.nmp.ms.sivad.valuacion.dominio.estrategia.RedondeoEstrategias;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.Avaluo;
 import org.junit.Test;
