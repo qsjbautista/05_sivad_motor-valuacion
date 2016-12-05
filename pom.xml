@@ -169,6 +169,11 @@
             <artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-netflix-spectator</artifactId>
+        </dependency>
 	</dependencies>
 
 	<build>
@@ -343,6 +348,36 @@
                             </vmArgs>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>wsdl-referencia-alhajas</id>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlUrls>
+                                <wsdlUrl>src/main/resources/client-api-definition/ReferenciaAlhajas.wsdl</wsdlUrl>
+                            </wsdlUrls>
+                            <sourceDestDir>target/generated-sources/wsdlimport/ReferenciaAlhajas</sourceDestDir>
+                            <vmArgs>
+                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+                            </vmArgs>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>wsdl-referencia-diamantes</id>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <wsdlUrls>
+                                <wsdlUrl>src/main/resources/client-api-definition/ReferenciaDiamantes.wsdl</wsdlUrl>
+                            </wsdlUrls>
+                            <sourceDestDir>target/generated-sources/wsdlimport/ReferenciaDiamantes</sourceDestDir>
+                            <vmArgs>
+                                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+                            </vmArgs>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -358,6 +393,8 @@
                         <configuration>
                             <sources>
                                 <source>target/generated-sources/wsdlimport/ValuadorDiamantes</source>
+                                <source>target/generated-sources/wsdlimport/ReferenciaAlhajas</source>
+                                <source>target/generated-sources/wsdlimport/ReferenciaDiamantes</source>
                             </sources>
                         </configuration>
                     </execution>

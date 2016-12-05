@@ -22,3 +22,12 @@ info:
 
 cxf:
   path: /soap-api
+
+valuacion:
+  referencia:
+    alhaja:
+        wsdlLocation: http://localhost:8080/soap-api/ReferenciaAlhajaService?wsdl
+    diamante:
+        wsdlLocation: http://localhost:8080/soap-api/ReferenciaDiamanteService?wsdl
+  avaluo:
+    redondeo: DOS_DECIMALES_ROUND_HALF_UP

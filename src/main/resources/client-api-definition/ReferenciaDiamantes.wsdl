@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding ="utf-8"?>
+<!--
+(c) Nacional Monte de Piedad
+2016-11-10
+Tablas de Referencia Diamantes
+ -->
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://ws.api.referencia.sivad.ms.nmp.com.mx/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:ns2="http://schemas.xmlsoap.org/soap/http"
+                  xmlns:ns1="http://nmp.com.mx/ms/sivad/referencia/ws/diamantes/datatypes/"
+                  name="ReferenciaDiamantesServiceEndpointService"
+                  targetNamespace="http://ws.api.referencia.sivad.ms.nmp.com.mx/">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://nmp.com.mx/ms/sivad/referencia/ws/diamantes/datatypes/" elementFormDefault="qualified" targetNamespace="http://nmp.com.mx/ms/sivad/referencia/ws/diamantes/datatypes/" version="1.0">
+            <xs:element name="obtenerModificadorRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="certificadoDiamante" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="obtenerModificadorResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="factor" type="xs:decimal"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="obtenerValorComercialRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="corte" type="xs:string"/>
+                        <xs:element name="color" type="xs:string"/>
+                        <xs:element name="claridad" type="xs:string"/>
+                        <xs:element name="quilates_ct" type="xs:decimal"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="obtenerValorComercialResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="valorComercial" type="tns:ValorComercial"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="ValorComercial">
+                <xs:sequence>
+                    <xs:element name="valorMinimo" type="xs:decimal"/>
+                    <xs:element name="valorMedio" type="xs:decimal"/>
+                    <xs:element name="valorMaximo" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="obtenerModificadorResponse">
+        <wsdl:part element="ns1:obtenerModificadorResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="obtenerModificador">
+        <wsdl:part element="ns1:obtenerModificadorRequest" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="obtenerValorComercialResponse">
+        <wsdl:part element="ns1:obtenerValorComercialResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="obtenerValorComercial">
+        <wsdl:part element="ns1:obtenerValorComercialRequest" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="ReferenciaDiamanteService">
+        <wsdl:operation name="obtenerModificador">
+            <wsdl:input message="tns:obtenerModificador" name="obtenerModificador"></wsdl:input>
+            <wsdl:output message="tns:obtenerModificadorResponse" name="obtenerModificadorResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="obtenerValorComercial">
+            <wsdl:input message="tns:obtenerValorComercial" name="obtenerValorComercial"></wsdl:input>
+            <wsdl:output message="tns:obtenerValorComercialResponse" name="obtenerValorComercialResponse"></wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ReferenciaDiamantesServiceEndpointServiceSoapBinding" type="tns:ReferenciaDiamanteService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="obtenerModificador">
+            <soap:operation soapAction="http://ws.api.referencia.sivad.ms.nmp.com.mx/obtenerModificador" style="document"/>
+            <wsdl:input name="obtenerModificador">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="obtenerModificadorResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="obtenerValorComercial">
+            <soap:operation soapAction="http://ws.api.referencia.sivad.ms.nmp.com.mx/obtenerValorComercial" style="document"/>
+            <wsdl:input name="obtenerValorComercial">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="obtenerValorComercialResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ReferenciaDiamantesServiceEndpointService">
+        <wsdl:port binding="tns:ReferenciaDiamantesServiceEndpointServiceSoapBinding" name="ReferenciaDiamantesServiceEndpointPort">
+            <soap:address location="http://localhost:8080/soap-api/ReferenciaDiamanteService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

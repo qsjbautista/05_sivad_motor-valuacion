@@ -12,5 +12,12 @@
         overflowToDisk="false"
         />
 
+    <cache name = "tablasDeReferenciaAlhajasCache"
+           eternal="false"
+           overflowToDisk="false"/>
+
+    <cache name = "tablasDeReferenciaDiamantesCache"
+           eternal="false"
+           overflowToDisk="false"/>
 
 </ehcache>

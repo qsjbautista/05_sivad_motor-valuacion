@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding ="utf-8"?>
+<!--
+(c) Nacional Monte de Piedad
+2016-11-10
+Tablas de Referencia Alhajas
+ -->
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://ws.api.referencia.sivad.ms.nmp.com.mx/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:ns2="http://schemas.xmlsoap.org/soap/http"
+                  xmlns:ns1="http://nmp.com.mx/ms/sivad/referencia/ws/alhajas/datatypes/"
+                  name="ReferenciaAlhajaServiceEndpointService"
+                  targetNamespace="http://ws.api.referencia.sivad.ms.nmp.com.mx/">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://nmp.com.mx/ms/sivad/referencia/ws/alhajas/datatypes/" elementFormDefault="qualified" targetNamespace="http://nmp.com.mx/ms/sivad/referencia/ws/alhajas/datatypes/" version="1.0">
+            <xs:element name="obtenerDesplazamientoRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="metal" type="xs:string"/>
+                        <xs:element name="calidad" type="xs:string"/>
+                        <xs:element name="rango" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="obtenerDesplazamientoResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="desplazamiento" type="xs:decimal"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="obtenerFactorRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="metal" type="xs:string"/>
+                        <xs:element name="calidad" type="xs:string"/>
+                        <xs:element name="rango" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="obtenerFactorResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="factor" type="xs:decimal"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="obtenerLimitesIncrementoRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="metal" type="xs:string"/>
+                        <xs:element name="calidad" type="xs:string"/>
+                        <xs:element name="rango" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="obtenerLimitesIncrementoResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="limitesIncremento" type="tns:RangoLimite"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="obtenerValorGramoMetalRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="metal" type="xs:string"/>
+                        <xs:element name="calidad" type="xs:string"/>
+                        <xs:element name="rango" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="obtenerValorGramoMetalResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="precioPorGramo" type="xs:decimal"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="obtenerValorGramoOroRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="color" type="xs:string"/>
+                        <xs:element name="calidad" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="obtenerValorGramoOroResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="precioPorGramo" type="xs:decimal"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="RangoLimite">
+                <xs:sequence>
+                    <xs:element name="limiteInferior" type="xs:decimal"/>
+                    <xs:element name="limiteSuperior" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="obtenerValorGramoMetalResponse">
+        <wsdl:part element="ns1:obtenerValorGramoMetalResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="obtenerLimitesIncrementoResponse">
+        <wsdl:part element="ns1:obtenerLimitesIncrementoResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="obtenerDesplazamientoResponse">
+        <wsdl:part element="ns1:obtenerDesplazamientoResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="obtenerValorGramoOroResponse">
+        <wsdl:part element="ns1:obtenerValorGramoOroResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="obtenerFactorResponse">
+        <wsdl:part element="ns1:obtenerFactorResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="obtenerFactor">
+        <wsdl:part element="ns1:obtenerFactorRequest" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="obtenerDesplazamiento">
+        <wsdl:part element="ns1:obtenerDesplazamientoRequest" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="obtenerLimitesIncremento">
+        <wsdl:part element="ns1:obtenerLimitesIncrementoRequest" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="obtenerValorGramoOro">
+        <wsdl:part element="ns1:obtenerValorGramoOroRequest" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="obtenerValorGramoMetal">
+        <wsdl:part element="ns1:obtenerValorGramoMetalRequest" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="ReferenciaAlhajaService">
+        <wsdl:operation name="obtenerValorGramoOro">
+            <wsdl:input message="tns:obtenerValorGramoOro" name="obtenerValorGramoOro"></wsdl:input>
+            <wsdl:output message="tns:obtenerValorGramoOroResponse" name="obtenerValorGramoOroResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="obtenerDesplazamiento">
+            <wsdl:input message="tns:obtenerDesplazamiento" name="obtenerDesplazamiento"></wsdl:input>
+            <wsdl:output message="tns:obtenerDesplazamientoResponse" name="obtenerDesplazamientoResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="obtenerLimitesIncremento">
+            <wsdl:input message="tns:obtenerLimitesIncremento" name="obtenerLimitesIncremento"></wsdl:input>
+            <wsdl:output message="tns:obtenerLimitesIncrementoResponse" name="obtenerLimitesIncrementoResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="obtenerFactor">
+            <wsdl:input message="tns:obtenerFactor" name="obtenerFactor"></wsdl:input>
+            <wsdl:output message="tns:obtenerFactorResponse" name="obtenerFactorResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="obtenerValorGramoMetal">
+            <wsdl:input message="tns:obtenerValorGramoMetal" name="obtenerValorGramoMetal"></wsdl:input>
+            <wsdl:output message="tns:obtenerValorGramoMetalResponse" name="obtenerValorGramoMetalResponse"></wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ReferenciaAlhajaServiceEndpointServiceSoapBinding" type="tns:ReferenciaAlhajaService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="obtenerDesplazamiento">
+            <soap:operation soapAction="http://ws.api.referencia.sivad.ms.nmp.com.mx/obtenerDesplazamiento" style="document"/>
+            <wsdl:input name="obtenerDesplazamiento">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="obtenerDesplazamientoResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="obtenerValorGramoOro">
+            <soap:operation soapAction="http://ws.api.referencia.sivad.ms.nmp.com.mx/obtenerValorGramoOro" style="document"/>
+            <wsdl:input name="obtenerValorGramoOro">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="obtenerValorGramoOroResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="obtenerLimitesIncremento">
+            <soap:operation soapAction="http://ws.api.referencia.sivad.ms.nmp.com.mx/obtenerLimitesIncremento" style="document"/>
+            <wsdl:input name="obtenerLimitesIncremento">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="obtenerLimitesIncrementoResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="obtenerFactor">
+            <soap:operation soapAction="http://ws.api.referencia.sivad.ms.nmp.com.mx/obtenerFactor" style="document"/>
+            <wsdl:input name="obtenerFactor">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="obtenerFactorResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="obtenerValorGramoMetal">
+            <soap:operation soapAction="http://ws.api.referencia.sivad.ms.nmp.com.mx/obtenerValorGramoMetal" style="document"/>
+            <wsdl:input name="obtenerValorGramoMetal">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="obtenerValorGramoMetalResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ReferenciaAlhajaServiceEndpointService">
+        <wsdl:port binding="tns:ReferenciaAlhajaServiceEndpointServiceSoapBinding" name="ReferenciaAlhajaServiceEndpointPort">
+            <soap:address location="http://localhost:8080/soap-api/ReferenciaAlhajaService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
