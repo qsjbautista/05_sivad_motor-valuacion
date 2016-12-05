@@ -55,7 +55,7 @@ public class CacheConfiguration {
         LOGGER.debug("Iniciando Ehcache");
         cacheManager = net.sf.ehcache.CacheManager.create();
         cacheManager.getConfiguration().setMaxBytesLocalHeap("16M");
-        LOGGER.debug("Registando indicadore de Ehcache para Metrics");
+        LOGGER.debug("Registando indicadores de Ehcache para Metrics");
         for (String name : cacheManager.getCacheNames()) {
             net.sf.ehcache.Cache cache = cacheManager.getCache(name);
             cacheManager.replaceCacheWithDecoratedCache(cache, InstrumentedEhcache.instrument(metricRegistry, cache));
