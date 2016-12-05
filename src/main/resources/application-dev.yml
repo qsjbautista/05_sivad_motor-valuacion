@@ -1,2 +1,23 @@
+# ===================================================================
+# Configuración Spring Boot
+#
+# Configuración para el profile de Spring "dev".
+# Aquí puedes establecer la configuración necesaria para el perfil de
+# desarrollo.
+# ===================================================================
+
+# ===================================================================
+# Propiedades estandar de Spring.
+# Referencia completa en:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
 server:
-  port: 8181
+    port: 8085
+management:
+    shell:
+        ssh:
+            port: 2085
+
+# ===================================================================
+# Propiedades especificas de la aplicacion (microservicio)
+# ===================================================================
