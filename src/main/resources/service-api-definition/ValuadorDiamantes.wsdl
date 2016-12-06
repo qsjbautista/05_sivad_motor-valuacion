@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding ="utf-8"?>
 <!--
 (c) Nacional Monte de Piedad
-2016-11-30
+2016-12-05
 Valuador Diamantes
  -->
 <wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema"
@@ -70,7 +70,7 @@ Valuador Diamantes
 
     <wsdl:service name="ValuadorDiamantes">
         <wsdl:port name="ValuadorDiamantesService" binding="valuacion:ValuadorService">
-            <soap:address location="http://localhost:8080/soap-api/ValuadorDiamantesService"/>
+            <soap:address location="http://localhost:8085/soap-api/ValuadorDiamantesService"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

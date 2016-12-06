@@ -4,6 +4,11 @@
           elementFormDefault="qualified"
           version="1.0">
 
+    <s:annotation>
+        <s:appinfo>Siva Diamantes - Motor de Valuacion</s:appinfo>
+        <s:documentation>Definiciones de datos para Motor de Valuacion de Siva Diamantes</s:documentation>
+    </s:annotation>
+
     <s:element name="valuarPrendaBasicoRequest">
         <s:complexType>
             <s:sequence>
@@ -36,62 +41,71 @@
         </s:complexType>
     </s:element>
 
-    <s:complexType name="Prenda">
-        <s:sequence>
-            <s:element name="ramo" type="s:string" nillable="false" />
-            <s:element name="subramo" type="s:string" nillable="false" />
-            <s:element name="avaluo" type="Avaluo" nillable="true" />
-            <s:element name="piezas" type="Pieza" minOccurs="1" maxOccurs="unbounded" />
-        </s:sequence>
-    </s:complexType>
-
-    <s:complexType name="Pieza">
-        <s:sequence>
-            <s:element name="diamantes" type="Diamante" minOccurs="1" maxOccurs="unbounded" />
-            <s:element name="alhaja" type="Alhaja" />
-            <s:element name="complemento" type="Complemento" />
-        </s:sequence>
-    </s:complexType>
-
-    <s:complexType name="Diamante">
-        <s:sequence>
-            <s:element name="numeroDePiezas" type="s:int" default="0" />
-            <s:element name="colorGIA" type="s:string" nillable="false" />
-            <s:element name="claridad" type="s:string" nillable="false" />
-            <s:element name="quilataje" type="s:decimal" default="0.0" />
-            <s:element name="certificado" type="s:string" nillable="true" />
-            <s:element name="valorExperto" type="s:decimal" default="0.0" />
-            <s:element name="corte" type="s:string" nillable="false" />
-            <s:element name="avaluo" type="Avaluo" />
-        </s:sequence>
-    </s:complexType>
-
-    <s:complexType name="Alhaja">
-        <s:sequence>
-            <s:element name="metal" type="s:string" nillable="false" />
-            <s:element name="color" type="s:string" nillable="true" />
-            <s:element name="calidad" type="s:string" nillable="true" />
-            <s:element name="peso" type="s:decimal" default="0.0" />
-            <s:element name="incremento" type="s:decimal" default="0.0" />
-            <s:element name="desplazamiento" type="s:decimal" default="0.0" />
-            <s:element name="rango" type="s:string" nillable="true" />
-            <s:element name="avaluo" type="Avaluo" />
-        </s:sequence>
-    </s:complexType>
-
-    <s:complexType name="Complemento">
-        <s:sequence>
-            <s:element name="numeroDePiezas" type="s:int" default="0" />
-            <s:element name="valorExperto" type="s:decimal" default="0.0" />
-            <s:element name="avaluo" type="Avaluo" />
-        </s:sequence>
-    </s:complexType>
-
     <s:complexType name="Avaluo">
         <s:sequence>
             <s:element name="valorMinimo" type="s:decimal" default="0.0" />
             <s:element name="valorPromedio" type="s:decimal" default="0.0" />
             <s:element name="valorMaximo" type="s:decimal" default="0.0" />
+        </s:sequence>
+    </s:complexType>
+
+    <s:complexType name="Prenda">
+        <s:sequence>
+            <s:element name="id" type="s:string" nillable="true" />
+            <s:element name="ramo" type="s:string" nillable="false" />
+            <s:element name="subramo" type="s:string" nillable="false" />
+            <s:element name="tipo" type="s:string" nillable="false" />
+            <s:element name="avaluo" type="Avaluo" nillable="true" />
+            <s:element name="pieza" type="Pieza" minOccurs="1" maxOccurs="unbounded" />
+        </s:sequence>
+    </s:complexType>
+
+    <s:complexType name="Pieza">
+        <s:sequence>
+            <s:element name="id" type="s:string" />
+            <s:element name="cantidad" type="s:int" nillable="false" default="1" />
+            <s:element name="avaluo" type="Avaluo" />
+            <s:choice>
+                <s:element name="diamante" type="Diamante" />
+                <s:element name="alhaja" type="Alhaja" />
+                <s:element name="complemento" type="Complemento" />
+            </s:choice>
+        </s:sequence>
+    </s:complexType>
+
+    <s:complexType name="Diamante">
+        <s:sequence>
+            <s:element name="corte" type="s:string" nillable="false" />
+            <s:element name="forma" type="s:string" nillable="false" />
+            <s:element name="color" type="s:string" nillable="false" />
+            <s:element name="claridad" type="s:string" nillable="false" />
+            <s:element name="quilataje" type="s:decimal" default="0.0" />
+            <s:element name="certificado" type="s:string" nillable="true" />
+            <s:element name="valorExperto" type="s:decimal" default="0.0" />
+        </s:sequence>
+    </s:complexType>
+
+    <s:complexType name="Alhaja">
+        <s:sequence>
+            <s:element name="tipo" type="s:string" nillable="false" />
+            <s:element name="forma" type="s:string" />
+            <s:element name="metal" type="s:string" nillable="false" />
+            <s:element name="color" type="s:string" nillable="true" />
+            <s:element name="rango" type="s:string" nillable="true" />
+            <s:element name="calidad" type="s:string" nillable="true" />
+            <s:element name="peso" type="s:decimal" default="0.0" />
+            <s:element name="condicion" type="s:string" />
+            <s:element name="valorExperto" type="s:decimal" default="0.0" />
+            <s:element name="incremento" type="s:decimal" default="0.0" />
+            <s:element name="desplazamiento" type="s:decimal" default="0.0" />
+        </s:sequence>
+    </s:complexType>
+
+    <s:complexType name="Complemento">
+        <s:sequence>
+            <s:element name="tipo" type="s:string" />
+            <s:element name="peso" type="s:string" />
+            <s:element name="valorExperto" type="s:decimal" default="0.0" />
         </s:sequence>
     </s:complexType>
 
