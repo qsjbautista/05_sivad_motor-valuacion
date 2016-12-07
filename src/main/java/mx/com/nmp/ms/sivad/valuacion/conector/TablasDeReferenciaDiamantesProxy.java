@@ -7,6 +7,7 @@
  */
 package mx.com.nmp.ms.sivad.valuacion.conector;
 
+import com.codahale.metrics.annotation.Timed;
 import mx.com.nmp.ms.arquetipo.annotation.validation.NotNull;
 import mx.com.nmp.ms.sivad.referencia.ws.diamantes.datatypes.ObtenerModificadorRequest;
 import mx.com.nmp.ms.sivad.referencia.ws.diamantes.datatypes.ObtenerModificadorResponse;
@@ -59,6 +60,7 @@ public class TablasDeReferenciaDiamantesProxy implements TablasDeReferenciaDiama
     /**
      * {@inheritDoc}
      */
+    @Timed
     @Override
     @Cacheable(value = "TablasDeReferenciaDiamantes.obtenerModificador.cache", condition = "#proveedor != null ",
         key = "#proveedor.certificadoDiamante")
@@ -75,6 +77,7 @@ public class TablasDeReferenciaDiamantesProxy implements TablasDeReferenciaDiama
     /**
      * {@inheritDoc}
      */
+    @Timed
     @Override
     @Cacheable(value = "TablasDeReferenciaDiamantes.obtenerValorComercial.cache", condition = "#proveedor != null ",
         key = "T(java.util.Objects).hash(#proveedor.color, #proveedor.color, #proveedor.claridad, #proveedor.quilates)")

@@ -7,6 +7,7 @@
  */
 package mx.com.nmp.ms.sivad.valuacion.conector;
 
+import com.codahale.metrics.annotation.Timed;
 import mx.com.nmp.ms.arquetipo.annotation.validation.NotNull;
 import mx.com.nmp.ms.sivad.referencia.ws.alhajas.datatypes.ObtenerFactorRequest;
 import mx.com.nmp.ms.sivad.referencia.ws.alhajas.datatypes.ObtenerFactorResponse;
@@ -62,6 +63,7 @@ public class TablasDeReferenciaAlhajasProxy implements TablasDeReferenciaAlhajas
     /**
      * {@inheritDoc}
      */
+    @Timed
     @Override
     @Cacheable(value = "TablasDeReferenciaAlhajas.obtenerValorGramoOro.cache", condition = "#proveedor != null ",
         key = "T(java.util.Objects).hash(#proveedor.color, #proveedor.calidad)")
@@ -78,6 +80,7 @@ public class TablasDeReferenciaAlhajasProxy implements TablasDeReferenciaAlhajas
     /**
      * {@inheritDoc}
      */
+    @Timed
     @Override
     @Cacheable(value = "TablasDeReferenciaAlhajas.obtenerFactor.cache", condition = "#proveedor != null ",
         key = "T(java.util.Objects).hash(#proveedor.metal, #proveedor.calidad, #proveedor.rango)")
@@ -93,6 +96,7 @@ public class TablasDeReferenciaAlhajasProxy implements TablasDeReferenciaAlhajas
     /**
      * {@inheritDoc}
      */
+    @Timed
     @Override
     @Cacheable(value = "TablasDeReferenciaAlhajas.obtenerValorGramoMetal.cache", condition = "#proveedor != null ",
         key = "T(java.util.Objects).hash(#proveedor.metal, #proveedor.calidad)")
