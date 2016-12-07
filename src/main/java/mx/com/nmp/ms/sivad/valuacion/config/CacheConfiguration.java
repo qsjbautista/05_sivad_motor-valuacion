@@ -58,7 +58,9 @@ public class CacheConfiguration {
         LOGGER.debug("Registando indicadores de Ehcache para Metrics");
         for (String name : cacheManager.getCacheNames()) {
             net.sf.ehcache.Cache cache = cacheManager.getCache(name);
-            cacheManager.replaceCacheWithDecoratedCache(cache, InstrumentedEhcache.instrument(metricRegistry, cache));
+            if (cache != null) {
+                cacheManager.replaceCacheWithDecoratedCache(cache, InstrumentedEhcache.instrument(metricRegistry, cache));
+            }
         }
         EhCacheCacheManager ehCacheManager = new EhCacheCacheManager();
         ehCacheManager.setCacheManager(cacheManager);
