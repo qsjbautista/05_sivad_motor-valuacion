@@ -203,7 +203,7 @@ Tablas de Referencia Alhajas
     </wsdl:binding>
     <wsdl:service name="ReferenciaAlhajaServiceEndpointService">
         <wsdl:port binding="tns:ReferenciaAlhajaServiceEndpointServiceSoapBinding" name="ReferenciaAlhajaServiceEndpointPort">
-            <soap:address location="http://localhost:8080/soap-api/ReferenciaAlhajaService"/>
+            <soap:address location="http://localhost:8084/soap-api/ReferenciaAlhajaService"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

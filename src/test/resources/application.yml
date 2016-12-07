@@ -51,12 +51,14 @@ server:
 # ===================================================================
 # Propiedades especificas de la aplicacion
 # ===================================================================
+cxf:
+  path: /soap-api
 
 valuacion:
   referencia:
     alhaja:
-        wsdlLocation:
+        wsdlLocation: http://localhost:10344/soap-api/ReferenciaAlhajaService?wsdl
     diamante:
-        wsdlLocation:
+        wsdlLocation: http://localhost:10344/soap-api/ReferenciaDiamanteService?wsdl
   avaluo:
     redondeo: DOS_DECIMALES_ROUND_HALF_UP

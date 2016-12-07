@@ -12,12 +12,34 @@
         overflowToDisk="false"
         />
 
-    <cache name = "tablasDeReferenciaAlhajasCache"
+    <cache name = "TablasDeReferenciaAlhajas.obtenerValorGramoOro.cache"
            eternal="false"
-           overflowToDisk="false"/>
+           overflowToDisk="false"
+           timeToLiveSeconds="600"
+           timeToIdleSeconds="300"/>
 
-    <cache name = "tablasDeReferenciaDiamantesCache"
+    <cache name = "TablasDeReferenciaAlhajas.obtenerFactor.cache"
            eternal="false"
-           overflowToDisk="false"/>
+           overflowToDisk="false"
+           timeToLiveSeconds="600"
+           timeToIdleSeconds="300"/>
+
+    <cache name = "TablasDeReferenciaAlhajas.obtenerValorGramoMetal.cache"
+           eternal="false"
+           overflowToDisk="false"
+           timeToLiveSeconds="600"
+           timeToIdleSeconds="300"/>
+
+    <cache name = "TablasDeReferenciaDiamantes.obtenerModificador.cache"
+           eternal="false"
+           overflowToDisk="false"
+           timeToLiveSeconds="600"
+           timeToIdleSeconds="300"/>
+
+    <cache name = "TablasDeReferenciaDiamantes.obtenerValorComercial.cache"
+           eternal="false"
+           overflowToDisk="false"
+           timeToLiveSeconds="600"
+           timeToIdleSeconds="300"/>
 
 </ehcache>

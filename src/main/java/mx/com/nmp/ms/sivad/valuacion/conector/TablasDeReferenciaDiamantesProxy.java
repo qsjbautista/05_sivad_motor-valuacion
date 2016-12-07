@@ -19,6 +19,8 @@ import mx.com.nmp.ms.sivad.valuacion.conector.provedor.CaracteristicasDiamantePr
 import mx.com.nmp.ms.sivad.valuacion.conector.provedor.CertificadoDiamanteProveedor;
 import mx.com.nmp.ms.sivad.valuacion.conector.referencia.diamante.ReferenciaDiamantesConector;
 import mx.com.nmp.ms.sivad.valuacion.conector.referencia.diamante.factory.ReferenciaDiamanteFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +35,8 @@ import static mx.com.nmp.ms.sivad.valuacion.conector.consumidor.ConsumidorFactor
 @Component("tablasDeReferenciaDiamantes")
 @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
 public class TablasDeReferenciaDiamantesProxy implements TablasDeReferenciaDiamantes {
+    private Logger LOGGER = LoggerFactory.getLogger(TablasDeReferenciaDiamantesProxy.class);
+
     /**
      * Referencia al conector hacia el Servicio Web Referencia de Diamantes.
      */
@@ -56,9 +60,11 @@ public class TablasDeReferenciaDiamantesProxy implements TablasDeReferenciaDiama
      * {@inheritDoc}
      */
     @Override
-    @Cacheable(value = "tablasDeReferenciaDiamantesCache", condition = "#proveedor != null ",
+    @Cacheable(value = "TablasDeReferenciaDiamantes.obtenerModificador.cache", condition = "#proveedor != null ",
         key = "#proveedor.certificadoDiamante")
     public BigDecimalConsumidor obtenerModificador(@NotNull final CertificadoDiamanteProveedor proveedor) {
+        LOGGER.info(">> obtenerModificador({})", proveedor);
+
         ObtenerModificadorRequest certificado = referenciaDiamanteFactory.crearObtenerModificadorRequest(proveedor);
         ObtenerModificadorResponse respuesta = referenciaDiamantesConector.getWsReferenciaDiamante()
             .obtenerModificador(certificado);
@@ -70,9 +76,11 @@ public class TablasDeReferenciaDiamantesProxy implements TablasDeReferenciaDiama
      * {@inheritDoc}
      */
     @Override
-    @Cacheable(value = "tablasDeReferenciaDiamantesCache", condition = "#proveedor != null ",
+    @Cacheable(value = "TablasDeReferenciaDiamantes.obtenerValorComercial.cache", condition = "#proveedor != null ",
         key = "T(java.util.Objects).hash(#proveedor.color, #proveedor.color, #proveedor.claridad, #proveedor.quilates)")
     public ValorComercialConsumidor obtenerValorComercial(@NotNull final CaracteristicasDiamanteProveedor proveedor) {
+        LOGGER.info(">> obtenerValorComercial({})", proveedor);
+
         ObtenerValorComercialRequest valorComercial = referenciaDiamanteFactory
             .crearObtenerValorComercialRequest(proveedor);
         ObtenerValorComercialResponse respuesta = referenciaDiamantesConector.getWsReferenciaDiamante()

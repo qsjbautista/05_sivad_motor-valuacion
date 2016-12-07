@@ -19,6 +19,8 @@ import mx.com.nmp.ms.sivad.valuacion.conector.referencia.alhaja.factory.Referenc
 import mx.com.nmp.ms.sivad.valuacion.conector.referencia.alhaja.ReferenciaAlhajasConector;
 import mx.com.nmp.ms.sivad.valuacion.conector.provedor.CaracteristicasGramoOroProveedor;
 import mx.com.nmp.ms.sivad.valuacion.conector.provedor.MetalCalidadRangoProveedor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +36,8 @@ import static mx.com.nmp.ms.sivad.valuacion.conector.consumidor.ConsumidorFactor
 @Component("tablasDeReferenciaAlhajas")
 @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
 public class TablasDeReferenciaAlhajasProxy implements TablasDeReferenciaAlhajas {
+    private Logger LOGGER = LoggerFactory.getLogger(TablasDeReferenciaAlhajasProxy.class);
+
     /**
      * Referencia al conector hacia el Servicio Web Referencia de Alhajas.
      */
@@ -59,9 +63,11 @@ public class TablasDeReferenciaAlhajasProxy implements TablasDeReferenciaAlhajas
      * {@inheritDoc}
      */
     @Override
-    @Cacheable(value = "tablasDeReferenciaAlhajasCache", condition = "#proveedor != null ",
+    @Cacheable(value = "TablasDeReferenciaAlhajas.obtenerValorGramoOro.cache", condition = "#proveedor != null ",
         key = "T(java.util.Objects).hash(#proveedor.color, #proveedor.calidad)")
     public BigDecimalConsumidor obtenerValorGramoOro(@NotNull final CaracteristicasGramoOroProveedor proveedor) {
+        LOGGER.info(">> obtenerValorGramoOro({})", proveedor);
+
         ObtenerValorGramoOroRequest gramoOro = referenciaAlhajaFactory.crearObtenerValorGramoOroRequest(proveedor);
         ObtenerValorGramoOroResponse respuesta = referenciaAlhajasConector.getWsReferenciaAlhaja()
             .obtenerValorGramoOro(gramoOro);
@@ -73,9 +79,11 @@ public class TablasDeReferenciaAlhajasProxy implements TablasDeReferenciaAlhajas
      * {@inheritDoc}
      */
     @Override
-    @Cacheable(value = "tablasDeReferenciaAlhajasCache", condition = "#proveedor != null ",
+    @Cacheable(value = "TablasDeReferenciaAlhajas.obtenerFactor.cache", condition = "#proveedor != null ",
         key = "T(java.util.Objects).hash(#proveedor.metal, #proveedor.calidad, #proveedor.rango)")
     public BigDecimalConsumidor obtenerFactor(@NotNull final MetalCalidadRangoProveedor proveedor) {
+        LOGGER.info(">> obtenerFactor({})", proveedor);
+
         ObtenerFactorRequest factor = referenciaAlhajaFactory.crearObtenerFactorRequest(proveedor);
         ObtenerFactorResponse respuesta = referenciaAlhajasConector.getWsReferenciaAlhaja().obtenerFactor(factor);
 
@@ -86,9 +94,11 @@ public class TablasDeReferenciaAlhajasProxy implements TablasDeReferenciaAlhajas
      * {@inheritDoc}
      */
     @Override
-    @Cacheable(value = "tablasDeReferenciaAlhajasCache", condition = "#proveedor != null ",
+    @Cacheable(value = "TablasDeReferenciaAlhajas.obtenerValorGramoMetal.cache", condition = "#proveedor != null ",
         key = "T(java.util.Objects).hash(#proveedor.metal, #proveedor.calidad)")
     public BigDecimalConsumidor obtenerValorGramoMetal(@NotNull final MetalCalidadRangoProveedor proveedor) {
+        LOGGER.info(">> obtenerValorGramoMetal({})", proveedor);
+
         ObtenerValorGramoMetalRequest gramoMetal =
             referenciaAlhajaFactory.crearObtenerValorGramoMetalRequest(proveedor);
         ObtenerValorGramoMetalResponse respuesta = referenciaAlhajasConector.getWsReferenciaAlhaja()

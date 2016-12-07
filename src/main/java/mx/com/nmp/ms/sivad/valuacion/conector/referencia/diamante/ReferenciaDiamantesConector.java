@@ -55,6 +55,7 @@ public class ReferenciaDiamantesConector {
             crearReferenciaDiamanteService();
         }
 
+        LOGGER.info("Recuperando referencia al WS Referencia Diamantes.");
         return wsReferenciaDiamante;
     }
 
@@ -66,8 +67,10 @@ public class ReferenciaDiamantesConector {
         URL url = getURL();
 
         if (ObjectUtils.isEmpty(url)) {
+            LOGGER.info("Creando referencia al WS Referencia Diamantes. con valores por defecto");
             ep = new ReferenciaDiamantesServiceEndpointService();
         } else {
+            LOGGER.info("Creando referencia al WS Referencia Diamantes. con URL {}", url);
             ep = new ReferenciaDiamantesServiceEndpointService(url);
         }
 
@@ -84,6 +87,7 @@ public class ReferenciaDiamantesConector {
 
         if (!ObjectUtils.isEmpty(wsdlLocation)) {
             try {
+                LOGGER.info("Creando URL con {}", wsdlLocation);
                 url = new URL(wsdlLocation);
             } catch (MalformedURLException e) {
                 LOGGER.warn("La URL no es valida. {}", wsdlLocation, e);

@@ -99,7 +99,7 @@ Tablas de Referencia Diamantes
     </wsdl:binding>
     <wsdl:service name="ReferenciaDiamantesServiceEndpointService">
         <wsdl:port binding="tns:ReferenciaDiamantesServiceEndpointServiceSoapBinding" name="ReferenciaDiamantesServiceEndpointPort">
-            <soap:address location="http://localhost:8080/soap-api/ReferenciaDiamanteService"/>
+            <soap:address location="http://localhost:8084/soap-api/ReferenciaDiamanteService"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

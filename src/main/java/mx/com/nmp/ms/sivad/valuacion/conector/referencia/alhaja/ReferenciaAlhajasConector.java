@@ -55,6 +55,7 @@ public class ReferenciaAlhajasConector {
             crearReferenciaAlhajaService();
         }
 
+        LOGGER.info("Recuperando referencia al WS Referencia Alhajas.");
         return wsReferenciaAlhaja;
     }
 
@@ -66,8 +67,10 @@ public class ReferenciaAlhajasConector {
         URL url = getURL();
 
         if (ObjectUtils.isEmpty(url)) {
+            LOGGER.info("Creando referencia al WS Referencia Alhajas. con valores por defecto");
             ep = new ReferenciaAlhajaServiceEndpointService();
         } else {
+            LOGGER.info("Creando referencia al WS Referencia Alhajas. con URL {}", url);
             ep = new ReferenciaAlhajaServiceEndpointService(url);
         }
 
@@ -84,6 +87,7 @@ public class ReferenciaAlhajasConector {
 
         if (!ObjectUtils.isEmpty(wsdlLocation)) {
             try {
+                LOGGER.info("Creando URL con {}", wsdlLocation);
                 url = new URL(wsdlLocation);
             } catch (MalformedURLException e) {
                 LOGGER.warn("La URL no es accesible. {}", wsdlLocation, e);

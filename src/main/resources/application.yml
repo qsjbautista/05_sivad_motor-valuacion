@@ -26,8 +26,8 @@ cxf:
 valuacion:
   referencia:
     alhaja:
-        wsdlLocation: http://localhost:8080/soap-api/ReferenciaAlhajaService?wsdl
+        wsdlLocation: http://localhost:8084/soap-api/ReferenciaAlhajaService?wsdl
     diamante:
-        wsdlLocation: http://localhost:8080/soap-api/ReferenciaDiamanteService?wsdl
+        wsdlLocation: http://localhost:8084/soap-api/ReferenciaDiamanteService?wsdl
   avaluo:
     redondeo: DOS_DECIMALES_ROUND_HALF_UP
