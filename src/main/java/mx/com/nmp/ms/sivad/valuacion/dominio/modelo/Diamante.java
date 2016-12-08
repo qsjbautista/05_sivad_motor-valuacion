@@ -128,7 +128,7 @@ public class Diamante implements PiezaValuable, CaracteristicasDiamanteProveedor
      * @param builder Referencia al objeto que contiene los datos necesarios para construir la entidad.
      * @param conector Referencia hacia el conector con el sistema de tablas de referencia.
      */
-    private Diamante(Builder builder, TablasDeReferenciaDiamantes conector) {
+    public Diamante(Builder builder, TablasDeReferenciaDiamantes conector) {
         super();
 
         this.corte = builder.getCorte();
@@ -180,12 +180,9 @@ public class Diamante implements PiezaValuable, CaracteristicasDiamanteProveedor
             if (incrementoPorCertificado.compareTo(BigDecimal.ZERO) > 0) {
                 LOGGER.debug("Incremento Por Certificado: [{}]", incrementoPorCertificado);
 
-                valorComercialMinimo = valorComercialMinimo.add(
-                    valorComercialMinimo.multiply(incrementoPorCertificado));
-                valorComercialMedio = valorComercialMedio.add(
-                    valorComercialMedio.multiply(incrementoPorCertificado));
-                valorComercialMaximo = valorComercialMaximo.add(
-                    valorComercialMaximo.multiply(incrementoPorCertificado));
+                valorComercialMinimo = valorComercialMinimo.multiply(incrementoPorCertificado);
+                valorComercialMedio = valorComercialMedio.multiply(incrementoPorCertificado);
+                valorComercialMaximo = valorComercialMaximo.multiply(incrementoPorCertificado);
 
                 LOGGER.debug("Valor Comercial Minimo: [{}]", valorComercialMinimo);
                 LOGGER.debug("Valor Comercial Medio: [{}]", valorComercialMedio);
