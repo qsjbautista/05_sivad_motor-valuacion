@@ -50,6 +50,13 @@
         </s:sequence>
     </s:complexType>
 
+    <s:complexType name="ValorExperto">
+        <s:choice>
+            <s:element name="unitario" type="s:decimal" />
+            <s:element name="total" type="s:decimal" />
+        </s:choice>
+    </s:complexType>
+
     <s:complexType name="Prenda">
         <s:sequence>
             <s:element name="id" type="s:string" nillable="true" />
@@ -82,7 +89,7 @@
             <s:element name="claridad" type="s:string" nillable="false" />
             <s:element name="quilataje" type="s:decimal" default="0.0" />
             <s:element name="certificado" type="s:string" nillable="true" />
-            <s:element name="valorExperto" type="s:decimal" default="0.0" />
+            <s:element name="valorExperto" type="ValorExperto" />
         </s:sequence>
     </s:complexType>
 
@@ -96,7 +103,7 @@
             <s:element name="calidad" type="s:string" nillable="true" />
             <s:element name="peso" type="s:decimal" default="0.0" />
             <s:element name="condicion" type="s:string" />
-            <s:element name="valorExperto" type="s:decimal" default="0.0" />
+            <s:element name="valorExperto" type="ValorExperto" />
             <s:element name="incremento" type="s:decimal" default="0.0" />
             <s:element name="desplazamiento" type="s:decimal" default="0.0" />
         </s:sequence>
@@ -106,7 +113,7 @@
         <s:sequence>
             <s:element name="tipo" type="s:string" />
             <s:element name="peso" type="s:string" />
-            <s:element name="valorExperto" type="s:decimal" default="0.0" />
+            <s:element name="valorExperto" type="ValorExperto" />
         </s:sequence>
     </s:complexType>
 
