@@ -18,7 +18,7 @@ import org.springframework.util.ObjectUtils;
 import java.math.BigDecimal;
 
 /**
- * Clase que implementa la interface {@link PiezaValuable}, ésta clase representa una Diamante y encapsula
+ * Clase que extiende de la clase {@link Pieza}, ésta clase representa una Diamante y encapsula
  * la lógica para valuar este tipo de piezas.
  *
  * @author ngonzalez
