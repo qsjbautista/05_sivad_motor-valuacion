@@ -10,6 +10,7 @@ import mx.com.nmp.ms.sivad.valuacion.conector.consumidor.ValorComercialConsumido
 import mx.com.nmp.ms.sivad.valuacion.conector.provedor.CaracteristicasDiamanteProveedor;
 import mx.com.nmp.ms.sivad.valuacion.conector.provedor.CertificadoDiamanteProveedor;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.Avaluo;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
@@ -22,7 +23,7 @@ import java.math.BigDecimal;
  *
  * @author ngonzalez
  */
-public class Diamante implements PiezaValuable, CaracteristicasDiamanteProveedor, CertificadoDiamanteProveedor {
+public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor, CertificadoDiamanteProveedor {
 
     /**
      * Utilizada para manipular los mensajes informativos y de error.
@@ -57,12 +58,7 @@ public class Diamante implements PiezaValuable, CaracteristicasDiamanteProveedor
     /**
      * El valor experto para la pieza en particular.
      */
-    private BigDecimal valorExperto;
-
-    /**
-     * Avalúo del diamante.
-     */
-    private Avaluo avaluo;
+    private ValorExperto valorExperto;
 
     /**
      * Referencia hacia el conector con el sistema de tablas de referencia.
@@ -73,6 +69,13 @@ public class Diamante implements PiezaValuable, CaracteristicasDiamanteProveedor
      * Interface que define el contrato para crear entidades de tipo {@link Diamante}.
      */
     public interface Builder {
+
+        /**
+         * Permite obtener el número de piezas de tipo Diamante con características idénticas.
+         *
+         * @return El número de piezas de tipo Diamante con características idénticas.
+         */
+        public int getNumeroDePiezas();
 
         /**
          * Permite obtener el tipo de corte del diamante.
@@ -114,7 +117,7 @@ public class Diamante implements PiezaValuable, CaracteristicasDiamanteProveedor
          *
          * @return El valor experto para la pieza en particular.
          */
-        public BigDecimal getValorExperto();
+        public ValorExperto getValorExperto();
 
     }
 
@@ -131,6 +134,7 @@ public class Diamante implements PiezaValuable, CaracteristicasDiamanteProveedor
     public Diamante(Builder builder, TablasDeReferenciaDiamantes conector) {
         super();
 
+        this.numeroDePiezas = builder.getNumeroDePiezas();
         this.corte = builder.getCorte();
         this.color = builder.getColor();
         this.claridad = builder.getClaridad();
@@ -155,7 +159,8 @@ public class Diamante implements PiezaValuable, CaracteristicasDiamanteProveedor
         BigDecimal valorComercialMaximo;
 
         // SE DETERMINA SI EXISTE VALOR DE EXPERTO.
-        if (ObjectUtils.isEmpty(this.valorExperto)) {
+        if (ObjectUtils.isEmpty(valorExperto) ||
+            ObjectUtils.isEmpty(valorExperto.getValorExperto())) {
 
             // SE OBTIENE EL VALOR COMERCIAL DEL DIAMANTE CON BASE EN SUS CARACTERÍSTICAS.
             ValorComercialConsumidor valorComercialConsumidor = conector.obtenerValorComercial(this);
@@ -164,9 +169,11 @@ public class Diamante implements PiezaValuable, CaracteristicasDiamanteProveedor
             valorComercialMedio = valorComercialConsumidor.getValorMedio();
             valorComercialMaximo = valorComercialConsumidor.getValorMaximo();
         } else {
-            valorComercialMinimo = valorExperto;
-            valorComercialMedio = valorExperto;
-            valorComercialMaximo = valorExperto;
+
+            // SE ASIGNA EL VALOR DEL EXPERTO.
+            valorComercialMinimo = valorExperto.getValorExperto();
+            valorComercialMedio = valorExperto.getValorExperto();
+            valorComercialMaximo = valorExperto.getValorExperto();
         }
 
         LOGGER.debug("Valor Comercial Minimo: [{}]", valorComercialMinimo);
@@ -174,7 +181,7 @@ public class Diamante implements PiezaValuable, CaracteristicasDiamanteProveedor
         LOGGER.debug("Valor Comercial Maximo: [{}]", valorComercialMaximo);
 
         // EN CASO DE EXISTIR CERTIFICADO SE APLICA EL INCREMENTO.
-        if (!ObjectUtils.isEmpty(this.certificadoDiamante)) {
+        if (!ObjectUtils.isEmpty(certificadoDiamante)) {
             BigDecimal incrementoPorCertificado = conector.obtenerModificador(this).getValor();
 
             if (incrementoPorCertificado.compareTo(BigDecimal.ZERO) > 0) {
@@ -190,9 +197,26 @@ public class Diamante implements PiezaValuable, CaracteristicasDiamanteProveedor
             }
         }
 
+        // EN CASO DE QUE EL NÚMERO DE PIEZAS SE MAYOR A UNO.
+        LOGGER.debug(">>>>>>>>>>>Número de Piezas: [{}]", numeroDePiezas);
+        if (numeroDePiezas > 1) {
+            LOGGER.debug("Número de Piezas: [{}]", numeroDePiezas);
+
+            BigDecimal numPiezas = new BigDecimal(numeroDePiezas);
+
+            if (ObjectUtils.isEmpty(valorExperto) || valorExperto.getTipo().equals(ValorExperto.TipoEnum.UNITARIO)) {
+                valorComercialMinimo = valorComercialMinimo.multiply(numPiezas);
+                valorComercialMedio = valorComercialMedio.multiply(numPiezas);
+                valorComercialMaximo = valorComercialMaximo.multiply(numPiezas);
+            }
+
+            LOGGER.debug("Valor Comercial Minimo: [{}]", valorComercialMinimo);
+            LOGGER.debug("Valor Comercial Medio: [{}]", valorComercialMedio);
+            LOGGER.debug("Valor Comercial Maximo: [{}]", valorComercialMaximo);
+        }
+
         // SE CREA EL AVALÚO CON BASE EN LOS VALORES COMERCIALES DEFINITIVOS.
-        avaluo = new Avaluo(valorComercialMinimo, valorComercialMedio, valorComercialMaximo);
-        return avaluo;
+        return new Avaluo(valorComercialMinimo, valorComercialMedio, valorComercialMaximo);
     }
 
 
@@ -219,12 +243,8 @@ public class Diamante implements PiezaValuable, CaracteristicasDiamanteProveedor
         return certificadoDiamante;
     }
 
-    public BigDecimal getValorExperto() {
+    public ValorExperto getValorExperto() {
         return valorExperto;
-    }
-
-    public Avaluo getAvaluo() {
-        return avaluo;
     }
 
 }

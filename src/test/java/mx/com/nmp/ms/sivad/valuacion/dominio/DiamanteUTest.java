@@ -10,6 +10,7 @@ import mx.com.nmp.ms.sivad.valuacion.conector.consumidor.BigDecimalConsumidor;
 import mx.com.nmp.ms.sivad.valuacion.conector.consumidor.ValorComercialConsumidor;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Diamante;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.Avaluo;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -33,6 +34,10 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(classes = MotorValuacionApplication.class)
 public class DiamanteUTest {
 
+    private static final int NUM_PIEZAS_MENOR_CERO = -1;
+    private static final int NUM_PIEZAS_CERO = 0;
+    private static final int NUM_PIEZAS_UNO = 1;
+    private static final int NUM_PIEZAS_DOS = 2;
     private static final String CERTIFICADO = "ABC";
     private static final String CLARIDAD = "VS1";
     private static final String COLOR = "D";
@@ -53,10 +58,12 @@ public class DiamanteUTest {
         new BigDecimal(600.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
     private static final BigDecimal VALOR_MAXIMO_INCREMENTO =
         new BigDecimal(660.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
-    private static final BigDecimal VALOR_EXPERTO =
-        new BigDecimal(500.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
-    private static final BigDecimal VALOR_EXPERTO_INCREMENTO =
-        new BigDecimal(550.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
+    private static final ValorExperto VALOR_EXPERTO = new ValorExperto(
+        new BigDecimal(500.00D).setScale(2, BigDecimal.ROUND_HALF_UP), ValorExperto.TipoEnum.UNITARIO);
+    private static final ValorExperto VALOR_EXPERTO_VALOR_NULO = new ValorExperto(
+        null, ValorExperto.TipoEnum.UNITARIO);
+    private static final ValorExperto VALOR_EXPERTO_INCREMENTO = new ValorExperto(
+        new BigDecimal(550.00D).setScale(2, BigDecimal.ROUND_HALF_UP), ValorExperto.TipoEnum.UNITARIO);
 
     /**
      * Referencia al conector TablasDeReferenciaDiamantes.
@@ -80,6 +87,7 @@ public class DiamanteUTest {
     /**
      * Utilizado para crear una entidad Diamante con las siguientes características:
      *
+     * NÚMERO DE PIEZAS - 1
      * CORTE - NO NULO
      * COLOR - NO NULO
      * CLARIDAD - NO NULA
@@ -90,21 +98,22 @@ public class DiamanteUTest {
     @Test
     public void crearDiamanteTest01() {
         Diamante diamante =
-            new Diamante(getBuilder(CORTE, COLOR, CLARIDAD, QUILATES, null, VALOR_EXPERTO), conector);
+            new Diamante(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, null, VALOR_EXPERTO), conector);
 
         Avaluo avaluo = diamante.valuar();
         assertNotNull(avaluo);
         assertNotNull(avaluo.valorMinimo());
         assertNotNull(avaluo.valorPromedio());
         assertNotNull(avaluo.valorMaximo());
-        assertEquals(VALOR_EXPERTO, avaluo.valorMinimo());
-        assertEquals(VALOR_EXPERTO, avaluo.valorPromedio());
-        assertEquals(VALOR_EXPERTO, avaluo.valorMaximo());
+        assertEquals(VALOR_EXPERTO.getValorExperto(), avaluo.valorMinimo());
+        assertEquals(VALOR_EXPERTO.getValorExperto(), avaluo.valorPromedio());
+        assertEquals(VALOR_EXPERTO.getValorExperto(), avaluo.valorMaximo());
     }
 
     /**
      * Utilizado para crear una entidad Diamante con las siguientes características:
      *
+     * NÚMERO DE PIEZAS - 1
      * CORTE - NO NULO
      * COLOR - NO NULO
      * CLARIDAD - NO NULA
@@ -115,21 +124,22 @@ public class DiamanteUTest {
     @Test
     public void crearDiamanteTest02() {
         Diamante diamante =
-            new Diamante(getBuilder(CORTE, COLOR, CLARIDAD, QUILATES, "", VALOR_EXPERTO), conector);
+            new Diamante(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, "", VALOR_EXPERTO), conector);
 
         Avaluo avaluo = diamante.valuar();
         assertNotNull(avaluo);
         assertNotNull(avaluo.valorMinimo());
         assertNotNull(avaluo.valorPromedio());
         assertNotNull(avaluo.valorMaximo());
-        assertEquals(VALOR_EXPERTO, avaluo.valorMinimo());
-        assertEquals(VALOR_EXPERTO, avaluo.valorPromedio());
-        assertEquals(VALOR_EXPERTO, avaluo.valorMaximo());
+        assertEquals(VALOR_EXPERTO.getValorExperto(), avaluo.valorMinimo());
+        assertEquals(VALOR_EXPERTO.getValorExperto(), avaluo.valorPromedio());
+        assertEquals(VALOR_EXPERTO.getValorExperto(), avaluo.valorMaximo());
     }
 
     /**
      * Utilizado para crear una entidad Diamante con las siguientes características:
      *
+     * NÚMERO DE PIEZAS - 1
      * CORTE - NO NULO
      * COLOR - NO NULO
      * CLARIDAD - NO NULA
@@ -140,7 +150,7 @@ public class DiamanteUTest {
     @Test
     public void crearDiamanteTest03() {
         Diamante diamante =
-            new Diamante(getBuilder(CORTE, COLOR, CLARIDAD, QUILATES, null, null), conector);
+            new Diamante(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, null, null), conector);
 
         ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
             VALOR_MINIMO, VALOR_MEDIO, VALOR_MAXIMO);
@@ -159,6 +169,37 @@ public class DiamanteUTest {
     /**
      * Utilizado para crear una entidad Diamante con las siguientes características:
      *
+     * NÚMERO DE PIEZAS - 1
+     * CORTE - NO NULO
+     * COLOR - NO NULO
+     * CLARIDAD - NO NULA
+     * QUILATES - NO NULO
+     * CERTIFICADO - NULO
+     * VALOR EXPERTO - NO NULO (Valor nulo)
+     */
+    @Test
+    public void crearDiamanteTest04() {
+        Diamante diamante =
+            new Diamante(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, null, VALOR_EXPERTO_VALOR_NULO), conector);
+
+        ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
+            VALOR_MINIMO, VALOR_MEDIO, VALOR_MAXIMO);
+        when(conector.obtenerValorComercial(any(Diamante.class))).thenReturn(valorComercial);
+
+        Avaluo avaluo = diamante.valuar();
+        assertNotNull(avaluo);
+        assertNotNull(avaluo.valorMinimo());
+        assertNotNull(avaluo.valorPromedio());
+        assertNotNull(avaluo.valorMaximo());
+        assertEquals(VALOR_MINIMO, avaluo.valorMinimo());
+        assertEquals(VALOR_MEDIO, avaluo.valorPromedio());
+        assertEquals(VALOR_MAXIMO, avaluo.valorMaximo());
+    }
+
+    /**
+     * Utilizado para crear una entidad Diamante con las siguientes características:
+     *
+     * NÚMERO DE PIEZAS - 1
      * CORTE - NO NULO
      * COLOR - NO NULO
      * CLARIDAD - NO NULA
@@ -167,9 +208,9 @@ public class DiamanteUTest {
      * VALOR EXPERTO - NULO
      */
     @Test
-    public void crearDiamanteTest04() {
+    public void crearDiamanteTest05() {
         Diamante diamante =
-            new Diamante(getBuilder(CORTE, COLOR, CLARIDAD, QUILATES, "", null), conector);
+            new Diamante(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, "", null), conector);
 
         ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
             VALOR_MINIMO, VALOR_MEDIO, VALOR_MAXIMO);
@@ -188,6 +229,37 @@ public class DiamanteUTest {
     /**
      * Utilizado para crear una entidad Diamante con las siguientes características:
      *
+     * NÚMERO DE PIEZAS - 1
+     * CORTE - NO NULO
+     * COLOR - NO NULO
+     * CLARIDAD - NO NULA
+     * QUILATES - NO NULO
+     * CERTIFICADO - VACÍO
+     * VALOR EXPERTO - NO NULO (Valor nulo)
+     */
+    @Test
+    public void crearDiamanteTest06() {
+        Diamante diamante =
+            new Diamante(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, "", VALOR_EXPERTO_VALOR_NULO), conector);
+
+        ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
+            VALOR_MINIMO, VALOR_MEDIO, VALOR_MAXIMO);
+        when(conector.obtenerValorComercial(any(Diamante.class))).thenReturn(valorComercial);
+
+        Avaluo avaluo = diamante.valuar();
+        assertNotNull(avaluo);
+        assertNotNull(avaluo.valorMinimo());
+        assertNotNull(avaluo.valorPromedio());
+        assertNotNull(avaluo.valorMaximo());
+        assertEquals(VALOR_MINIMO, avaluo.valorMinimo());
+        assertEquals(VALOR_MEDIO, avaluo.valorPromedio());
+        assertEquals(VALOR_MAXIMO, avaluo.valorMaximo());
+    }
+
+    /**
+     * Utilizado para crear una entidad Diamante con las siguientes características:
+     *
+     * NÚMERO DE PIEZAS - 1
      * CORTE - NO NULO
      * COLOR - NO NULO
      * CLARIDAD - NO NULA
@@ -196,9 +268,9 @@ public class DiamanteUTest {
      * VALOR EXPERTO - NULO
      */
     @Test
-    public void crearDiamanteTest05() {
+    public void crearDiamanteTest07() {
         Diamante diamante =
-            new Diamante(getBuilder(CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, null), conector);
+            new Diamante(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, null), conector);
 
         ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
             VALOR_MINIMO, VALOR_MEDIO, VALOR_MAXIMO);
@@ -220,17 +292,22 @@ public class DiamanteUTest {
     /**
      * Utilizado para crear una entidad Diamante con las siguientes características:
      *
+     * NÚMERO DE PIEZAS - MENOR A CERO
      * CORTE - NO NULO
      * COLOR - NO NULO
      * CLARIDAD - NO NULA
      * QUILATES - NO NULO
      * CERTIFICADO - NO NULO
-     * VALOR EXPERTO - NO NULO
+     * VALOR EXPERTO - NULO
      */
     @Test
-    public void crearDiamanteTest06() {
+    public void crearDiamanteTest08() {
         Diamante diamante =
-            new Diamante(getBuilder(CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO), conector);
+            new Diamante(getBuilder(NUM_PIEZAS_MENOR_CERO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, null), conector);
+
+        ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
+            VALOR_MINIMO, VALOR_MEDIO, VALOR_MAXIMO);
+        when(conector.obtenerValorComercial(any(Diamante.class))).thenReturn(valorComercial);
 
         BigDecimalConsumidor bigDecimalConsumidor = getBigDecimalConsumidor(PORCENTAJE_INCREMENTO);
         when(conector.obtenerModificador(any(Diamante.class))).thenReturn(bigDecimalConsumidor);
@@ -240,9 +317,191 @@ public class DiamanteUTest {
         assertNotNull(avaluo.valorMinimo());
         assertNotNull(avaluo.valorPromedio());
         assertNotNull(avaluo.valorMaximo());
-        assertEquals(VALOR_EXPERTO_INCREMENTO, avaluo.valorMinimo());
-        assertEquals(VALOR_EXPERTO_INCREMENTO, avaluo.valorPromedio());
-        assertEquals(VALOR_EXPERTO_INCREMENTO, avaluo.valorMaximo());
+        assertEquals(VALOR_MINIMO_INCREMENTO, avaluo.valorMinimo());
+        assertEquals(VALOR_MEDIO_INCREMENTO, avaluo.valorPromedio());
+        assertEquals(VALOR_MAXIMO_INCREMENTO, avaluo.valorMaximo());
+    }
+
+    /**
+     * Utilizado para crear una entidad Diamante con las siguientes características:
+     *
+     * NÚMERO DE PIEZAS - CERO
+     * CORTE - NO NULO
+     * COLOR - NO NULO
+     * CLARIDAD - NO NULA
+     * QUILATES - NO NULO
+     * CERTIFICADO - NO NULO
+     * VALOR EXPERTO - NULO
+     */
+    @Test
+    public void crearDiamanteTest09() {
+        Diamante diamante =
+            new Diamante(getBuilder(NUM_PIEZAS_CERO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, null), conector);
+
+        ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
+            VALOR_MINIMO, VALOR_MEDIO, VALOR_MAXIMO);
+        when(conector.obtenerValorComercial(any(Diamante.class))).thenReturn(valorComercial);
+
+        BigDecimalConsumidor bigDecimalConsumidor = getBigDecimalConsumidor(PORCENTAJE_INCREMENTO);
+        when(conector.obtenerModificador(any(Diamante.class))).thenReturn(bigDecimalConsumidor);
+
+        Avaluo avaluo = diamante.valuar();
+        assertNotNull(avaluo);
+        assertNotNull(avaluo.valorMinimo());
+        assertNotNull(avaluo.valorPromedio());
+        assertNotNull(avaluo.valorMaximo());
+        assertEquals(VALOR_MINIMO_INCREMENTO, avaluo.valorMinimo());
+        assertEquals(VALOR_MEDIO_INCREMENTO, avaluo.valorPromedio());
+        assertEquals(VALOR_MAXIMO_INCREMENTO, avaluo.valorMaximo());
+    }
+
+    /**
+     * Utilizado para crear una entidad Diamante con las siguientes características:
+     *
+     * NÚMERO DE PIEZAS - 2
+     * CORTE - NO NULO
+     * COLOR - NO NULO
+     * CLARIDAD - NO NULA
+     * QUILATES - NO NULO
+     * CERTIFICADO - NO NULO
+     * VALOR EXPERTO - NULO
+     */
+    @Test
+    public void crearDiamanteTest10() {
+        Diamante diamante =
+            new Diamante(getBuilder(NUM_PIEZAS_DOS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, null), conector);
+
+        ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
+            VALOR_MINIMO, VALOR_MEDIO, VALOR_MAXIMO);
+        when(conector.obtenerValorComercial(any(Diamante.class))).thenReturn(valorComercial);
+
+        BigDecimalConsumidor bigDecimalConsumidor = getBigDecimalConsumidor(PORCENTAJE_INCREMENTO);
+        when(conector.obtenerModificador(any(Diamante.class))).thenReturn(bigDecimalConsumidor);
+
+        Avaluo avaluo = diamante.valuar();
+        assertNotNull(avaluo);
+        assertNotNull(avaluo.valorMinimo());
+        assertNotNull(avaluo.valorPromedio());
+        assertNotNull(avaluo.valorMaximo());
+        assertEquals(VALOR_MINIMO_INCREMENTO.multiply(new BigDecimal(NUM_PIEZAS_DOS)), avaluo.valorMinimo());
+        assertEquals(VALOR_MEDIO_INCREMENTO.multiply(new BigDecimal(NUM_PIEZAS_DOS)), avaluo.valorPromedio());
+        assertEquals(VALOR_MAXIMO_INCREMENTO.multiply(new BigDecimal(NUM_PIEZAS_DOS)), avaluo.valorMaximo());
+    }
+
+    /**
+     * Utilizado para crear una entidad Diamante con las siguientes características:
+     *
+     * NÚMERO DE PIEZAS - 1
+     * CORTE - NO NULO
+     * COLOR - NO NULO
+     * CLARIDAD - NO NULA
+     * QUILATES - NO NULO
+     * CERTIFICADO - NO NULO
+     * VALOR EXPERTO - NO NULO
+     */
+    @Test
+    public void crearDiamanteTest11() {
+        Diamante diamante =
+            new Diamante(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO), conector);
+
+        BigDecimalConsumidor bigDecimalConsumidor = getBigDecimalConsumidor(PORCENTAJE_INCREMENTO);
+        when(conector.obtenerModificador(any(Diamante.class))).thenReturn(bigDecimalConsumidor);
+
+        Avaluo avaluo = diamante.valuar();
+        assertNotNull(avaluo);
+        assertNotNull(avaluo.valorMinimo());
+        assertNotNull(avaluo.valorPromedio());
+        assertNotNull(avaluo.valorMaximo());
+        assertEquals(VALOR_EXPERTO_INCREMENTO.getValorExperto(), avaluo.valorMinimo());
+        assertEquals(VALOR_EXPERTO_INCREMENTO.getValorExperto(), avaluo.valorPromedio());
+        assertEquals(VALOR_EXPERTO_INCREMENTO.getValorExperto(), avaluo.valorMaximo());
+    }
+
+    /**
+     * Utilizado para crear una entidad Diamante con las siguientes características:
+     *
+     * NÚMERO DE PIEZAS - MENOR A CERO
+     * CORTE - NO NULO
+     * COLOR - NO NULO
+     * CLARIDAD - NO NULA
+     * QUILATES - NO NULO
+     * CERTIFICADO - NO NULO
+     * VALOR EXPERTO - NO NULO
+     */
+    @Test
+    public void crearDiamanteTest12() {
+        Diamante diamante =
+            new Diamante(getBuilder(NUM_PIEZAS_MENOR_CERO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO), conector);
+
+        BigDecimalConsumidor bigDecimalConsumidor = getBigDecimalConsumidor(PORCENTAJE_INCREMENTO);
+        when(conector.obtenerModificador(any(Diamante.class))).thenReturn(bigDecimalConsumidor);
+
+        Avaluo avaluo = diamante.valuar();
+        assertNotNull(avaluo);
+        assertNotNull(avaluo.valorMinimo());
+        assertNotNull(avaluo.valorPromedio());
+        assertNotNull(avaluo.valorMaximo());
+        assertEquals(VALOR_EXPERTO_INCREMENTO.getValorExperto(), avaluo.valorMinimo());
+        assertEquals(VALOR_EXPERTO_INCREMENTO.getValorExperto(), avaluo.valorPromedio());
+        assertEquals(VALOR_EXPERTO_INCREMENTO.getValorExperto(), avaluo.valorMaximo());
+    }
+
+    /**
+     * Utilizado para crear una entidad Diamante con las siguientes características:
+     *
+     * NÚMERO DE PIEZAS - CERO
+     * CORTE - NO NULO
+     * COLOR - NO NULO
+     * CLARIDAD - NO NULA
+     * QUILATES - NO NULO
+     * CERTIFICADO - NO NULO
+     * VALOR EXPERTO - NO NULO
+     */
+    @Test
+    public void crearDiamanteTest13() {
+        Diamante diamante =
+            new Diamante(getBuilder(NUM_PIEZAS_CERO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO), conector);
+
+        BigDecimalConsumidor bigDecimalConsumidor = getBigDecimalConsumidor(PORCENTAJE_INCREMENTO);
+        when(conector.obtenerModificador(any(Diamante.class))).thenReturn(bigDecimalConsumidor);
+
+        Avaluo avaluo = diamante.valuar();
+        assertNotNull(avaluo);
+        assertNotNull(avaluo.valorMinimo());
+        assertNotNull(avaluo.valorPromedio());
+        assertNotNull(avaluo.valorMaximo());
+        assertEquals(VALOR_EXPERTO_INCREMENTO.getValorExperto(), avaluo.valorMinimo());
+        assertEquals(VALOR_EXPERTO_INCREMENTO.getValorExperto(), avaluo.valorPromedio());
+        assertEquals(VALOR_EXPERTO_INCREMENTO.getValorExperto(), avaluo.valorMaximo());
+    }
+
+    /**
+     * Utilizado para crear una entidad Diamante con las siguientes características:
+     *
+     * NÚMERO DE PIEZAS - 2
+     * CORTE - NO NULO
+     * COLOR - NO NULO
+     * CLARIDAD - NO NULA
+     * QUILATES - NO NULO
+     * CERTIFICADO - NO NULO
+     * VALOR EXPERTO - NO NULO
+     */
+    @Test
+    public void crearDiamanteTest14() {
+        Diamante diamante =
+            new Diamante(getBuilder(NUM_PIEZAS_DOS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO), conector);
+
+        BigDecimalConsumidor bigDecimalConsumidor = getBigDecimalConsumidor(PORCENTAJE_INCREMENTO);
+        when(conector.obtenerModificador(any(Diamante.class))).thenReturn(bigDecimalConsumidor);
+
+        Avaluo avaluo = diamante.valuar();
+        assertNotNull(avaluo);
+        assertNotNull(avaluo.valorMinimo());
+        assertNotNull(avaluo.valorPromedio());
+        assertNotNull(avaluo.valorMaximo());
+        assertEquals(VALOR_EXPERTO_INCREMENTO.getValorExperto().multiply(new BigDecimal(NUM_PIEZAS_DOS)), avaluo.valorMinimo());
+        assertEquals(VALOR_EXPERTO_INCREMENTO.getValorExperto().multiply(new BigDecimal(NUM_PIEZAS_DOS)), avaluo.valorPromedio());
+        assertEquals(VALOR_EXPERTO_INCREMENTO.getValorExperto().multiply(new BigDecimal(NUM_PIEZAS_DOS)), avaluo.valorMaximo());
     }
 
     /**
@@ -256,10 +515,15 @@ public class DiamanteUTest {
      * @param valorExperto El valor experto para la pieza en particular.
      * @return El builder creado.
      */
-    private Diamante.Builder getBuilder(final String corte, final String color,
+    private Diamante.Builder getBuilder(final int numeroDePiezas, final String corte, final String color,
                                         final String claridad, final BigDecimal quilates,
-                                        final String certificadoDiamante, final BigDecimal valorExperto) {
+                                        final String certificadoDiamante, final ValorExperto valorExperto) {
         return new Diamante.Builder() {
+
+            @Override
+            public int getNumeroDePiezas() {
+                return numeroDePiezas;
+            }
 
             @Override
             public String getCorte() {
@@ -287,7 +551,7 @@ public class DiamanteUTest {
             }
 
             @Override
-            public BigDecimal getValorExperto() {
+            public ValorExperto getValorExperto() {
                 return valorExperto;
             }
 
