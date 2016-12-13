@@ -10,7 +10,9 @@ package mx.com.nmp.ms.sivad.valuacion.dominio.modelo;
 import mx.com.nmp.ms.sivad.valuacion.conector.TablasDeReferenciaAlhajas;
 import mx.com.nmp.ms.sivad.valuacion.conector.provedor.CaracteristicasGramoOroProveedor;
 import mx.com.nmp.ms.sivad.valuacion.conector.provedor.MetalCalidadRangoProveedor;
+import mx.com.nmp.ms.sivad.valuacion.dominio.factory.AvaluoFactory;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.Avaluo;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
@@ -23,8 +25,7 @@ import java.math.BigDecimal;
  *
  * @author <a href="https://wiki.quarksoft.net/display/~cachavez">Carlos Chávez Melena</a>
  */
-public class Alhaja implements PiezaValuable,
-        CaracteristicasGramoOroProveedor, MetalCalidadRangoProveedor {
+public class Alhaja extends Pieza implements CaracteristicasGramoOroProveedor, MetalCalidadRangoProveedor {
     private static final Logger LOGGER = LoggerFactory.getLogger(Alhaja.class);
 
     /**
@@ -73,9 +74,9 @@ public class Alhaja implements PiezaValuable,
     private BigDecimal desplazamiento;
 
     /**
-     * Valor de ésta alhaja.
+     * Valor experto para la pieza en particular.
      */
-    private Avaluo avaluo;
+    private ValorExperto valorExperto;
 
     /**
      * Representa la interface publica usada para crear objetos tipo {@link Alhaja}
@@ -130,6 +131,13 @@ public class Alhaja implements PiezaValuable,
          * @return Desplazamiento comercial.
          */
         BigDecimal getDesplazamiento();
+
+        /**
+         * Recupera el valor experto para la pieza en particular.
+         *
+         * @return El valor experto para la pieza en particular.
+         */
+        ValorExperto getValorExperto();
     }
 
     /**
@@ -138,7 +146,7 @@ public class Alhaja implements PiezaValuable,
      * @param builder Objeto con los datos necesarios para construir la instancia.
      * @param conector Referencia hacia el conector con el sistema de tablas de referencia.
      */
-    public Alhaja(Builder builder, TablasDeReferenciaAlhajas conector) {
+    private Alhaja(Builder builder, TablasDeReferenciaAlhajas conector) {
         super();
 
         metal = builder.getMetal();
@@ -149,6 +157,7 @@ public class Alhaja implements PiezaValuable,
         peso = builder.getPeso();
         incremento = builder.getIncremento();
         desplazamiento = builder.getDesplazamiento();
+        valorExperto = builder.getValorExperto();
 
         this.conector = conector;
     }
@@ -160,18 +169,13 @@ public class Alhaja implements PiezaValuable,
      */
     @Override
     public Avaluo valuar() {
-        if (!ObjectUtils.isEmpty(avaluo)) {
-            LOGGER.debug("Alhaja ya valuada. Se regresa resultado existente.");
-            return avaluo;
+        LOGGER.info(">> valuar()");
+
+        if (ObjectUtils.isEmpty(avaluo)) {
+            realizarValuacion();
         }
 
-        synchronized (Alhaja.class) {
-            if (ObjectUtils.isEmpty(avaluo)) {
-                realizarValuacion();
-            } else {
-                LOGGER.debug("Alhaja ya valuada. Se regresa resultado existente.");
-            }
-        }
+        LOGGER.debug("<< {}", avaluo);
 
         return avaluo;
     }
@@ -218,20 +222,28 @@ public class Alhaja implements PiezaValuable,
      */
     private void realizarValuacion() {
         BigDecimal precioGramo = recuperarPrecioGramoMetal();
-        BigDecimal factor = conector.obtenerFactor(this).getValor();
+        LOGGER.debug("Valor por gramo de {} = {}", metal, precioGramo);
+
         BigDecimal precioMetal = precioGramo.multiply(peso);
-        BigDecimal precioMetalFactor = precioMetal.multiply(factor);
-        BigDecimal avaluoAlahaja = precioMetalFactor;
+        LOGGER.debug("Aplicando peso {}gr = {}", peso, precioMetal);
 
-        if (incremento.compareTo(BigDecimal.ZERO) > 0) {
-            avaluoAlahaja = precioMetalFactor.multiply(incremento);
-        }
+        BigDecimal factor = recuperarFactor();
+        BigDecimal conFactor = precioMetal.multiply(factor);
+        LOGGER.debug("Aplicando factor {} = {}", factor, conFactor);
 
-        if (desplazamiento.compareTo(BigDecimal.ZERO) > 0) {
-            avaluoAlahaja = avaluoAlahaja.multiply(desplazamiento);
-        }
+        BigDecimal vl = recuperarValorExperto();
+        BigDecimal conValorExperto = conFactor.add(vl);
+        LOGGER.debug("Aplicando valor experto {} = {}", vl, conValorExperto);
 
-        avaluo = new Avaluo(avaluoAlahaja, avaluoAlahaja, avaluoAlahaja);
+        BigDecimal inc = recuperarIncremento();
+        BigDecimal conIncremento = conValorExperto.multiply(inc);
+        LOGGER.debug("Aplicando incremento {} = {}", inc, conIncremento);
+
+        BigDecimal desp = recuperarDesplazamiento();
+        BigDecimal avaluoAlhaja = conIncremento.multiply(desp);
+        LOGGER.debug("Aplicando desplazamiento {} = {}", desp, avaluoAlhaja);
+
+        avaluo = AvaluoFactory.crearCon(avaluoAlhaja, avaluoAlhaja, avaluoAlhaja);
     }
 
     /**
@@ -249,5 +261,70 @@ public class Alhaja implements PiezaValuable,
         }
 
         return precioGramoMetal;
+    }
+
+    /**
+     * Recupera el factor a aplicar a la alhaja.
+     *
+     * @return Factor a aplicar.
+     */
+    private BigDecimal recuperarFactor() {
+        if (isValidFactorRequest()) {
+            return conector.obtenerFactor(this).getValor();
+        } else {
+            return BigDecimal.ONE;
+        }
+    }
+
+    /**
+     * Verifica si se tienen los datos necesario para solicitar el factor.
+     *
+     * @return Verdadero si se tienen los datos para solicitar el factor, falso si no.
+     */
+    private boolean isValidFactorRequest() {
+        return !(ObjectUtils.isEmpty(metal) || (ObjectUtils.isEmpty(calidad) || ObjectUtils.isEmpty(rango)));
+    }
+
+    /**
+     * Recupera el avaluó que capturo el experto.
+     *
+     * @return Avaluó del experto.
+     */
+    private BigDecimal recuperarValorExperto() {
+        if (ObjectUtils.isEmpty(valorExperto) || metal.equals(IDENTIFICADOR_METAL_ORO)) {
+            return BigDecimal.ZERO;
+        } else {
+            if (ValorExperto.TipoEnum.UNITARIO.equals(valorExperto.getTipo())) {
+                throw new IllegalArgumentException("Valor experto tipo unitario no soportado para alhajas.");
+            } else {
+                return valorExperto.getValorExperto();
+            }
+        }
+    }
+
+    /**
+     * Recupera el incremento a aplicar.
+     *
+     * @return Incremento a aplicar.
+     */
+    private BigDecimal recuperarIncremento() {
+        if (ObjectUtils.isEmpty(incremento) || incremento.compareTo(BigDecimal.ZERO) <= 0) {
+            return BigDecimal.ONE;
+        } else {
+            return incremento;
+        }
+    }
+
+    /**
+     * Recupera el desplazamiento a aplicar.
+     *
+     * @return Desplazamiento a aplicar.
+     */
+    private BigDecimal recuperarDesplazamiento() {
+        if (ObjectUtils.isEmpty(desplazamiento) || desplazamiento.compareTo(BigDecimal.ZERO) <= 0) {
+            return BigDecimal.ONE;
+        } else {
+            return desplazamiento;
+        }
     }
 }

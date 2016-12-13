@@ -7,6 +7,7 @@
  */
 package mx.com.nmp.ms.sivad.valuacion.dominio.vo;
 
+import mx.com.nmp.ms.sivad.valuacion.dominio.factory.AvaluoFactory;
 import mx.com.nmp.ms.sivad.valuacion.infrastructure.estrategia.RedondeoEstrategiaUtil;
 import mx.com.nmp.ms.sivad.valuacion.dominio.estrategia.RedondeoEstrategias;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.Avaluo;
@@ -38,7 +39,7 @@ public class AvaluoUTest {
      */
     @Test
     public void crearAvaluoTest() {
-        Avaluo avaluo =  new Avaluo(BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE);
+        Avaluo avaluo = AvaluoFactory.crearCon(BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE);
 
         assertNotNull(avaluo);
     }
@@ -53,7 +54,7 @@ public class AvaluoUTest {
     @Test
     public void obtenerValoresAvaluoTest() {
         BigDecimal valorExperto = BigDecimal.ONE;
-        Avaluo avaluo =  new Avaluo(valorExperto, valorExperto, valorExperto);
+        Avaluo avaluo =  AvaluoFactory.crearCon(valorExperto, valorExperto, valorExperto);
 
         valorExperto = RedondeoEstrategiaUtil.get().redondear(valorExperto);
 
@@ -70,7 +71,7 @@ public class AvaluoUTest {
      */
     @Test
     public void equalsAvaluoTest() {
-        Avaluo avaluo =  new Avaluo(BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE);
+        Avaluo avaluo =  AvaluoFactory.crearCon(BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE);
 
         assertEquals(avaluo, avaluo);
         assertFalse(avaluo.equals(null));
@@ -84,8 +85,8 @@ public class AvaluoUTest {
      */
     @Test
     public void equalsFalseMinimoAvaluoTest() {
-        Avaluo avaluo =  new Avaluo(BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE);
-        Avaluo avaluo2 =  new Avaluo(BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE);
+        Avaluo avaluo =  AvaluoFactory.crearCon(BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE);
+        Avaluo avaluo2 =  AvaluoFactory.crearCon(BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE);
 
         assertFalse(avaluo.equals(avaluo2));
     }
@@ -97,8 +98,8 @@ public class AvaluoUTest {
      */
     @Test
     public void equalsFalsePromedioAvaluoTest() {
-        Avaluo avaluo =  new Avaluo(BigDecimal.ONE, BigDecimal.TEN, BigDecimal.ONE);
-        Avaluo avaluo2 =  new Avaluo(BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE);
+        Avaluo avaluo =  AvaluoFactory.crearCon(BigDecimal.ONE, BigDecimal.TEN, BigDecimal.ONE);
+        Avaluo avaluo2 =  AvaluoFactory.crearCon(BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE);
 
         assertFalse(avaluo.equals(avaluo2));
     }
@@ -110,8 +111,8 @@ public class AvaluoUTest {
      */
     @Test
     public void equalsFalseMaximoAvaluoTest() {
-        Avaluo avaluo =  new Avaluo(BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE);
-        Avaluo avaluo2 =  new Avaluo(BigDecimal.ONE, BigDecimal.ONE, BigDecimal.TEN);
+        Avaluo avaluo =  AvaluoFactory.crearCon(BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE);
+        Avaluo avaluo2 =  AvaluoFactory.crearCon(BigDecimal.ONE, BigDecimal.ONE, BigDecimal.TEN);
 
         assertFalse(avaluo.equals(avaluo2));
     }
@@ -123,8 +124,8 @@ public class AvaluoUTest {
      */
     @Test
     public void equalsTrueAvaluoTest() {
-        Avaluo avaluo =  new Avaluo(BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE);
-        Avaluo avaluo2 =  new Avaluo(BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE);
+        Avaluo avaluo =  AvaluoFactory.crearCon(BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE);
+        Avaluo avaluo2 =  AvaluoFactory.crearCon(BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE);
 
         assertEquals(avaluo, avaluo2);
     }
@@ -136,7 +137,7 @@ public class AvaluoUTest {
      */
     @Test
     public void toStringTrueAvaluoTest() {
-        Avaluo avaluo =  new Avaluo(BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE);
+        Avaluo avaluo =  AvaluoFactory.crearCon(BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE);
 
         assertNotNull(avaluo.toString());
     }
@@ -148,7 +149,7 @@ public class AvaluoUTest {
      */
     @Test
     public void hashCodeTrueAvaluoTest() {
-        Avaluo avaluo =  new Avaluo(BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE);
+        Avaluo avaluo =  AvaluoFactory.crearCon(BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE);
 
         assertNotNull(avaluo.hashCode());
     }
@@ -160,7 +161,7 @@ public class AvaluoUTest {
     @Test
     public void redondeoROUND_HALF_DOWNAvaluoTest() {
         BigDecimal valorExperto = BigDecimal.valueOf(12.335);
-        Avaluo avaluo =  new Avaluo(valorExperto, valorExperto, valorExperto);
+        Avaluo avaluo =  AvaluoFactory.crearCon(valorExperto, valorExperto, valorExperto);
 
         RedondeoEstrategiaUtil.get();
         ReflectionTestUtils.setField(RedondeoEstrategiaUtil.class, "INSTANCIA", null);
@@ -181,7 +182,7 @@ public class AvaluoUTest {
     @Test
     public void redondeoROUND_HALF_UPAvaluoTest() {
         BigDecimal valorExperto = BigDecimal.valueOf(12.335);
-        Avaluo avaluo =  new Avaluo(valorExperto, valorExperto, valorExperto);
+        Avaluo avaluo =  AvaluoFactory.crearCon(valorExperto, valorExperto, valorExperto);
 
         RedondeoEstrategiaUtil.get();
         ReflectionTestUtils.setField(RedondeoEstrategiaUtil.class, "INSTANCIA", null);
@@ -202,7 +203,7 @@ public class AvaluoUTest {
     @Test
     public void redondeoDefaultAvaluoTest() {
         BigDecimal valorExperto = BigDecimal.valueOf(12.335);
-        Avaluo avaluo =  new Avaluo(valorExperto, valorExperto, valorExperto);
+        Avaluo avaluo =  AvaluoFactory.crearCon(valorExperto, valorExperto, valorExperto);
 
         RedondeoEstrategiaUtil.get();
         ReflectionTestUtils.setField(RedondeoEstrategiaUtil.class, "INSTANCIA", null);
@@ -210,5 +211,20 @@ public class AvaluoUTest {
         assertEquals(avaluo.valorMinimo(), BigDecimal.valueOf(12.34));
         assertEquals(avaluo.valorPromedio(), BigDecimal.valueOf(12.34));
         assertEquals(avaluo.valorMaximo(), BigDecimal.valueOf(12.34));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void crearAvaluoNulos() {
+        AvaluoFactory.crearCon(null, null, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void crearAvaluoNegativos() {
+        AvaluoFactory.crearCon(BigDecimal.valueOf(-1), BigDecimal.valueOf(-1), BigDecimal.valueOf(-1));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void crearAvaluoCeros() {
+        AvaluoFactory.crearCon(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
     }
 }

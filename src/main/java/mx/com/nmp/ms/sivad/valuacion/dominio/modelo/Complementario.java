@@ -7,7 +7,12 @@
  */
 package mx.com.nmp.ms.sivad.valuacion.dominio.modelo;
 
+import mx.com.nmp.ms.sivad.valuacion.dominio.factory.AvaluoFactory;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.Avaluo;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.ObjectUtils;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -18,16 +23,13 @@ import java.util.Objects;
  *
  * @author <a href="https://wiki.quarksoft.net/display/~cachavez">Carlos Chávez Melena</a>
  */
-public class Complementario implements PiezaValuable {
+public class Complementario extends Pieza {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Complementario.class);
+
     /**
      * Contiene el valor estimado por un experto.
      */
-    private BigDecimal valorExperto;
-
-    /**
-     * Valor de éste Valor Complementario.
-     */
-    private Avaluo avaluo;
+    private ValorExperto valorExperto;
 
     /**
      * Representa la interface publica usada para crear objetos tipo {@link Complementario}
@@ -39,7 +41,7 @@ public class Complementario implements PiezaValuable {
          *
          * @return Valor estimado por un experto.
          */
-        BigDecimal getValorExperto();
+        ValorExperto getValorExperto();
     }
 
     /**
@@ -47,7 +49,7 @@ public class Complementario implements PiezaValuable {
      *
      * @param builder Objeto con los datos necesarios para construir la instancia.
      */
-    public Complementario(Builder builder) {
+    private Complementario(Builder builder) {
         super();
 
         valorExperto = builder.getValorExperto();
@@ -60,7 +62,13 @@ public class Complementario implements PiezaValuable {
      */
     @Override
     public Avaluo valuar() {
-        avaluo = new Avaluo(valorExperto, valorExperto, valorExperto);
+        LOGGER.info(">> valuar()");
+
+        if (ObjectUtils.isEmpty(avaluo)) {
+            realizarValuacion();
+        }
+
+        LOGGER.debug("<< {}", avaluo);
 
         return avaluo;
     }
@@ -106,5 +114,21 @@ public class Complementario implements PiezaValuable {
     @Override
     public String toString() {
         return String.format("Complementario{valorExperto=%s}", valorExperto);
+    }
+
+    /**
+     * Realiza el cálculo para obtener el precio de éste complemento.
+     */
+    private void realizarValuacion() {
+        BigDecimal avaluoComplemento;
+
+        if (ValorExperto.TipoEnum.UNITARIO.equals(valorExperto.getTipo())) {
+            BigDecimal numeroComplementos = BigDecimal.valueOf(numeroDePiezas);
+            avaluoComplemento = valorExperto.getValorExperto().multiply(numeroComplementos);
+        } else {
+            avaluoComplemento = valorExperto.getValorExperto();
+        }
+
+        avaluo = AvaluoFactory.crearCon(avaluoComplemento, avaluoComplemento, avaluoComplemento);
     }
 }

@@ -39,7 +39,7 @@ public class RedondeoEstrategiaUtil {
     /**
      * Constructor. Privado ya que es un singleton y no se debería crearse más de una instancia.
      */
-    public RedondeoEstrategiaUtil() {
+    private RedondeoEstrategiaUtil() {
         super();
 
         RedondeoEstrategiaUtil.set(this);

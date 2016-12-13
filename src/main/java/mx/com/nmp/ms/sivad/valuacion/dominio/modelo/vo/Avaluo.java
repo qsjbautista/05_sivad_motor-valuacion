@@ -40,7 +40,7 @@ public class Avaluo {
      * @param valorPromedio Valor promedio del avaluó.
      * @param valorMaximo Valor máximo del avaluó.
      */
-    public Avaluo(BigDecimal valorMinimo, BigDecimal valorPromedio, BigDecimal valorMaximo) {
+    private Avaluo(BigDecimal valorMinimo, BigDecimal valorPromedio, BigDecimal valorMaximo) {
         super();
 
         this.valorMinimo = valorMinimo;
@@ -109,6 +109,6 @@ public class Avaluo {
     @Override
     public String toString() {
         return String.format("Avaluo{valorMinimo=%s, valorPromedio=%s, valorMaximo=%s}",
-            valorMinimo, valorPromedio, valorMaximo);
+            valorMinimo(), valorPromedio(), valorMaximo());
     }
 }

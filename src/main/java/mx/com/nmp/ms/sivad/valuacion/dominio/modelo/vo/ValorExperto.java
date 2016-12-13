@@ -5,6 +5,7 @@
 package mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * Value Object con la información del valor experto.
@@ -83,4 +84,30 @@ public class ValorExperto {
         return tipo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        ValorExperto that = (ValorExperto) o;
+
+        return Objects.equals(valorExperto, that.valorExperto) &&
+            tipo == that.tipo;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(valorExperto, tipo);
+    }
 }

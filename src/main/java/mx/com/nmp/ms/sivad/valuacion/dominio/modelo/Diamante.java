@@ -9,6 +9,7 @@ import mx.com.nmp.ms.sivad.valuacion.conector.TablasDeReferenciaDiamantes;
 import mx.com.nmp.ms.sivad.valuacion.conector.consumidor.ValorComercialConsumidor;
 import mx.com.nmp.ms.sivad.valuacion.conector.provedor.CaracteristicasDiamanteProveedor;
 import mx.com.nmp.ms.sivad.valuacion.conector.provedor.CertificadoDiamanteProveedor;
+import mx.com.nmp.ms.sivad.valuacion.dominio.factory.AvaluoFactory;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.Avaluo;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto;
 import org.slf4j.Logger;
@@ -216,7 +217,7 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
         }
 
         // SE CREA EL AVALÚO CON BASE EN LOS VALORES COMERCIALES DEFINITIVOS.
-        return new Avaluo(valorComercialMinimo, valorComercialMedio, valorComercialMaximo);
+        return AvaluoFactory.crearCon(valorComercialMinimo, valorComercialMedio, valorComercialMaximo);
     }
 
 
