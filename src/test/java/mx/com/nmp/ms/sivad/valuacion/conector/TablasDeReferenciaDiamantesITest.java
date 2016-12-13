@@ -108,8 +108,8 @@ public class TablasDeReferenciaDiamantesITest {
         } catch (ValuacionException e) {
             assertNotNull(e);
             assertNotNull(e.getCodigo());
-            assertEquals("MV003", e.getCodigo());
-            assertNotNull(e.getActor());
+            assertEquals("soap:NMP-TR-010", e.getCodigo());
+            assertNull(e.getActor());
             return;
         }
 
