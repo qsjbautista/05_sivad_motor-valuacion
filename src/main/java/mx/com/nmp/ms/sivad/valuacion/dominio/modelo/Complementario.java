@@ -124,9 +124,9 @@ public class Complementario extends Pieza {
 
         if (ValorExperto.TipoEnum.UNITARIO.equals(valorExperto.getTipo())) {
             BigDecimal numeroComplementos = BigDecimal.valueOf(numeroDePiezas);
-            avaluoComplemento = valorExperto.getValorExperto().multiply(numeroComplementos);
+            avaluoComplemento = valorExperto.getValor().multiply(numeroComplementos);
         } else {
-            avaluoComplemento = valorExperto.getValorExperto();
+            avaluoComplemento = valorExperto.getValor();
         }
 
         avaluo = AvaluoFactory.crearCon(avaluoComplemento, avaluoComplemento, avaluoComplemento);

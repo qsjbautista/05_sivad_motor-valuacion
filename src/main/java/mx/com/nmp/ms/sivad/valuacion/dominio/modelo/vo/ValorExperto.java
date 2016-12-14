@@ -17,7 +17,7 @@ public class ValorExperto {
     /**
      * El valor del experto.
      */
-    private BigDecimal valorExperto;
+    private BigDecimal valor;
 
     /**
      * El tipo de valor experto (Unitario o Total).
@@ -64,11 +64,11 @@ public class ValorExperto {
     /**
      * Constructor.
      *
-     * @param valorExperto El valor del experto.
+     * @param valor El valor del experto.
      * @param tipo El tipo de valor experto.
      */
-    public ValorExperto(BigDecimal valorExperto, ValorExperto.TipoEnum tipo) {
-        this.valorExperto = valorExperto;
+    public ValorExperto(BigDecimal valor, ValorExperto.TipoEnum tipo) {
+        this.valor = valor;
         this.tipo = tipo;
     }
 
@@ -76,8 +76,8 @@ public class ValorExperto {
 
     // GETTERS
 
-    public BigDecimal getValorExperto() {
-        return valorExperto;
+    public BigDecimal getValor() {
+        return valor;
     }
 
     public TipoEnum getTipo() {
@@ -99,7 +99,7 @@ public class ValorExperto {
 
         ValorExperto that = (ValorExperto) o;
 
-        return Objects.equals(valorExperto, that.valorExperto) &&
+        return Objects.equals(valor, that.valor) &&
             tipo == that.tipo;
     }
 
@@ -108,6 +108,6 @@ public class ValorExperto {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(valorExperto, tipo);
+        return Objects.hash(valor, tipo);
     }
 }

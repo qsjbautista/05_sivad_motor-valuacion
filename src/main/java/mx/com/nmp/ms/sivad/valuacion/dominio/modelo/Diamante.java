@@ -132,7 +132,7 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
      * @param builder Referencia al objeto que contiene los datos necesarios para construir la entidad.
      * @param conector Referencia hacia el conector con el sistema de tablas de referencia.
      */
-    public Diamante(Builder builder, TablasDeReferenciaDiamantes conector) {
+    private Diamante(Builder builder, TablasDeReferenciaDiamantes conector) {
         super();
 
         this.numeroDePiezas = builder.getNumeroDePiezas();
@@ -161,7 +161,7 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
 
         // SE DETERMINA SI EXISTE VALOR DE EXPERTO.
         if (ObjectUtils.isEmpty(valorExperto) ||
-            ObjectUtils.isEmpty(valorExperto.getValorExperto())) {
+            ObjectUtils.isEmpty(valorExperto.getValor())) {
 
             // SE OBTIENE EL VALOR COMERCIAL DEL DIAMANTE CON BASE EN SUS CARACTERÍSTICAS.
             ValorComercialConsumidor valorComercialConsumidor = conector.obtenerValorComercial(this);
@@ -172,9 +172,9 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
         } else {
 
             // SE ASIGNA EL VALOR DEL EXPERTO.
-            valorComercialMinimo = valorExperto.getValorExperto();
-            valorComercialMedio = valorExperto.getValorExperto();
-            valorComercialMaximo = valorExperto.getValorExperto();
+            valorComercialMinimo = valorExperto.getValor();
+            valorComercialMedio = valorExperto.getValor();
+            valorComercialMaximo = valorExperto.getValor();
         }
 
         LOGGER.debug("Valor Comercial Minimo: [{}]", valorComercialMinimo);

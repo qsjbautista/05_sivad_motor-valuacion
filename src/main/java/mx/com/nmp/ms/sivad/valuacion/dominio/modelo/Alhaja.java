@@ -297,7 +297,7 @@ public class Alhaja extends Pieza implements CaracteristicasGramoOroProveedor, M
             if (ValorExperto.TipoEnum.UNITARIO.equals(valorExperto.getTipo())) {
                 throw new IllegalArgumentException("Valor experto tipo unitario no soportado para alhajas.");
             } else {
-                return valorExperto.getValorExperto();
+                return valorExperto.getValor();
             }
         }
     }
