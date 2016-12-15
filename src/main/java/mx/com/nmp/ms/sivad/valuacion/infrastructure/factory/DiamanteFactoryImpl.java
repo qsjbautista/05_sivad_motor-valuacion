@@ -6,6 +6,7 @@ package mx.com.nmp.ms.sivad.valuacion.infrastructure.factory;
 
 import mx.com.nmp.ms.arquetipo.journal.util.ApplicationContextProvider;
 import mx.com.nmp.ms.sivad.valuacion.conector.TablasDeReferenciaDiamantes;
+import mx.com.nmp.ms.sivad.valuacion.dominio.exception.DomainExceptionCodes;
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.DiamanteFactory;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Diamante;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto;
@@ -27,12 +28,6 @@ import static mx.com.nmp.ms.sivad.valuacion.infrastructure.factory.ConstructorUt
  */
 @Component
 public class DiamanteFactoryImpl implements DiamanteFactory {
-
-    private static final String BUILDER_NULO = "El objeto constructor no debe ser nulo.";
-    private static final String CLARIDAD_NULA = "La claridad no debe ser nula.";
-    private static final String COLOR_NULO = "El corte no debe ser nulo.";
-    private static final String CORTE_NULO = "El corte no debe ser nulo.";
-    private static final String QUILATES_NULO = "El valor en quilates no debe ser nulo.";
 
     /**
      * Referencia al constructor de la entidad.
@@ -147,11 +142,11 @@ public class DiamanteFactoryImpl implements DiamanteFactory {
      * @param builder Objeto constructor de la entidad.
      */
     private static void validarBuilder(final Diamante.Builder builder) {
-        Assert.notNull(builder, BUILDER_NULO);
-        Assert.notNull(builder.getCorte(), CORTE_NULO);
-        Assert.notNull(builder.getColor(), COLOR_NULO);
-        Assert.notNull(builder.getClaridad(), CLARIDAD_NULA);
-        Assert.notNull(builder.getQuilates(), QUILATES_NULO);
+        Assert.notNull(builder, DomainExceptionCodes.BUILDER_NULO.getMessageException());
+        Assert.notNull(builder.getCorte(), DomainExceptionCodes.DIAMANTE_CORTE_NULO.getMessageException());
+        Assert.notNull(builder.getColor(), DomainExceptionCodes.DIAMANTE_COLOR_NULO.getMessageException());
+        Assert.notNull(builder.getClaridad(), DomainExceptionCodes.DIAMANTE_CLARIDAD_NULA.getMessageException());
+        Assert.notNull(builder.getQuilates(), DomainExceptionCodes.DIAMANTE_QUILATES_NULO.getMessageException());
 
         ValidadorNumero.validarPositivo(builder.getNumeroDePiezas());
         ValidadorNumero.validarPositivo(builder.getQuilates());

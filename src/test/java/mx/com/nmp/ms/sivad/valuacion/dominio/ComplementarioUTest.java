@@ -16,9 +16,7 @@ import org.junit.Test;
 import java.lang.reflect.Constructor;
 import java.math.BigDecimal;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * Pruebas de unidad para la clase {@link Complementario}
@@ -44,7 +42,7 @@ public class ComplementarioUTest {
      */
     @Test
     public void crearComplementarioTest() {
-        Complementario test = ConstructorUtil.getInstancia(constructor, getBuilder(BigDecimal.valueOf(238.57)));
+        Complementario test = ConstructorUtil.getInstancia(constructor, getBuilder(1, BigDecimal.valueOf(238.57)));
 
         assertNotNull(test);
     }
@@ -55,7 +53,7 @@ public class ComplementarioUTest {
      */
     @Test
     public void valuarComplementarioTest() {
-        Complementario test = ConstructorUtil.getInstancia(constructor, getBuilder(BigDecimal.valueOf(238.57)));
+        Complementario test = ConstructorUtil.getInstancia(constructor, getBuilder(1, BigDecimal.valueOf(238.57)));
 
         Avaluo avaluo = test.valuar();
 
@@ -70,7 +68,7 @@ public class ComplementarioUTest {
      */
     @Test
     public void toStringComplementarioTest() {
-        Complementario test = ConstructorUtil.getInstancia(constructor, getBuilder(BigDecimal.valueOf(238.57)));
+        Complementario test = ConstructorUtil.getInstancia(constructor, getBuilder(1, BigDecimal.valueOf(238.57)));
 
         assertNotNull(test.toString());
     }
@@ -81,7 +79,7 @@ public class ComplementarioUTest {
      */
     @Test
     public void hashCodeComplementarioTest() {
-        Complementario test = ConstructorUtil.getInstancia(constructor, getBuilder(BigDecimal.valueOf(238.57)));
+        Complementario test = ConstructorUtil.getInstancia(constructor, getBuilder(1, BigDecimal.valueOf(238.57)));
 
         assertNotNull(test.hashCode());
     }
@@ -92,9 +90,9 @@ public class ComplementarioUTest {
      */
     @Test
     public void equalsComplementarioTest() {
-        Complementario test = ConstructorUtil.getInstancia(constructor, getBuilder(BigDecimal.valueOf(238.57)));
-        Complementario test2 = ConstructorUtil.getInstancia(constructor, getBuilder(BigDecimal.valueOf(238.57)));
-        Complementario test3 = ConstructorUtil.getInstancia(constructor, getBuilder(BigDecimal.valueOf(238.51)));
+        Complementario test = ConstructorUtil.getInstancia(constructor, getBuilder(1, BigDecimal.valueOf(238.57)));
+        Complementario test2 = ConstructorUtil.getInstancia(constructor, getBuilder(1, BigDecimal.valueOf(238.57)));
+        Complementario test3 = ConstructorUtil.getInstancia(constructor, getBuilder(1, BigDecimal.valueOf(238.51)));
 
         assertEquals(test, test);
         assertFalse(test.equals(null));
@@ -103,8 +101,14 @@ public class ComplementarioUTest {
         assertFalse(test.equals(test3));
     }
 
-    private Complementario.Builder getBuilder(final BigDecimal valorExperto) {
+    private Complementario.Builder getBuilder(final int numeroDePiezas, final BigDecimal valorExperto) {
         return new Complementario.Builder() {
+
+            @Override
+            public int getNumeroDePiezas() {
+                return numeroDePiezas;
+            }
+
             @Override
             public ValorExperto getValorExperto() {
                 return new ValorExperto(valorExperto, ValorExperto.TipoEnum.TOTAL);

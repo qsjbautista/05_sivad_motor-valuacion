@@ -36,6 +36,14 @@ public class Complementario extends Pieza {
      * Nos brinda el contrato que se debe cumplir para crear una instancia de la clase {@link Complementario}
      */
     public interface Builder {
+
+        /**
+         * Permite obtener el número de piezas de tipo {@link Complementario} con características idénticas.
+         *
+         * @return El número de piezas de tipo {@link Complementario} con características idénticas.
+         */
+        public int getNumeroDePiezas();
+
         /**
          * Recupera el valor estimado por un experto.
          *
@@ -52,6 +60,7 @@ public class Complementario extends Pieza {
     private Complementario(Builder builder) {
         super();
 
+        this.numeroDePiezas = builder.getNumeroDePiezas();
         valorExperto = builder.getValorExperto();
     }
 

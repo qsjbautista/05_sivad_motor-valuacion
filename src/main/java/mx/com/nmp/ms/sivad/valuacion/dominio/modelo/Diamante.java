@@ -199,10 +199,9 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
         }
 
         // EN CASO DE QUE EL NÚMERO DE PIEZAS SE MAYOR A UNO.
-        LOGGER.debug(">>>>>>>>>>>Número de Piezas: [{}]", numeroDePiezas);
-        if (numeroDePiezas > 1) {
-            LOGGER.debug("Número de Piezas: [{}]", numeroDePiezas);
+        LOGGER.debug("Número de Piezas: [{}]", numeroDePiezas);
 
+        if (numeroDePiezas > 1) {
             BigDecimal numPiezas = new BigDecimal(numeroDePiezas);
 
             if (ObjectUtils.isEmpty(valorExperto) || valorExperto.getTipo().equals(ValorExperto.TipoEnum.UNITARIO)) {

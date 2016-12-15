@@ -29,11 +29,6 @@ public class Alhaja extends Pieza implements CaracteristicasGramoOroProveedor, M
     private static final Logger LOGGER = LoggerFactory.getLogger(Alhaja.class);
 
     /**
-     * Identificador del metal Oro.
-     */
-    private static final String IDENTIFICADOR_METAL_ORO = "AU";
-
-    /**
      * Referencia hacia el conector con el sistema de tablas de referencia.
      */
     private TablasDeReferenciaAlhajas conector;
@@ -254,7 +249,7 @@ public class Alhaja extends Pieza implements CaracteristicasGramoOroProveedor, M
     private BigDecimal recuperarPrecioGramoMetal() {
         BigDecimal precioGramoMetal;
 
-        if (metal.equals(IDENTIFICADOR_METAL_ORO)) {
+        if (metal.equals(TipoMetalEnum.ORO.getTipo())) {
             precioGramoMetal = conector.obtenerValorGramoOro(this).getValor();
         } else {
             precioGramoMetal = conector.obtenerValorGramoMetal(this).getValor();
@@ -291,14 +286,10 @@ public class Alhaja extends Pieza implements CaracteristicasGramoOroProveedor, M
      * @return Avaluó del experto.
      */
     private BigDecimal recuperarValorExperto() {
-        if (ObjectUtils.isEmpty(valorExperto) || metal.equals(IDENTIFICADOR_METAL_ORO)) {
+        if (ObjectUtils.isEmpty(valorExperto) || metal.equals(TipoMetalEnum.ORO.getTipo())) {
             return BigDecimal.ZERO;
         } else {
-            if (ValorExperto.TipoEnum.UNITARIO.equals(valorExperto.getTipo())) {
-                throw new IllegalArgumentException("Valor experto tipo unitario no soportado para alhajas.");
-            } else {
-                return valorExperto.getValor();
-            }
+            return valorExperto.getValor();
         }
     }
 
