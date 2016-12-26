@@ -30,10 +30,12 @@ public class DiamanteFactoryUTest {
     private static final int NUM_PIEZAS = 1;
     private static final int NUM_PIEZAS_CERO = 0;
     private static final int NUM_PIEZAS_MENOR_CERO = -1;
+
     private static final String CERTIFICADO = "ABC";
     private static final String CLARIDAD = "VS1";
     private static final String COLOR = "D";
     private static final String CORTE = "Oval";
+
     private static final BigDecimal QUILATES =
         new BigDecimal(0.92D).setScale(2, BigDecimal.ROUND_HALF_UP);
     private static final BigDecimal QUILATES_CERO =
@@ -42,12 +44,12 @@ public class DiamanteFactoryUTest {
         new BigDecimal(-1.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
     private static final ValorExperto VALOR_EXPERTO = new ValorExperto(
         new BigDecimal(500.00D).setScale(2, BigDecimal.ROUND_HALF_UP), ValorExperto.TipoEnum.UNITARIO);
-    private static final ValorExperto VALOR_EXPERTO_SIN_VALOR = new ValorExperto(
-        null, ValorExperto.TipoEnum.UNITARIO);
     private static final ValorExperto VALOR_EXPERTO_VALOR_CERO = new ValorExperto(
         new BigDecimal(0.00D).setScale(2, BigDecimal.ROUND_HALF_UP), ValorExperto.TipoEnum.UNITARIO);
     private static final ValorExperto VALOR_EXPERTO_VALOR_MENOR_CERO = new ValorExperto(
         new BigDecimal(-1.00D).setScale(2, BigDecimal.ROUND_HALF_UP), ValorExperto.TipoEnum.UNITARIO);
+    private static final ValorExperto VALOR_EXPERTO_SIN_VALOR = new ValorExperto(
+        null, ValorExperto.TipoEnum.UNITARIO);
 
     /**
      * Referencia hacia la fábrica de entidades tipo {@link Diamante}.
@@ -397,9 +399,13 @@ public class DiamanteFactoryUTest {
      * @param valorExperto El valor experto para la pieza en particular.
      * @return El builder creado.
      */
-    private Diamante.Builder getBuilder(final int numeroDePiezas, final String corte, final String color,
-                                        final String claridad, final BigDecimal quilates,
-                                        final String certificadoDiamante, final ValorExperto valorExperto) {
+    private Diamante.Builder getBuilder(final int numeroDePiezas,
+                                        final String corte,
+                                        final String color,
+                                        final String claridad,
+                                        final BigDecimal quilates,
+                                        final String certificadoDiamante,
+                                        final ValorExperto valorExperto) {
         return new Diamante.Builder() {
 
             @Override

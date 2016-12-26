@@ -30,14 +30,15 @@ public class ComplementarioFactoryUTest {
     private static final int NUM_PIEZAS = 1;
     private static final int NUM_PIEZAS_CERO = 0;
     private static final int NUM_PIEZAS_MENOR_CERO = -1;
+    
     private static final ValorExperto VALOR_EXPERTO = new ValorExperto(
         new BigDecimal(500.00D).setScale(2, BigDecimal.ROUND_HALF_UP), ValorExperto.TipoEnum.UNITARIO);
-    private static final ValorExperto VALOR_EXPERTO_SIN_VALOR = new ValorExperto(
-        null, ValorExperto.TipoEnum.UNITARIO);
     private static final ValorExperto VALOR_EXPERTO_VALOR_CERO = new ValorExperto(
         new BigDecimal(0.00D).setScale(2, BigDecimal.ROUND_HALF_UP), ValorExperto.TipoEnum.UNITARIO);
     private static final ValorExperto VALOR_EXPERTO_VALOR_MENOR_CERO = new ValorExperto(
         new BigDecimal(-1.00D).setScale(2, BigDecimal.ROUND_HALF_UP), ValorExperto.TipoEnum.UNITARIO);
+    private static final ValorExperto VALOR_EXPERTO_SIN_VALOR = new ValorExperto(
+        null, ValorExperto.TipoEnum.UNITARIO);
 
     /**
      * Referencia hacia la fábrica de entidades tipo {@link Complementario}.
@@ -186,7 +187,8 @@ public class ComplementarioFactoryUTest {
      * @param valorExperto El valor experto para la pieza en particular.
      * @return El builder creado.
      */
-    private Complementario.Builder getBuilder(final int numeroDePiezas, final ValorExperto valorExperto) {
+    private Complementario.Builder getBuilder(final int numeroDePiezas,
+                                              final ValorExperto valorExperto) {
         return new Complementario.Builder() {
 
             @Override
