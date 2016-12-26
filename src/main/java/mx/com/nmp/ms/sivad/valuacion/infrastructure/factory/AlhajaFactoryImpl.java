@@ -10,6 +10,7 @@ import mx.com.nmp.ms.sivad.valuacion.dominio.exception.DomainExceptionCodes;
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.AlhajaFactory;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Alhaja;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.TipoMetalEnum;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto.AlhajaDTO;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto;
 import mx.com.nmp.ms.sivad.valuacion.dominio.validador.ValidadorNumero;
 import org.springframework.stereotype.Component;
@@ -58,16 +59,9 @@ public class AlhajaFactoryImpl implements AlhajaFactory {
      * {@inheritDoc}
      */
     @Override
-    public Alhaja create(String metal,
-                         String color,
-                         String calidad,
-                         String rango,
-                         BigDecimal peso,
-                         BigDecimal incremento,
-                         BigDecimal desplazamiento,
-                         ValorExperto valorExperto) {
+    public Alhaja create(AlhajaDTO alhajaDTO) {
         final Alhaja.Builder builder =
-            getBuilder(metal, color, calidad, rango, peso, incremento, desplazamiento, valorExperto);
+            getBuilder(alhajaDTO);
         return create(builder);
     }
 
@@ -83,64 +77,50 @@ public class AlhajaFactoryImpl implements AlhajaFactory {
     /**
      * Crea un objeto constructor a partir del valor de los argumentos.
      *
-     * @param metal El tipo de metal de la alhaja.
-     * @param color El color del metal.
-     * @param calidad La calidad de la alhaja.
-     * @param rango El rango de la alhaja.
-     * @param peso El peso en gramos de la alhaja.
-     * @param incremento El incremento por las condiciones físicas de la prenda.
-     * @param desplazamiento El desplazamiento comercial.
-     * @param valorExperto El valor experto para la pieza en particular.
+     * @param alhajaDTO DTO con la información de la pieza de tipo alhaja.
      * @return El objeto constructor creado.
      */
-    private static Alhaja.Builder getBuilder(final String metal,
-                                             final String color,
-                                             final String calidad,
-                                             final String rango,
-                                             final BigDecimal peso,
-                                             final BigDecimal incremento,
-                                             final BigDecimal desplazamiento,
-                                             final ValorExperto valorExperto) {
+    private static Alhaja.Builder getBuilder(final AlhajaDTO alhajaDTO) {
         return new Alhaja.Builder() {
 
             @Override
             public String getMetal() {
-                return metal;
+                return alhajaDTO.getMetal();
             }
 
             @Override
             public String getColor() {
-                return color;
+                return alhajaDTO.getColor();
             }
 
             @Override
             public String getCalidad() {
-                return calidad;
+                return alhajaDTO.getCalidad();
             }
 
             @Override
             public String getRango() {
-                return rango;
+                return alhajaDTO.getRango();
             }
 
             @Override
             public BigDecimal getPeso() {
-                return peso;
+                return alhajaDTO.getPeso();
             }
 
             @Override
             public BigDecimal getIncremento() {
-                return incremento;
+                return alhajaDTO.getIncremento();
             }
 
             @Override
             public BigDecimal getDesplazamiento() {
-                return desplazamiento;
+                return alhajaDTO.getDesplazamiento();
             }
 
             @Override
             public ValorExperto getValorExperto() {
-                return valorExperto;
+                return alhajaDTO.getValorExperto();
             }
         };
     }

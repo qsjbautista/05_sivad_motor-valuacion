@@ -72,9 +72,9 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
     public interface Builder {
 
         /**
-         * Permite obtener el número de piezas de tipo Diamante con características idénticas.
+         * Permite obtener el número de piezas de tipo {@link Diamante} con características idénticas.
          *
-         * @return El número de piezas de tipo Diamante con características idénticas.
+         * @return El número de piezas de tipo {@link Diamante} con características idénticas.
          */
         public int getNumeroDePiezas();
 
@@ -146,9 +146,9 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
     }
 
     /**
-     * Permite realizar la valuación de la pieza del tipo Diamante.
+     * Permite realizar la valuación de la pieza del tipo {@link Diamante}.
      *
-     * @return El avalúo de la pieza del tipo Diamante.
+     * @return El avalúo de la pieza del tipo {@link Diamante}.
      */
     @Override
     @Timed

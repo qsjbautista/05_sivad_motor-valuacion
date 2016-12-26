@@ -5,9 +5,7 @@
 package mx.com.nmp.ms.sivad.valuacion.dominio.factory;
 
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Diamante;
-import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto;
-
-import java.math.BigDecimal;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto.DiamanteDTO;
 
 /**
  * Interface que define el contrato para la fabricación de entidades tipo {@link Diamante}.
@@ -19,22 +17,10 @@ public interface DiamanteFactory {
     /**
      * Permite crear una entidad de tipo {@link Diamante} con base en los argumentos recibidos.
      *
-     * @param numeroDePiezas El número de piezas de tipo {@link Diamante} con características idénticas.
-     * @param corte El tipo de corte del diamante.
-     * @param color El tipo de color del diamante.
-     * @param claridad El tipo de claridad del diamante.
-     * @param quilates El valor en quilates del diamante.
-     * @param certificadoDiamante El valor del certificado del diamante.
-     * @param valorExperto El valor experto para la pieza en particular.
+     * @param diamanteDTO DTO con la información de la pieza de tipo diamante.
      * @return La entidad creada.
      */
-    public Diamante create(int numeroDePiezas,
-                           String corte,
-                           String color,
-                           String claridad,
-                           BigDecimal quilates,
-                           String certificadoDiamante,
-                           ValorExperto valorExperto);
+    public Diamante create(DiamanteDTO diamanteDTO);
 
     /**
      * Permite crear una entidad de tipo {@link Diamante} con base en el builder recibido.

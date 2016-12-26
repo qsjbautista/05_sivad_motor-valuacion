@@ -9,6 +9,7 @@ import mx.com.nmp.ms.sivad.valuacion.conector.TablasDeReferenciaDiamantes;
 import mx.com.nmp.ms.sivad.valuacion.dominio.exception.DomainExceptionCodes;
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.DiamanteFactory;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Diamante;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto.DiamanteDTO;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto;
 import mx.com.nmp.ms.sivad.valuacion.dominio.validador.ValidadorNumero;
 import org.springframework.stereotype.Component;
@@ -57,15 +58,9 @@ public class DiamanteFactoryImpl implements DiamanteFactory {
      * {@inheritDoc}
      */
     @Override
-    public Diamante create(int numeroDePiezas,
-                           String corte,
-                           String color,
-                           String claridad,
-                           BigDecimal quilates,
-                           String certificadoDiamante,
-                           ValorExperto valorExperto) {
+    public Diamante create(DiamanteDTO diamanteDTO) {
         final Diamante.Builder builder =
-            getBuilder(numeroDePiezas, corte, color, claridad, quilates, certificadoDiamante, valorExperto);
+            getBuilder(diamanteDTO);
         return create(builder);
     }
 
@@ -81,57 +76,45 @@ public class DiamanteFactoryImpl implements DiamanteFactory {
     /**
      * Crea un objeto constructor a partir del valor de los argumentos.
      *
-     * @param numeroDePiezas El número de piezas de tipo {@link Diamante} con características idénticas.
-     * @param corte El tipo de corte del diamante.
-     * @param color El tipo de color del diamante.
-     * @param claridad El tipo de claridad del diamante.
-     * @param quilates El valor en quilates del diamante.
-     * @param certificadoDiamante El valor del certificado del diamante.
-     * @param valorExperto El valor experto para la pieza en particular.
+     * @param diamanteDTO DTO con la información de la pieza de tipo diamante.
      * @return El objeto constructor creado.
      */
-    private static Diamante.Builder getBuilder(final int numeroDePiezas,
-                                               final String corte,
-                                               final String color,
-                                               final String claridad,
-                                               final BigDecimal quilates,
-                                               final String certificadoDiamante,
-                                               final ValorExperto valorExperto) {
+    private static Diamante.Builder getBuilder(final DiamanteDTO diamanteDTO) {
         return new Diamante.Builder() {
 
             @Override
             public int getNumeroDePiezas() {
-                return numeroDePiezas;
+                return diamanteDTO.getNumeroDePiezas();
             }
 
             @Override
             public String getCorte() {
-                return corte;
+                return diamanteDTO.getCorte();
             }
 
             @Override
             public String getColor() {
-                return color;
+                return diamanteDTO.getColor();
             }
 
             @Override
             public String getClaridad() {
-                return claridad;
+                return diamanteDTO.getClaridad();
             }
 
             @Override
             public BigDecimal getQuilates() {
-                return quilates;
+                return diamanteDTO.getQuilates();
             }
 
             @Override
             public String getCertificadoDiamante() {
-                return certificadoDiamante;
+                return diamanteDTO.getCertificadoDiamante();
             }
 
             @Override
             public ValorExperto getValorExperto() {
-                return valorExperto;
+                return diamanteDTO.getValorExperto();
             }
         };
     }

@@ -7,6 +7,7 @@ package mx.com.nmp.ms.sivad.valuacion.infrastructure.factory;
 import mx.com.nmp.ms.sivad.valuacion.dominio.exception.DomainExceptionCodes;
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.ComplementarioFactory;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Complementario;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto.ComplementarioDTO;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto;
 import mx.com.nmp.ms.sivad.valuacion.dominio.validador.ValidadorNumero;
 import org.springframework.stereotype.Component;
@@ -48,10 +49,9 @@ public class ComplementarioFactoryImpl implements ComplementarioFactory {
      * {@inheritDoc}
      */
     @Override
-    public Complementario create(int numeroDePiezas,
-                                 ValorExperto valorExperto) {
+    public Complementario create(ComplementarioDTO complementarioDTO) {
         final Complementario.Builder builder =
-            getBuilder(numeroDePiezas, valorExperto);
+            getBuilder(complementarioDTO);
         return create(builder);
     }
 
@@ -67,22 +67,20 @@ public class ComplementarioFactoryImpl implements ComplementarioFactory {
     /**
      * Crea un objeto constructor a partir del valor de los argumentos.
      *
-     * @param numeroDePiezas El número de piezas de tipo {@link Complementario} con características idénticas.
-     * @param valorExperto El valor estimado por un experto.
+     * @param complementarioDTO DTO con la información de la pieza complementaria.
      * @return El objeto constructor creado.
      */
-    private static Complementario.Builder getBuilder(final int numeroDePiezas,
-                                                     final ValorExperto valorExperto) {
+    private static Complementario.Builder getBuilder(final ComplementarioDTO complementarioDTO) {
         return new Complementario.Builder() {
 
             @Override
             public int getNumeroDePiezas() {
-                return numeroDePiezas;
+                return complementarioDTO.getNumeroDePiezas();
             }
 
             @Override
             public ValorExperto getValorExperto() {
-                return valorExperto;
+                return complementarioDTO.getValorExperto();
             }
         };
     }

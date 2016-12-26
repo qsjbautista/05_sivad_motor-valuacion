@@ -140,4 +140,11 @@ public class Complementario extends Pieza {
 
         avaluo = AvaluoFactory.crearCon(avaluoComplemento, avaluoComplemento, avaluoComplemento);
     }
+
+    // GETTERS
+
+    public ValorExperto getValorExperto() {
+        return valorExperto;
+    }
+
 }

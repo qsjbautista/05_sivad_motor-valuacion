@@ -31,7 +31,10 @@ public enum DomainExceptionCodes {
         "El corte del diamante no debe ser nulo."),
     DIAMANTE_QUILATES_NULO("DIAMANTE_QUILATES_NULO",
         "El valor en quilates del diamante no debe ser nulo."),
-    NMPMV002("", "");
+    LISTA_PIEZAS_NULA("LISTA_PIEZAS_NULA",
+        "La lista de piezas no debe ser nula."),
+    LISTA_PIEZAS_VACIA("LISTA_PIEZAS_VACIA",
+        "La lista de piezas no debe estar vacia.");
 
     /**
      * Código de la excepción.
