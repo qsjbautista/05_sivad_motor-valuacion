@@ -548,5 +548,3 @@ public class AlhajaFactoryUTest {
     }
 
 }
-
-

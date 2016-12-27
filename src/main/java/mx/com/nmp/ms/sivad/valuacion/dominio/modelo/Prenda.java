@@ -105,34 +105,34 @@ public class Prenda implements PiezaValuable {
                     avaluoComplementarios = sumarAvaluos(avaluoComplementarios, pieza.valuar());
                 }
             }
+
+            // EN CASO DE QUE EXISTAN POLÍTICAS DE CASTIGO.
+            PoliticasCastigo politicasCastigo = politicasCastigoRepository.consultar();
+
+            if (!ObjectUtils.isEmpty(politicasCastigo) &&
+                !ObjectUtils.isEmpty(politicasCastigo.getFactorPoliticasCastigo())) {
+
+                if (!ObjectUtils.isEmpty(politicasCastigo.getFactorPoliticasCastigo().getFactorAlhaja())) {
+                    avaluoAlhajas = aplicarPoliticaCastigo(avaluoAlhajas,
+                        politicasCastigo.getFactorPoliticasCastigo().getFactorAlhaja());
+                }
+
+                if (!ObjectUtils.isEmpty(politicasCastigo.getFactorPoliticasCastigo().getFactorDiamante())) {
+                    avaluoDiamantes = aplicarPoliticaCastigo(avaluoDiamantes,
+                        politicasCastigo.getFactorPoliticasCastigo().getFactorDiamante());
+                }
+
+                if (!ObjectUtils.isEmpty(politicasCastigo.getFactorPoliticasCastigo().getFactorComplemento())) {
+                    avaluoComplementarios = aplicarPoliticaCastigo(avaluoComplementarios,
+                        politicasCastigo.getFactorPoliticasCastigo().getFactorComplemento());
+                }
+            }
+
+            // SE CREA EL AVALÚO CON BASE EN LOS VALORES DEFINITIVOS.
+            avaluoTotal = sumarAvaluos(avaluoTotal, avaluoAlhajas);
+            avaluoTotal = sumarAvaluos(avaluoTotal, avaluoDiamantes);
+            avaluoTotal = sumarAvaluos(avaluoTotal, avaluoComplementarios);
         }
-
-        // EN CASO DE QUE EXISTAN POLÍTICAS DE CASTIGO.
-        PoliticasCastigo politicasCastigo = politicasCastigoRepository.consultar();
-
-        if (!ObjectUtils.isEmpty(politicasCastigo) &&
-            !ObjectUtils.isEmpty(politicasCastigo.getFactorPoliticasCastigo())) {
-
-            if (!ObjectUtils.isEmpty(politicasCastigo.getFactorPoliticasCastigo().getFactorAlhaja())) {
-                avaluoAlhajas = aplicarPoliticaCastigo(avaluoAlhajas,
-                    politicasCastigo.getFactorPoliticasCastigo().getFactorAlhaja());
-            }
-
-            if (!ObjectUtils.isEmpty(politicasCastigo.getFactorPoliticasCastigo().getFactorDiamante())) {
-                avaluoDiamantes = aplicarPoliticaCastigo(avaluoDiamantes,
-                    politicasCastigo.getFactorPoliticasCastigo().getFactorDiamante());
-            }
-
-            if (!ObjectUtils.isEmpty(politicasCastigo.getFactorPoliticasCastigo().getFactorComplemento())) {
-                avaluoComplementarios = aplicarPoliticaCastigo(avaluoComplementarios,
-                    politicasCastigo.getFactorPoliticasCastigo().getFactorComplemento());
-            }
-        }
-
-        // SE CREA EL AVALÚO CON BASE EN LOS VALORES DEFINITIVOS.
-        avaluoTotal = sumarAvaluos(avaluoTotal, avaluoAlhajas);
-        avaluoTotal = sumarAvaluos(avaluoTotal, avaluoDiamantes);
-        avaluoTotal = sumarAvaluos(avaluoTotal, avaluoComplementarios);
 
         return avaluoTotal;
     }

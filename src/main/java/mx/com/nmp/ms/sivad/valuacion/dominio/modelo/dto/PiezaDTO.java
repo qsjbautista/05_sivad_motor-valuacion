@@ -1,9 +1,15 @@
+/**
+ * Proyecto:        NMP - Microservicio de Motor de Valuación
+ * Quarksoft S.A.P.I. de C.V. – Todos los derechos reservados. Para uso exclusivo de Nacional Monte de Piedad.
+ */
 package mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto;
 
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto;
 
 /**
- * Created by Quarksoft on 25/12/2016.
+ * DTO abstracto que encapsula las operaciones y atributos comunes de las piezas.
+ *
+ * @author ngonzalez
  */
 public abstract class PiezaDTO {
 
