@@ -10,10 +10,10 @@ import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.Avaluo;
 import mx.com.nmp.ms.sivad.valuacion.dominio.repository.PoliticasCastigoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.ObjectUtils;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Clase que implementa la interface {@link PiezaValuable}, ésta clase representa una Prenda y encapsula
@@ -39,6 +39,11 @@ public class Prenda implements PiezaValuable {
     private Avaluo avaluo;
 
     /**
+     * Mapa de estrategia de avalúos por tipo de pieza.
+     */
+    private Map<Class<? extends Pieza>, Avaluo> mapaEstrategiaAvaluos;
+
+    /**
      * Referencia hacia el repositorio de políticas de castigo.
      */
     private PoliticasCastigoRepository politicasCastigoRepository;
@@ -54,6 +59,13 @@ public class Prenda implements PiezaValuable {
          * @return La lista de piezas de tipo {@link Pieza}.
          */
         List<Pieza> getPiezas();
+
+        /**
+         * Permite obtener el mapa de estrategia de avalúos por tipo de pieza.
+         *
+         * @return El mapa de estrategia de avalúos por tipo de pieza.
+         */
+        Map<Class<? extends Pieza>, Avaluo> getMapaEstrategiaAvaluos();
 
     }
 
@@ -71,6 +83,7 @@ public class Prenda implements PiezaValuable {
         super();
 
         this.piezas = builder.getPiezas();
+        this.mapaEstrategiaAvaluos = builder.getMapaEstrategiaAvaluos();
         this.politicasCastigoRepository = politicasCastigoRepository;
     }
 
@@ -84,72 +97,73 @@ public class Prenda implements PiezaValuable {
     public Avaluo valuar() {
         LOGGER.info(">> valuar");
 
-        // SE INICIALIZAN LOS AVALÚOS.
-        Avaluo avaluoTotal = AvaluoFactory.crearCon(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
-        Avaluo avaluoAlhajas = AvaluoFactory.crearCon(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
-        Avaluo avaluoDiamantes = AvaluoFactory.crearCon(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
-        Avaluo avaluoComplementarios = AvaluoFactory.crearCon(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
 
         // SE VALÚAN LAS PIEZAS.
-        if (!ObjectUtils.isEmpty(piezas)) {
-            for (Pieza pieza : piezas) {
-                if (pieza instanceof Alhaja) {
-                    avaluoAlhajas = sumarAvaluos(avaluoAlhajas, pieza.valuar());
-                }
+        for (Pieza pieza : piezas) {
+            mapaEstrategiaAvaluos.put(pieza.getClass(),
+                sumarAvaluos(mapaEstrategiaAvaluos.get(pieza.getClass()), pieza.valuar()));
+        }
 
-                if (pieza instanceof Diamante) {
-                    avaluoDiamantes = sumarAvaluos(avaluoDiamantes, pieza.valuar());
-                }
 
-                if (pieza instanceof Complementario) {
-                    avaluoComplementarios = sumarAvaluos(avaluoComplementarios, pieza.valuar());
-                }
-            }
+        // EN CASO DE QUE EXISTAN POLÍTICAS DE CASTIGO.
+        PoliticasCastigo politicasCastigo = politicasCastigoRepository.consultar();
 
-            // EN CASO DE QUE EXISTAN POLÍTICAS DE CASTIGO.
-            PoliticasCastigo politicasCastigo = politicasCastigoRepository.consultar();
+        // TODO - Modificar cuando se tenga la versión genérica de políticas de castigo.
 
-            if (!ObjectUtils.isEmpty(politicasCastigo) &&
-                !ObjectUtils.isEmpty(politicasCastigo.getFactorPoliticasCastigo())) {
+//        if (!ObjectUtils.isEmpty(politicasCastigo) &&
+//            !ObjectUtils.isEmpty(politicasCastigo.getFactorPoliticasCastigo())) {
+//
+//            if (!ObjectUtils.isEmpty(politicasCastigo.getFactorPoliticasCastigo().getFactorAlhaja())) {
+//                avaluoAlhajas = aplicarPoliticaCastigo(avaluoAlhajas,
+//                    politicasCastigo.getFactorPoliticasCastigo().getFactorAlhaja());
+//            }
+//
+//            if (!ObjectUtils.isEmpty(politicasCastigo.getFactorPoliticasCastigo().getFactorDiamante())) {
+//                avaluoDiamantes = aplicarPoliticaCastigo(avaluoDiamantes,
+//                    politicasCastigo.getFactorPoliticasCastigo().getFactorDiamante());
+//            }
+//
+//            if (!ObjectUtils.isEmpty(politicasCastigo.getFactorPoliticasCastigo().getFactorComplemento())) {
+//                avaluoComplementarios = aplicarPoliticaCastigo(avaluoComplementarios,
+//                    politicasCastigo.getFactorPoliticasCastigo().getFactorComplemento());
+//            }
+//        }
 
-                if (!ObjectUtils.isEmpty(politicasCastigo.getFactorPoliticasCastigo().getFactorAlhaja())) {
-                    avaluoAlhajas = aplicarPoliticaCastigo(avaluoAlhajas,
-                        politicasCastigo.getFactorPoliticasCastigo().getFactorAlhaja());
-                }
 
-                if (!ObjectUtils.isEmpty(politicasCastigo.getFactorPoliticasCastigo().getFactorDiamante())) {
-                    avaluoDiamantes = aplicarPoliticaCastigo(avaluoDiamantes,
-                        politicasCastigo.getFactorPoliticasCastigo().getFactorDiamante());
-                }
+        // SE CREA EL AVALÚO CON BASE EN LOS VALORES DEFINITIVOS.
+        Avaluo avaluoTotal = null;
 
-                if (!ObjectUtils.isEmpty(politicasCastigo.getFactorPoliticasCastigo().getFactorComplemento())) {
-                    avaluoComplementarios = aplicarPoliticaCastigo(avaluoComplementarios,
-                        politicasCastigo.getFactorPoliticasCastigo().getFactorComplemento());
-                }
-            }
-
-            // SE CREA EL AVALÚO CON BASE EN LOS VALORES DEFINITIVOS.
-            avaluoTotal = sumarAvaluos(avaluoTotal, avaluoAlhajas);
-            avaluoTotal = sumarAvaluos(avaluoTotal, avaluoDiamantes);
-            avaluoTotal = sumarAvaluos(avaluoTotal, avaluoComplementarios);
+        for (Map.Entry<Class<? extends Pieza>, Avaluo> entry : mapaEstrategiaAvaluos.entrySet()) {
+            avaluoTotal = sumarAvaluos(avaluoTotal, entry.getValue());
         }
 
         return avaluoTotal;
+
     }
 
     /**
-     * Metodo auxiliar utilizado para sumar el contenido de dos avalúos.
+     * Metodo auxiliar utilizado para sumar el contenido de dos avalúos, considerando que el avalúo 1 pudiera ser nulo.
      *
      * @param avaluoUno El avalúo uno.
      * @param avaluoDos El avalúo dos.
      * @return Un avalúo con la suma de los dos.
      */
     private Avaluo sumarAvaluos(Avaluo avaluoUno, Avaluo avaluoDos) {
-        avaluoUno.valorMinimo().add(avaluoDos.valorMinimo());
-        avaluoUno.valorPromedio().add(avaluoDos.valorPromedio());
-        avaluoUno.valorMaximo().add(avaluoDos.valorMaximo());
+        LOGGER.debug(">> sumarAvaluos. " +
+            "Avaluo 1: [" + avaluoUno != null ? avaluoUno.toString() : "null" + "], " +
+            "Avaluo 2: [" + avaluoDos != null ? avaluoDos.toString() : "null" + "]");
 
-        return avaluoUno;
+        if (avaluoUno == null) {
+            return AvaluoFactory.crearCon(
+                avaluoDos.valorMinimo(),
+                avaluoDos.valorPromedio(),
+                avaluoDos.valorMaximo());
+        }
+
+        return AvaluoFactory.crearCon(
+            avaluoUno.valorMinimo().add(avaluoDos.valorMinimo()),
+            avaluoUno.valorPromedio().add(avaluoDos.valorPromedio()),
+            avaluoUno.valorMaximo().add(avaluoDos.valorMaximo()));
     }
 
     /**
@@ -160,11 +174,14 @@ public class Prenda implements PiezaValuable {
      * @return El avalúo con el factor de castigo aplicado.
      */
     private Avaluo aplicarPoliticaCastigo(Avaluo avaluo, BigDecimal factor) {
-        avaluo.valorMinimo().multiply(factor);
-        avaluo.valorPromedio().multiply(factor);
-        avaluo.valorMaximo().multiply(factor);
+        LOGGER.debug(">> aplicarPoliticaCastigo. " +
+            "Avaluo: [" + avaluo != null ? avaluo.toString() : "null" + "], " +
+            "Factor: [" + factor != null ? factor.toString() : "null");
 
-        return avaluo;
+        return AvaluoFactory.crearCon(
+            avaluo.valorMinimo().multiply(factor),
+            avaluo.valorPromedio().multiply(factor),
+            avaluo.valorMaximo().multiply(factor));
     }
 
 

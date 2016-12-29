@@ -50,8 +50,7 @@ public class ComplementarioFactoryImpl implements ComplementarioFactory {
      */
     @Override
     public Complementario create(ComplementarioDTO complementarioDTO) {
-        final Complementario.Builder builder =
-            getBuilder(complementarioDTO);
+        final Complementario.Builder builder = getBuilder(complementarioDTO);
         return create(builder);
     }
 
@@ -82,6 +81,7 @@ public class ComplementarioFactoryImpl implements ComplementarioFactory {
             public ValorExperto getValorExperto() {
                 return complementarioDTO.getValorExperto();
             }
+
         };
     }
 

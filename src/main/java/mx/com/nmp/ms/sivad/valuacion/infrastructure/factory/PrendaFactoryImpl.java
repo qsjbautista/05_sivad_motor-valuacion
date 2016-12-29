@@ -16,6 +16,7 @@ import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Diamante;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Prenda;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto.*;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.Avaluo;
 import mx.com.nmp.ms.sivad.valuacion.dominio.repository.PoliticasCastigoRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -24,7 +25,9 @@ import org.springframework.util.ObjectUtils;
 import javax.inject.Inject;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static mx.com.nmp.ms.sivad.valuacion.infrastructure.factory.ConstructorUtil.getConstructor;
 import static mx.com.nmp.ms.sivad.valuacion.infrastructure.factory.ConstructorUtil.getInstancia;
@@ -43,11 +46,6 @@ public class PrendaFactoryImpl implements PrendaFactory {
     private final Constructor<Prenda> constructor;
 
     /**
-     * Referencia hacia el repositorio de políticas de castigo.
-     */
-    private PoliticasCastigoRepository politicasCastigoRepository;
-
-    /**
      * Referencia hacia la fábrica de entidades tipo {@link Alhaja}.
      */
     @Inject
@@ -64,6 +62,12 @@ public class PrendaFactoryImpl implements PrendaFactory {
      */
     @Inject
     private ComplementarioFactory complementarioFactory;
+
+    /**
+     * Referencia hacia el repositorio de políticas de castigo.
+     */
+    @Inject
+    private PoliticasCastigoRepository politicasCastigoRepository;
 
 
 
@@ -86,6 +90,13 @@ public class PrendaFactoryImpl implements PrendaFactory {
     public Prenda create(PrendaDTO prendaDTO) {
         List<Pieza> piezas = new ArrayList<>();
 
+
+
+        Map<Class<? extends Pieza>, Avaluo> mapaEstrategiaAvaluos = new HashMap<>();
+        mapaEstrategiaAvaluos.put(Alhaja.class, null);
+        mapaEstrategiaAvaluos.put(Diamante.class, null);
+        mapaEstrategiaAvaluos.put(Complementario.class, null);
+
         if (!ObjectUtils.isEmpty(prendaDTO) && !ObjectUtils.isEmpty(prendaDTO.getPiezas())) {
             for (PiezaDTO piezaDTO : prendaDTO.getPiezas()) {
                 if (piezaDTO instanceof AlhajaDTO) {
@@ -102,8 +113,7 @@ public class PrendaFactoryImpl implements PrendaFactory {
             }
         }
 
-        final Prenda.Builder builder =
-            getBuilder(piezas);
+        final Prenda.Builder builder = getBuilder(piezas, mapaEstrategiaAvaluos);
         return create(builder);
     }
 
@@ -113,22 +123,30 @@ public class PrendaFactoryImpl implements PrendaFactory {
     @Override
     public Prenda create(Prenda.Builder builder) {
         validarBuilder(builder);
-        return getInstancia(constructor, builder, getPoliticasCastigoRepository());
+        return getInstancia(constructor, builder, politicasCastigoRepository);
     }
 
     /**
      * Crea un objeto constructor a partir del valor de los argumentos.
      *
      * @param piezas Lista de piezas de las que se compone la prenda.
+     * @param mapaEstrategiaAvaluos Mapa de estrategia de avalúos por tipo de pieza.
      * @return El objeto constructor creado.
      */
-    private static Prenda.Builder getBuilder(final List<Pieza> piezas) {
+    private static Prenda.Builder getBuilder(final List<Pieza> piezas,
+                                             final Map<Class<? extends Pieza>, Avaluo> mapaEstrategiaAvaluos) {
         return new Prenda.Builder() {
 
             @Override
             public List<Pieza> getPiezas() {
                 return piezas;
             }
+
+            @Override
+            public Map<Class<? extends Pieza>, Avaluo> getMapaEstrategiaAvaluos() {
+                return mapaEstrategiaAvaluos;
+            }
+
         };
     }
 
@@ -141,20 +159,6 @@ public class PrendaFactoryImpl implements PrendaFactory {
         Assert.notNull(builder, DomainExceptionCodes.BUILDER_NULO.getMessageException());
         Assert.notNull(builder.getPiezas(), DomainExceptionCodes.LISTA_PIEZAS_NULA.getMessageException());
         Assert.notEmpty(builder.getPiezas(), DomainExceptionCodes.LISTA_PIEZAS_VACIA.getMessageException());
-    }
-
-    /**
-     * Permite obtener la referencia del repositorio de políticas de castigo.
-     *
-     * @return Referencia hacia el repositorio de políticas de castigo.
-     */
-    public PoliticasCastigoRepository getPoliticasCastigoRepository() {
-        if (ObjectUtils.isEmpty(politicasCastigoRepository)) {
-            politicasCastigoRepository =
-                ApplicationContextProvider.get().getBean(PoliticasCastigoRepository.class);
-        }
-
-        return politicasCastigoRepository;
     }
 
 }

@@ -4,7 +4,6 @@
  */
 package mx.com.nmp.ms.sivad.valuacion.infrastructure.factory;
 
-import mx.com.nmp.ms.arquetipo.journal.util.ApplicationContextProvider;
 import mx.com.nmp.ms.sivad.valuacion.conector.TablasDeReferenciaDiamantes;
 import mx.com.nmp.ms.sivad.valuacion.dominio.exception.DomainExceptionCodes;
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.DiamanteFactory;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 
+import javax.inject.Inject;
 import java.lang.reflect.Constructor;
 import java.math.BigDecimal;
 
@@ -38,6 +38,7 @@ public class DiamanteFactoryImpl implements DiamanteFactory {
     /**
      * Referencia hacia el conector con el sistema de "tablas de referencia".
      */
+    @Inject
     private TablasDeReferenciaDiamantes tablasDeReferenciaDiamantes;
 
 
@@ -59,8 +60,7 @@ public class DiamanteFactoryImpl implements DiamanteFactory {
      */
     @Override
     public Diamante create(DiamanteDTO diamanteDTO) {
-        final Diamante.Builder builder =
-            getBuilder(diamanteDTO);
+        final Diamante.Builder builder = getBuilder(diamanteDTO);
         return create(builder);
     }
 
@@ -70,7 +70,7 @@ public class DiamanteFactoryImpl implements DiamanteFactory {
     @Override
     public Diamante create(Diamante.Builder builder) {
         validarBuilder(builder);
-        return getInstancia(constructor, builder, getTablasDeReferenciaDiamantes());
+        return getInstancia(constructor, builder, tablasDeReferenciaDiamantes);
     }
 
     /**
@@ -116,6 +116,7 @@ public class DiamanteFactoryImpl implements DiamanteFactory {
             public ValorExperto getValorExperto() {
                 return diamanteDTO.getValorExperto();
             }
+
         };
     }
 
@@ -138,20 +139,6 @@ public class DiamanteFactoryImpl implements DiamanteFactory {
             !ObjectUtils.isEmpty(builder.getValorExperto().getValor())) {
             ValidadorNumero.validarPositivo(builder.getValorExperto().getValor());
         }
-    }
-
-    /**
-     * Permite obtener la referencia hacia el conector con el sistema de "tablas de referencia".
-     *
-     * @return Referencia hacia el conector con el sistema de "tablas de referencia".
-     */
-    public TablasDeReferenciaDiamantes getTablasDeReferenciaDiamantes() {
-        if (ObjectUtils.isEmpty(tablasDeReferenciaDiamantes)) {
-            tablasDeReferenciaDiamantes =
-                ApplicationContextProvider.get().getBean(TablasDeReferenciaDiamantes.class);
-        }
-
-        return tablasDeReferenciaDiamantes;
     }
 
 }

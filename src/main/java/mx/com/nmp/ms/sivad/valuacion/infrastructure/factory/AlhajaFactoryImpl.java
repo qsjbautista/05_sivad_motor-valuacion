@@ -4,7 +4,6 @@
  */
 package mx.com.nmp.ms.sivad.valuacion.infrastructure.factory;
 
-import mx.com.nmp.ms.arquetipo.journal.util.ApplicationContextProvider;
 import mx.com.nmp.ms.sivad.valuacion.conector.TablasDeReferenciaAlhajas;
 import mx.com.nmp.ms.sivad.valuacion.dominio.exception.DomainExceptionCodes;
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.AlhajaFactory;
@@ -17,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 
+import javax.inject.Inject;
 import java.lang.reflect.Constructor;
 import java.math.BigDecimal;
 
@@ -39,6 +39,7 @@ public class AlhajaFactoryImpl implements AlhajaFactory {
     /**
      * Referencia hacia el conector con el sistema de "tablas de referencia".
      */
+    @Inject
     private TablasDeReferenciaAlhajas tablasDeReferenciaAlhajas;
 
 
@@ -60,8 +61,7 @@ public class AlhajaFactoryImpl implements AlhajaFactory {
      */
     @Override
     public Alhaja create(AlhajaDTO alhajaDTO) {
-        final Alhaja.Builder builder =
-            getBuilder(alhajaDTO);
+        final Alhaja.Builder builder = getBuilder(alhajaDTO);
         return create(builder);
     }
 
@@ -71,7 +71,7 @@ public class AlhajaFactoryImpl implements AlhajaFactory {
     @Override
     public Alhaja create(Alhaja.Builder builder) {
         validarBuilder(builder);
-        return getInstancia(constructor, builder, getTablasDeReferenciaAlhajas());
+        return getInstancia(constructor, builder, tablasDeReferenciaAlhajas);
     }
 
     /**
@@ -122,6 +122,7 @@ public class AlhajaFactoryImpl implements AlhajaFactory {
             public ValorExperto getValorExperto() {
                 return alhajaDTO.getValorExperto();
             }
+
         };
     }
 
@@ -158,20 +159,6 @@ public class AlhajaFactoryImpl implements AlhajaFactory {
                 throw new IllegalArgumentException(DomainExceptionCodes.ALHAJA_VALOR_EXPERTO_NO_SOPORTADO.getMessageException());
             }
         }
-    }
-
-    /**
-     * Permite obtener la referencia hacia el conector con el sistema de "tablas de referencia".
-     *
-     * @return Referencia hacia el conector con el sistema de "tablas de referencia".
-     */
-    public TablasDeReferenciaAlhajas getTablasDeReferenciaAlhajas() {
-        if (ObjectUtils.isEmpty(tablasDeReferenciaAlhajas)) {
-            tablasDeReferenciaAlhajas =
-                ApplicationContextProvider.get().getBean(TablasDeReferenciaAlhajas.class);
-        }
-
-        return tablasDeReferenciaAlhajas;
     }
 
 }
