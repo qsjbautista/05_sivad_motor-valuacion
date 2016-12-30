@@ -44,4 +44,14 @@ public class PrendaDTO {
         this.piezas = piezas;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "PrendaDTO{" +
+            "piezas=" + ((piezas != null) ? piezas.size() : "null") +
+            '}';
+    }
+
 }

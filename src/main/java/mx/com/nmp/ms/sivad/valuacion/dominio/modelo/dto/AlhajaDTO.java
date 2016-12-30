@@ -145,4 +145,61 @@ public class AlhajaDTO extends PiezaDTO {
         this.desplazamiento = desplazamiento;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "AlhajaDTO{" +
+            "numeroDePiezas='" + numeroDePiezas +
+            ", metal='" + metal + '\'' +
+            ", color='" + color + '\'' +
+            ", calidad='" + calidad + '\'' +
+            ", rango='" + rango + '\'' +
+            ", peso=" + ((peso != null) ? peso.toString() : "null") +
+            ", incremento=" + ((incremento != null) ? incremento.toString() : "null") +
+            ", desplazamiento=" + ((desplazamiento != null) ? desplazamiento.toString() : "null") +
+            ", valorExperto='" + ((valorExperto != null) ? valorExperto.toString() : "null") +
+            '}';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AlhajaDTO)) return false;
+
+        AlhajaDTO that = (AlhajaDTO) o;
+
+        if (numeroDePiezas != that.numeroDePiezas) return false;
+        if (!calidad.equals(that.calidad)) return false;
+        if (!color.equals(that.color)) return false;
+        if (!desplazamiento.equals(that.desplazamiento)) return false;
+        if (!incremento.equals(that.incremento)) return false;
+        if (!metal.equals(that.metal)) return false;
+        if (!peso.equals(that.peso)) return false;
+        if (!rango.equals(that.rango)) return false;
+        if (!valorExperto.equals(that.valorExperto)) return false;
+
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        int result = metal.hashCode();
+        result = 31 * result + color.hashCode();
+        result = 31 * result + calidad.hashCode();
+        result = 31 * result + rango.hashCode();
+        result = 31 * result + peso.hashCode();
+        result = 31 * result + incremento.hashCode();
+        result = 31 * result + desplazamiento.hashCode();
+        result = 31 * result + valorExperto.hashCode();
+        return result;
+    }
+
 }

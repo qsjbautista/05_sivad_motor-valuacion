@@ -116,4 +116,55 @@ public class DiamanteDTO extends PiezaDTO {
         this.certificadoDiamante = certificadoDiamante;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "DiamanteDTO{" +
+            "numeroDePiezas='" + numeroDePiezas +
+            ", corte='" + corte + '\'' +
+            ", color='" + color + '\'' +
+            ", claridad='" + claridad + '\'' +
+            ", quilates=" + ((quilates != null) ? quilates.toString() : "null") +
+            ", certificadoDiamante='" + certificadoDiamante + '\'' +
+            ", valorExperto='" + ((valorExperto != null) ? valorExperto.toString() : "null") +
+            '}';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DiamanteDTO)) return false;
+
+        DiamanteDTO that = (DiamanteDTO) o;
+
+        if (numeroDePiezas != that.numeroDePiezas) return false;
+        if (!certificadoDiamante.equals(that.certificadoDiamante)) return false;
+        if (!claridad.equals(that.claridad)) return false;
+        if (!color.equals(that.color)) return false;
+        if (!corte.equals(that.corte)) return false;
+        if (!quilates.equals(that.quilates)) return false;
+        if (!valorExperto.equals(that.valorExperto)) return false;
+
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        int result = corte.hashCode();
+        result = 31 * result + color.hashCode();
+        result = 31 * result + claridad.hashCode();
+        result = 31 * result + quilates.hashCode();
+        result = 31 * result + certificadoDiamante.hashCode();
+        result = 31 * result + valorExperto.hashCode();
+        return result;
+    }
+
 }

@@ -90,8 +90,6 @@ public class PrendaFactoryImpl implements PrendaFactory {
     public Prenda create(PrendaDTO prendaDTO) {
         List<Pieza> piezas = new ArrayList<>();
 
-
-
         Map<Class<? extends Pieza>, Avaluo> mapaEstrategiaAvaluos = new HashMap<>();
         mapaEstrategiaAvaluos.put(Alhaja.class, null);
         mapaEstrategiaAvaluos.put(Diamante.class, null);

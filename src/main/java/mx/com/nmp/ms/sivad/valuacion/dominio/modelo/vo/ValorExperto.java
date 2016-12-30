@@ -88,6 +88,17 @@ public class ValorExperto {
      * {@inheritDoc}
      */
     @Override
+    public String toString() {
+        return "ValorExperto{" +
+            "valor=" + valor != null ? valor.toString() : "null" +
+            ", tipo=" + tipo != null ? tipo.getTipo() : "null" +
+            '}';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

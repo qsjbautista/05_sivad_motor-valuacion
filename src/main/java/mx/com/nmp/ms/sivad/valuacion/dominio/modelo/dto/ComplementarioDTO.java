@@ -30,4 +30,40 @@ public class ComplementarioDTO extends PiezaDTO {
         this.valorExperto = valorExperto;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "ComplementarioDTO{" +
+            "numeroDePiezas='" + numeroDePiezas +
+            ", valorExperto='" + ((valorExperto != null) ? valorExperto.toString() : "null") +
+            '}';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ComplementarioDTO)) return false;
+
+        ComplementarioDTO that = (ComplementarioDTO) o;
+
+        if (numeroDePiezas != that.numeroDePiezas) return false;
+        if (!valorExperto.equals(that.valorExperto)) return false;
+
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        int result = valorExperto.hashCode();
+        return result;
+    }
+
 }
