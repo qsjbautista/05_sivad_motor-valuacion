@@ -8,9 +8,12 @@
 package mx.com.nmp.ms.sivad.valuacion.dominio.factory;
 
 import mx.com.nmp.ms.arquetipo.annotation.validation.NotNull;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.PoliticasCastigo;
-import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.FactorPoliticasCastigo;
 import org.joda.time.DateTime;
+
+import java.math.BigDecimal;
+import java.util.Map;
 
 /**
  * Interface que define el contrato para la fabricación de entidades tipo {@link PoliticasCastigo}
@@ -29,7 +32,8 @@ public interface PoliticasCastigoFactory {
      *
      * @throws IllegalArgumentException Cuando algún argumento sea {@literal null}
      */
-    PoliticasCastigo crearCon(@NotNull FactorPoliticasCastigo factorPoliticasCastigo, @NotNull DateTime fechaListado);
+    PoliticasCastigo crearCon(
+        @NotNull Map<Class<? extends Pieza>, BigDecimal> factorPoliticasCastigo, @NotNull DateTime fechaListado);
 
     /**
      * Crea una entidad a partir del valor de los argumentos. a esta entidad le será inyectado
@@ -44,7 +48,7 @@ public interface PoliticasCastigoFactory {
      * @throws IllegalArgumentException Cuando algún argumento sea {@literal null}
      */
     PoliticasCastigo crearPersistibleCon(
-        @NotNull FactorPoliticasCastigo factorPoliticasCastigo, @NotNull DateTime fechaListado);
+        @NotNull Map<Class<? extends Pieza>, BigDecimal> factorPoliticasCastigo, @NotNull DateTime fechaListado);
 
     /**
      * Crea una entidad a partir de un objeto constructor.

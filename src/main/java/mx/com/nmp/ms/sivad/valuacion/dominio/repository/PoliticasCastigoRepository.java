@@ -33,11 +33,11 @@ public interface PoliticasCastigoRepository {
     /**
      * Permite actualizar el listado de Políticas de castigo.
      *
-     * @param politicasCastigo Políticas de castigo con la cual se desea reemplazar las vigentes.
+     * @param entidad Políticas de castigo con la cual se desea reemplazar las vigentes.
      *
      * @throws IllegalArgumentException Si {@code politicasCastigo} es {@literal null}
      */
-    void actualizar(@NotNull PoliticasCastigo politicasCastigo);
+    void actualizar(@NotNull PoliticasCastigo entidad);
 
     /**
      * Permite consultar el listado de Políticas de castigo con base en una fecha de vigencia.

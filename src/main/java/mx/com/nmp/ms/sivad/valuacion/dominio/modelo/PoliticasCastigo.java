@@ -7,13 +7,14 @@
  */
 package mx.com.nmp.ms.sivad.valuacion.dominio.modelo;
 
-import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.FactorPoliticasCastigo;
 import mx.com.nmp.ms.sivad.valuacion.dominio.repository.PoliticasCastigoRepository;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
 
+import java.math.BigDecimal;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -27,7 +28,7 @@ public class PoliticasCastigo {
     /**
      * Value Object que contiene los factores de castigo
      */
-    private FactorPoliticasCastigo factorPoliticasCastigo;
+    private Map<Class<? extends Pieza>, BigDecimal> factores;
 
     /**
      * Fecha en la que se actualiza la lista de políticas.
@@ -49,7 +50,7 @@ public class PoliticasCastigo {
          *
          * @return Value Object que representa una politica de castigo.
          */
-        FactorPoliticasCastigo getPoliticaCastigo();
+        Map<Class<? extends Pieza>, BigDecimal> getFactores();
 
         /**
          * Provee la fecha en la que se actualiza la lista de políticas.
@@ -68,7 +69,7 @@ public class PoliticasCastigo {
     private PoliticasCastigo(Builder builder, PoliticasCastigoRepository repositorio) {
         super();
 
-        factorPoliticasCastigo = builder.getPoliticaCastigo();
+        factores = builder.getFactores();
         fechaListado = builder.getFechaListado();
 
         this.repositorio = repositorio;
@@ -95,8 +96,8 @@ public class PoliticasCastigo {
      *
      * @return Value Object que representa una politica de castigo.
      */
-    public FactorPoliticasCastigo getFactorPoliticasCastigo() {
-        return factorPoliticasCastigo;
+    public Map<Class<? extends Pieza>, BigDecimal> getFactores() {
+        return factores;
     }
 
     /**
@@ -140,6 +141,6 @@ public class PoliticasCastigo {
     @Override
     public String toString() {
         return String.format("PoliticasCastigo{factorPoliticasCastigo=%s, fechaListado=%s}",
-            factorPoliticasCastigo, fechaListado);
+            factores, fechaListado);
     }
 }

@@ -18,6 +18,27 @@ management:
         ssh:
             port: 2085
 
+spring:
+    datasource:
+        initialize: true
+        schema: classpath:/schema-h2.sql
+#        data: classpath:/data-h2.sql
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:h2:file:./target/h2db/db/sivad_motor_valuacion;DB_CLOSE_DELAY=-1
+        name:
+        username: sivad
+        password:
+    h2:
+        console:
+            enabled: true
+    jpa:
+        database-platform: mx.com.nmp.ms.arquetipo.db.h2.FixedH2Dialect
+        database: H2
+        show-sql: true
+        generate-ddl: true
+        hibernate:
+            ddl-auto: none
+
 # ===================================================================
 # Propiedades especificas de la aplicacion (microservicio)
 # ===================================================================
