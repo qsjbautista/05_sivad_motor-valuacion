@@ -150,8 +150,8 @@ public class Prenda implements PiezaValuable {
      */
     private Avaluo sumarAvaluos(Avaluo avaluoUno, Avaluo avaluoDos) {
         LOGGER.debug(">> sumarAvaluos. " +
-            "Avaluo 1: [" + avaluoUno != null ? avaluoUno.toString() : "null" + "], " +
-            "Avaluo 2: [" + avaluoDos != null ? avaluoDos.toString() : "null" + "]");
+            "Avaluo 1: [" + (avaluoUno != null ? avaluoUno.toString() : "null") + "], " +
+            "Avaluo 2: [" + (avaluoDos != null ? avaluoDos.toString() : "null") + "].");
 
         if (avaluoUno == null) {
             return AvaluoFactory.crearCon(
@@ -175,8 +175,8 @@ public class Prenda implements PiezaValuable {
      */
     private Avaluo aplicarPoliticaCastigo(Avaluo avaluo, BigDecimal factor) {
         LOGGER.debug(">> aplicarPoliticaCastigo. " +
-            "Avaluo: [" + avaluo != null ? avaluo.toString() : "null" + "], " +
-            "Factor: [" + factor != null ? factor.toString() : "null");
+            "Avaluo: [" + (avaluo != null ? avaluo.toString() : "null") + "], " +
+            "Factor: [" + (factor != null ? factor.toString() : "null") + "].");
 
         return AvaluoFactory.crearCon(
             avaluo.valorMinimo().multiply(factor),

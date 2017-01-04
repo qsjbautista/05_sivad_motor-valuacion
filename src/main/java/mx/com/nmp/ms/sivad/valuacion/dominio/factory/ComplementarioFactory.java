@@ -12,7 +12,7 @@ import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto.ComplementarioDTO;
  *
  * @author ngonzalez
  */
-public interface ComplementarioFactory {
+public interface ComplementarioFactory extends PiezaFactory<ComplementarioDTO> {
 
     /**
      * Permite crear una entidad de tipo {@link Complementario} con base en los argumentos recibidos.

@@ -12,7 +12,7 @@ import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto.AlhajaDTO;
  *
  * @author ngonzalez
  */
-public interface AlhajaFactory {
+public interface AlhajaFactory extends PiezaFactory<AlhajaDTO> {
 
     /**
      * Permite crear una entidad de tipo {@link Alhaja} con base en los argumentos recibidos.

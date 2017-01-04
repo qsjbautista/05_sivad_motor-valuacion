@@ -12,7 +12,7 @@ import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto.DiamanteDTO;
  *
  * @author ngonzalez
  */
-public interface DiamanteFactory {
+public interface DiamanteFactory extends PiezaFactory<DiamanteDTO> {
 
     /**
      * Permite crear una entidad de tipo {@link Diamante} con base en los argumentos recibidos.

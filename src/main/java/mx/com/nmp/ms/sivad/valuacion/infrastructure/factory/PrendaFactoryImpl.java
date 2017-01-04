@@ -4,17 +4,9 @@
  */
 package mx.com.nmp.ms.sivad.valuacion.infrastructure.factory;
 
-import mx.com.nmp.ms.arquetipo.journal.util.ApplicationContextProvider;
 import mx.com.nmp.ms.sivad.valuacion.dominio.exception.DomainExceptionCodes;
-import mx.com.nmp.ms.sivad.valuacion.dominio.factory.AlhajaFactory;
-import mx.com.nmp.ms.sivad.valuacion.dominio.factory.ComplementarioFactory;
-import mx.com.nmp.ms.sivad.valuacion.dominio.factory.DiamanteFactory;
-import mx.com.nmp.ms.sivad.valuacion.dominio.factory.PrendaFactory;
-import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Alhaja;
-import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Complementario;
-import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Diamante;
-import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza;
-import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Prenda;
+import mx.com.nmp.ms.sivad.valuacion.dominio.factory.*;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.*;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto.*;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.Avaluo;
 import mx.com.nmp.ms.sivad.valuacion.dominio.repository.PoliticasCastigoRepository;
@@ -22,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -44,6 +37,16 @@ public class PrendaFactoryImpl implements PrendaFactory {
      * Referencia al constructor de la entidad.
      */
     private final Constructor<Prenda> constructor;
+
+    /**
+     * Mapa de estrategia de avalúos por tipo de pieza.
+     */
+    private Map<Class<? extends Pieza>, Avaluo> mapaEstrategiaAvaluos;
+
+    /**
+     * Mapa de estrategia de fábricas por tipo de pieza.
+     */
+    private Map<Class<? extends PiezaDTO>, PiezaFactory> mapaEstrategiaFactory;
 
     /**
      * Referencia hacia la fábrica de entidades tipo {@link Alhaja}.
@@ -81,6 +84,20 @@ public class PrendaFactoryImpl implements PrendaFactory {
 
         constructor = getConstructor(Prenda.class, Prenda.Builder.class,
             PoliticasCastigoRepository.class);
+
+        mapaEstrategiaFactory = new HashMap<>();
+        mapaEstrategiaAvaluos = new HashMap<>();
+    }
+
+    @PostConstruct
+    private void inicializar() {
+        mapaEstrategiaFactory.put(AlhajaDTO.class, alhajaFactory);
+        mapaEstrategiaFactory.put(DiamanteDTO.class, diamanteFactory);
+        mapaEstrategiaFactory.put(ComplementarioDTO.class, complementarioFactory);
+
+        mapaEstrategiaAvaluos.put(Alhaja.class, null);
+        mapaEstrategiaAvaluos.put(Diamante.class, null);
+        mapaEstrategiaAvaluos.put(Complementario.class, null);
     }
 
     /**
@@ -90,24 +107,9 @@ public class PrendaFactoryImpl implements PrendaFactory {
     public Prenda create(PrendaDTO prendaDTO) {
         List<Pieza> piezas = new ArrayList<>();
 
-        Map<Class<? extends Pieza>, Avaluo> mapaEstrategiaAvaluos = new HashMap<>();
-        mapaEstrategiaAvaluos.put(Alhaja.class, null);
-        mapaEstrategiaAvaluos.put(Diamante.class, null);
-        mapaEstrategiaAvaluos.put(Complementario.class, null);
-
         if (!ObjectUtils.isEmpty(prendaDTO) && !ObjectUtils.isEmpty(prendaDTO.getPiezas())) {
             for (PiezaDTO piezaDTO : prendaDTO.getPiezas()) {
-                if (piezaDTO instanceof AlhajaDTO) {
-                    piezas.add(alhajaFactory.create((AlhajaDTO) piezaDTO));
-                }
-
-                if (piezaDTO instanceof DiamanteDTO) {
-                    piezas.add(diamanteFactory.create((DiamanteDTO) piezaDTO));
-                }
-
-                if (piezaDTO instanceof ComplementarioDTO) {
-                    piezas.add(complementarioFactory.create((ComplementarioDTO) piezaDTO));
-                }
+                piezas.add(mapaEstrategiaFactory.get(piezaDTO.getClass()).create(piezaDTO));
             }
         }
 
