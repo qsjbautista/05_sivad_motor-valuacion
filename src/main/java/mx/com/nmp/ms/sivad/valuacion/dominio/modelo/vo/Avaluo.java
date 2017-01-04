@@ -90,9 +90,9 @@ public class Avaluo {
 
         Avaluo avaluo = (Avaluo) o;
 
-        return Objects.equals(valorMinimo, avaluo.valorMinimo) &&
-            Objects.equals(valorPromedio, avaluo.valorPromedio) &&
-            Objects.equals(valorMaximo, avaluo.valorMaximo);
+        return Objects.equals(valorMinimo(), avaluo.valorMinimo()) &&
+            Objects.equals(valorPromedio(), avaluo.valorPromedio()) &&
+            Objects.equals(valorMaximo(), avaluo.valorMaximo());
     }
 
     /**

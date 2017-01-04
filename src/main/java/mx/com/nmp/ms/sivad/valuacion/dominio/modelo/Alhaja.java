@@ -299,7 +299,7 @@ public class Alhaja extends Pieza implements CaracteristicasGramoOroProveedor, M
      * @return Incremento a aplicar.
      */
     private BigDecimal recuperarIncremento() {
-        if (ObjectUtils.isEmpty(incremento) || incremento.compareTo(BigDecimal.ZERO) <= 0) {
+        if (ObjectUtils.isEmpty(incremento)) {
             return BigDecimal.ONE;
         } else {
             return incremento;
@@ -312,7 +312,7 @@ public class Alhaja extends Pieza implements CaracteristicasGramoOroProveedor, M
      * @return Desplazamiento a aplicar.
      */
     private BigDecimal recuperarDesplazamiento() {
-        if (ObjectUtils.isEmpty(desplazamiento) || desplazamiento.compareTo(BigDecimal.ZERO) <= 0) {
+        if (ObjectUtils.isEmpty(desplazamiento)) {
             return BigDecimal.ONE;
         } else {
             return desplazamiento;

@@ -7,33 +7,39 @@
  */
 package mx.com.nmp.ms.sivad.valuacion.dominio;
 
+import mx.com.nmp.ms.sivad.valuacion.MotorValuacionApplication;
+import mx.com.nmp.ms.sivad.valuacion.dominio.factory.AvaluoFactory;
+import mx.com.nmp.ms.sivad.valuacion.dominio.factory.ComplementarioFactory;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Complementario;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.Avaluo;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto;
-import mx.com.nmp.ms.sivad.valuacion.infrastructure.factory.ConstructorUtil;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import java.lang.reflect.Constructor;
+import javax.inject.Inject;
 import java.math.BigDecimal;
 
 import static org.junit.Assert.*;
 
 /**
- * Pruebas de unidad para la clase {@link Complementario}
+ * Clase de pruebas para {@link Complementario}
  *
  * @author <a href="https://wiki.quarksoft.net/display/~cachavez">Carlos Chávez Melena</a>
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = MotorValuacionApplication.class)
 public class ComplementarioUTest {
 
-    private Constructor<Complementario> constructor;
+    @Inject
+    private ComplementarioFactory fabrica;
 
     /**
      * Constructor.
      */
     public ComplementarioUTest() {
         super();
-
-        constructor = ConstructorUtil.getConstructor(Complementario.class, Complementario.Builder.class);
     }
 
     /**
@@ -42,9 +48,17 @@ public class ComplementarioUTest {
      */
     @Test
     public void crearComplementarioTest() {
-        Complementario test = ConstructorUtil.getInstancia(constructor, getBuilder(1, BigDecimal.valueOf(238.57)));
+        Complementario test = fabrica.create(getBuilder(3, BigDecimal.valueOf(238.57), ValorExperto.TipoEnum.UNITARIO));
+        ValorExperto valorExperto = new ValorExperto(BigDecimal.valueOf(238.57), ValorExperto.TipoEnum.UNITARIO);
+        BigDecimal valor = BigDecimal.valueOf(715.71);
+        Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
+
+        Avaluo avaluo = test.valuar();
 
         assertNotNull(test);
+        assertEquals(valorExperto, test.getValorExperto());
+        assertEquals(resultado, avaluo);
+        assertEquals(test.avaluo(), avaluo);
     }
 
     /**
@@ -53,7 +67,7 @@ public class ComplementarioUTest {
      */
     @Test
     public void valuarComplementarioTest() {
-        Complementario test = ConstructorUtil.getInstancia(constructor, getBuilder(1, BigDecimal.valueOf(238.57)));
+        Complementario test = fabrica.create(getBuilder(1, BigDecimal.valueOf(238.57), null));
 
         Avaluo avaluo = test.valuar();
 
@@ -68,7 +82,7 @@ public class ComplementarioUTest {
      */
     @Test
     public void toStringComplementarioTest() {
-        Complementario test = ConstructorUtil.getInstancia(constructor, getBuilder(1, BigDecimal.valueOf(238.57)));
+        Complementario test = fabrica.create(getBuilder(1, BigDecimal.valueOf(238.57), null));
 
         assertNotNull(test.toString());
     }
@@ -79,7 +93,7 @@ public class ComplementarioUTest {
      */
     @Test
     public void hashCodeComplementarioTest() {
-        Complementario test = ConstructorUtil.getInstancia(constructor, getBuilder(1, BigDecimal.valueOf(238.57)));
+        Complementario test = fabrica.create(getBuilder(1, BigDecimal.valueOf(238.57), null));
 
         assertNotNull(test.hashCode());
     }
@@ -90,9 +104,9 @@ public class ComplementarioUTest {
      */
     @Test
     public void equalsComplementarioTest() {
-        Complementario test = ConstructorUtil.getInstancia(constructor, getBuilder(1, BigDecimal.valueOf(238.57)));
-        Complementario test2 = ConstructorUtil.getInstancia(constructor, getBuilder(1, BigDecimal.valueOf(238.57)));
-        Complementario test3 = ConstructorUtil.getInstancia(constructor, getBuilder(1, BigDecimal.valueOf(238.51)));
+        Complementario test = fabrica.create(getBuilder(1, BigDecimal.valueOf(238.57), null));
+        Complementario test2 = fabrica.create(getBuilder(1, BigDecimal.valueOf(238.57), null));
+        Complementario test3 = fabrica.create(getBuilder(1, BigDecimal.valueOf(238.51), null));
 
         assertEquals(test, test);
         assertFalse(test.equals(null));
@@ -101,7 +115,8 @@ public class ComplementarioUTest {
         assertFalse(test.equals(test3));
     }
 
-    private Complementario.Builder getBuilder(final int numeroDePiezas, final BigDecimal valorExperto) {
+    private Complementario.Builder getBuilder(
+            final int numeroDePiezas, final BigDecimal valorExperto, final ValorExperto.TipoEnum tipoEnum) {
         return new Complementario.Builder() {
 
             @Override
@@ -111,7 +126,7 @@ public class ComplementarioUTest {
 
             @Override
             public ValorExperto getValorExperto() {
-                return new ValorExperto(valorExperto, ValorExperto.TipoEnum.TOTAL);
+                return new ValorExperto(valorExperto, tipoEnum == null ? ValorExperto.TipoEnum.TOTAL : tipoEnum);
             }
         };
     }
