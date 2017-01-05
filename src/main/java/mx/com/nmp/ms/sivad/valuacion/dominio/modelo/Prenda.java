@@ -5,11 +5,13 @@
 package mx.com.nmp.ms.sivad.valuacion.dominio.modelo;
 
 import com.codahale.metrics.annotation.Timed;
+import mx.com.nmp.ms.sivad.valuacion.dominio.exception.PoliticaCastigoNoEncontradaException;
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.AvaluoFactory;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.Avaluo;
 import mx.com.nmp.ms.sivad.valuacion.dominio.repository.PoliticasCastigoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.ObjectUtils;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -105,40 +107,35 @@ public class Prenda implements PiezaValuable {
         }
 
 
-        // EN CASO DE QUE EXISTAN POLÍTICAS DE CASTIGO.
-        PoliticasCastigo politicasCastigo = politicasCastigoRepository.consultar();
+        // SE CONSULTAN LAS POLÍTICAS DE CASTIGO.
+        PoliticasCastigo politicasCastigo = null;
 
-        // TODO - Modificar cuando se tenga la versión genérica de políticas de castigo.
-
-//        if (!ObjectUtils.isEmpty(politicasCastigo) &&
-//            !ObjectUtils.isEmpty(politicasCastigo.getFactorPoliticasCastigo())) {
-//
-//            if (!ObjectUtils.isEmpty(politicasCastigo.getFactorPoliticasCastigo().getFactorAlhaja())) {
-//                avaluoAlhajas = aplicarPoliticaCastigo(avaluoAlhajas,
-//                    politicasCastigo.getFactorPoliticasCastigo().getFactorAlhaja());
-//            }
-//
-//            if (!ObjectUtils.isEmpty(politicasCastigo.getFactorPoliticasCastigo().getFactorDiamante())) {
-//                avaluoDiamantes = aplicarPoliticaCastigo(avaluoDiamantes,
-//                    politicasCastigo.getFactorPoliticasCastigo().getFactorDiamante());
-//            }
-//
-//            if (!ObjectUtils.isEmpty(politicasCastigo.getFactorPoliticasCastigo().getFactorComplemento())) {
-//                avaluoComplementarios = aplicarPoliticaCastigo(avaluoComplementarios,
-//                    politicasCastigo.getFactorPoliticasCastigo().getFactorComplemento());
-//            }
-//        }
+        try {
+            politicasCastigo = politicasCastigoRepository.consultar();
+        } catch (PoliticaCastigoNoEncontradaException e) {
+            LOGGER.warn("No existen políticas de castigo configuradas.");
+        } catch (Exception e) {
+            LOGGER.error("Ocurrió un error al consultar las políticas de castigo.");
+            throw e;
+        }
 
 
         // SE CREA EL AVALÚO CON BASE EN LOS VALORES DEFINITIVOS.
         Avaluo avaluoTotal = null;
 
         for (Map.Entry<Class<? extends Pieza>, Avaluo> entry : mapaEstrategiaAvaluos.entrySet()) {
+
+            // EN CASO DE QUE EXISTAN POLÍTICAS DE CASTIGO.
+            if (!ObjectUtils.isEmpty(politicasCastigo) && !ObjectUtils.isEmpty(politicasCastigo.getFactores())) {
+                mapaEstrategiaAvaluos.put(entry.getKey(),
+                    aplicarPoliticaCastigo(entry.getValue(), politicasCastigo.getFactores().get(entry.getKey())));
+            }
+
             avaluoTotal = sumarAvaluos(avaluoTotal, entry.getValue());
         }
 
-        return avaluoTotal;
 
+        return avaluoTotal;
     }
 
     /**
@@ -150,8 +147,8 @@ public class Prenda implements PiezaValuable {
      */
     private Avaluo sumarAvaluos(Avaluo avaluoUno, Avaluo avaluoDos) {
         LOGGER.debug(">> sumarAvaluos. " +
-            "Avaluo 1: [" + (avaluoUno != null ? avaluoUno.toString() : "null") + "], " +
-            "Avaluo 2: [" + (avaluoDos != null ? avaluoDos.toString() : "null") + "].");
+            "Avaluo 1: [" + ((avaluoUno != null) ? avaluoUno.toString() : "null") + "], " +
+            "Avaluo 2: [" + ((avaluoDos != null) ? avaluoDos.toString() : "null") + "].");
 
         if (avaluoUno == null) {
             return AvaluoFactory.crearCon(
@@ -160,10 +157,15 @@ public class Prenda implements PiezaValuable {
                 avaluoDos.valorMaximo());
         }
 
-        return AvaluoFactory.crearCon(
+        Avaluo result = AvaluoFactory.crearCon(
             avaluoUno.valorMinimo().add(avaluoDos.valorMinimo()),
             avaluoUno.valorPromedio().add(avaluoDos.valorPromedio()),
             avaluoUno.valorMaximo().add(avaluoDos.valorMaximo()));
+
+        LOGGER.debug("<< sumarAvaluos. " +
+            "Avaluo Result: [" + ((result != null) ? result.toString() : "null") + "].");
+
+        return result;
     }
 
     /**
@@ -175,13 +177,18 @@ public class Prenda implements PiezaValuable {
      */
     private Avaluo aplicarPoliticaCastigo(Avaluo avaluo, BigDecimal factor) {
         LOGGER.debug(">> aplicarPoliticaCastigo. " +
-            "Avaluo: [" + (avaluo != null ? avaluo.toString() : "null") + "], " +
-            "Factor: [" + (factor != null ? factor.toString() : "null") + "].");
+            "Avaluo: [" + ((avaluo != null) ? avaluo.toString() : "null") + "], " +
+            "Factor: [" + ((factor != null) ? factor.toString() : "null") + "].");
 
-        return AvaluoFactory.crearCon(
+        Avaluo result = AvaluoFactory.crearCon(
             avaluo.valorMinimo().multiply(factor),
             avaluo.valorPromedio().multiply(factor),
             avaluo.valorMaximo().multiply(factor));
+
+        LOGGER.debug("<< aplicarPoliticaCastigo. " +
+            "Avaluo Result: [" + ((result != null) ? result.toString() : "null") + "].");
+
+        return result;
     }
 
 
