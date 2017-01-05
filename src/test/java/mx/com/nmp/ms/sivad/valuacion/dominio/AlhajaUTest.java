@@ -43,6 +43,7 @@ import java.math.BigDecimal;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
@@ -102,6 +103,7 @@ public class AlhajaUTest {
         assertNotNull(avaluo);
         assertEquals(resultado, avaluo);
         assertEquals(test.avaluo(), avaluo);
+        assertTrue(avaluo == test.valuar());
     }
 
     /**
@@ -125,6 +127,7 @@ public class AlhajaUTest {
         assertNotNull(avaluo);
         assertEquals(resultado, avaluo);
         assertEquals(test.avaluo(), avaluo);
+        assertTrue(avaluo == test.valuar());
     }
 
     /**
@@ -148,6 +151,7 @@ public class AlhajaUTest {
         assertNotNull(avaluo);
         assertEquals(resultado, avaluo);
         assertEquals(test.avaluo(), avaluo);
+        assertTrue(avaluo == test.valuar());
     }
 
     /**
@@ -171,6 +175,7 @@ public class AlhajaUTest {
         assertNotNull(avaluo);
         assertEquals(resultado, avaluo);
         assertEquals(test.avaluo(), avaluo);
+        assertTrue(avaluo == test.valuar());
     }
 
     /**
@@ -192,6 +197,7 @@ public class AlhajaUTest {
         assertNotNull(avaluo);
         assertEquals(resultado, avaluo);
         assertEquals(test.avaluo(), avaluo);
+        assertTrue(avaluo == test.valuar());
     }
 
     /**
@@ -214,6 +220,7 @@ public class AlhajaUTest {
         assertNotNull(avaluo);
         assertEquals(resultado, avaluo);
         assertEquals(test.avaluo(), avaluo);
+        assertTrue(avaluo == test.valuar());
     }
 
     /**
@@ -236,6 +243,7 @@ public class AlhajaUTest {
         assertNotNull(avaluo);
         assertEquals(resultado, avaluo);
         assertEquals(test.avaluo(), avaluo);
+        assertTrue(avaluo == test.valuar());
     }
 
     /**
@@ -259,6 +267,7 @@ public class AlhajaUTest {
         assertNotNull(avaluo);
         assertEquals(resultado, avaluo);
         assertEquals(test.avaluo(), avaluo);
+        assertTrue(avaluo == test.valuar());
     }
 
     /**
@@ -282,6 +291,7 @@ public class AlhajaUTest {
         assertNotNull(avaluo);
         assertEquals(resultado, avaluo);
         assertEquals(test.avaluo(), avaluo);
+        assertTrue(avaluo == test.valuar());
     }
 
     /**
@@ -301,11 +311,7 @@ public class AlhajaUTest {
 
         assertNotNull(test);
 
-        Avaluo avaluo = test.valuar();
-
-        assertNotNull(avaluo);
-        assertEquals(resultado, avaluo);
-        assertEquals(test.avaluo(), avaluo);
+        test.valuar();
     }
 
     private void addComportamientoGramoOro(BigDecimal retorno) {

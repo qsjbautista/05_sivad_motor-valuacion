@@ -38,7 +38,7 @@ public class PoliticasCastigoRepositoryImpl implements PoliticasCastigoRepositor
     private static final Logger LOGGER = LoggerFactory.getLogger(PoliticasCastigoRepositoryImpl.class);
 
     /**
-     * Referencia al repositorio PA.
+     * Referencia al repositorio JPA.
      */
     @Inject
     private PoliticasCastigoJpaRepository repositorio;
@@ -48,12 +48,6 @@ public class PoliticasCastigoRepositoryImpl implements PoliticasCastigoRepositor
      */
     @Inject
     private PoliticasCastigoFactory fabrica;
-
-    /*
-     * Referencia a la fabrica de Value Objects
-     *
-    @Inject
-    private FactorPoliticasCastigoFactory fabricaVo;*/
 
     /**
      * Constructor.
@@ -74,8 +68,6 @@ public class PoliticasCastigoRepositoryImpl implements PoliticasCastigoRepositor
         if (ObjectUtils.isEmpty(politica)) {
             throw new PoliticaCastigoNoEncontradaException("No existen politicas de castigo vigentes");
         }
-
-        //politica.setFabrica(fabricaVo);
 
         LOGGER.debug("creando entidad {} desde {}", PoliticasCastigo.class.getSimpleName(), politica);
 
@@ -118,10 +110,7 @@ public class PoliticasCastigoRepositoryImpl implements PoliticasCastigoRepositor
         List<PoliticasCastigo> result = new ArrayList<>(politicas.size());
 
         for (PoliticasCastigoJpa p : politicas) {
-            //p.setFabrica(fabricaVo);
-
             LOGGER.debug("creando entidad {} desde {}", PoliticasCastigo.class.getSimpleName(), p);
-
             result.add(fabrica.crearDesde(p));
         }
 

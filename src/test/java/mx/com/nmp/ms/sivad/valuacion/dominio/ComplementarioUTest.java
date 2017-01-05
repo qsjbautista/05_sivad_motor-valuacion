@@ -59,6 +59,7 @@ public class ComplementarioUTest {
         assertEquals(valorExperto, test.getValorExperto());
         assertEquals(resultado, avaluo);
         assertEquals(test.avaluo(), avaluo);
+        assertTrue(avaluo == test.valuar());
     }
 
     /**
@@ -74,6 +75,7 @@ public class ComplementarioUTest {
         assertNotNull(test);
         assertNotNull(avaluo);
         assertNotNull(test.avaluo());
+        assertTrue(avaluo == test.valuar());
     }
 
     /**

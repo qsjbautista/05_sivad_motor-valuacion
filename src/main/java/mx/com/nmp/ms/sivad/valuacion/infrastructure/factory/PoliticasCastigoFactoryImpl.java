@@ -136,6 +136,10 @@ public class PoliticasCastigoFactoryImpl implements PoliticasCastigoFactory {
     private void validarBuilder(PoliticasCastigo.Builder builder) {
         validarFactores(builder.getFactores());
         Assert.notNull(builder.getFechaListado());
+
+        if (builder.getFechaListado().isAfterNow()) {
+            throw new IllegalArgumentException("La fecha de vigencia no puede ser una fecha futura");
+        }
     }
 
     /**
@@ -144,7 +148,7 @@ public class PoliticasCastigoFactoryImpl implements PoliticasCastigoFactory {
      * @param factores Mapa con los factores de politicas de castigo
      */
     private void validarFactores(Map<Class<? extends Pieza>, BigDecimal> factores) {
-        Assert.notNull(factores);
+        Assert.notEmpty(factores);
         Assert.isTrue(!factores.containsKey(null));
         Assert.isTrue(!factores.containsValue(null));
 

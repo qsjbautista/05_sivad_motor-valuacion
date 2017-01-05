@@ -46,9 +46,9 @@ public class PoliticasCastigo {
      */
     public interface Builder {
         /**
-         * Provee el value object que representa una politica de castigo.
+         * Provee el value object que representa una política de castigo.
          *
-         * @return Value Object que representa una politica de castigo.
+         * @return Value Object que representa una política de castigo.
          */
         Map<Class<? extends Pieza>, BigDecimal> getFactores();
 
@@ -61,7 +61,7 @@ public class PoliticasCastigo {
     }
 
     /**
-     * Constructor. Privado para que solo la fabrica pueda crear instancias.
+     * Constructor. Privado para que solo la fábrica pueda crear instancias.
      *
      * @param builder Objeto con los datos necesarios para construir la instancia.
      * @param repositorio Referencia al repositorio de datos.
@@ -83,18 +83,18 @@ public class PoliticasCastigo {
 
 
         if (ObjectUtils.isEmpty(repositorio)) {
-            LOGGER.info("No se puede actualizar el litado de politicas. " +
-                "Ya se encuentra almacenda la entidad o no contiene referencia al repositorio de datos.");
+            LOGGER.info("No se puede actualizar el litado de políticas. " +
+                "Ya se encuentra almacenada la entidad o no contiene referencia al repositorio de datos.");
         } else {
-            LOGGER.debug("Actualizando listado de politicas de castigo con {}", this);
+            LOGGER.debug("Actualizando listado de políticas de castigo con {}", this);
             repositorio.actualizar(this);
         }
     }
 
     /**
-     * Recupera el value object que representa una politica de castigo.
+     * Recupera el value object que representa una política de castigo.
      *
-     * @return Value Object que representa una politica de castigo.
+     * @return Value Object que representa una política de castigo.
      */
     public Map<Class<? extends Pieza>, BigDecimal> getFactores() {
         return factores;

@@ -54,7 +54,7 @@ public class PoliticasCastigoJpa implements PoliticasCastigo.Builder {
 
     @ElementCollection(fetch = EAGER)
     @MapKeyColumn(name = "pieza")
-    @Column(name = "factor")
+    @Column(name = "factor", scale = 4, precision = 4, nullable = false)
     @CollectionTable(name = "tc_politica_castigo_pieza_factores", joinColumns = @JoinColumn(name = "politica"))
     private Map<Class<? extends Pieza>, BigDecimal> factores;
 

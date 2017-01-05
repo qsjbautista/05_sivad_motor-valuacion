@@ -31,13 +31,13 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 /**
- * Utilizado por la consola CRaSH para administrar el listado de ploticas de castigo.
+ * Utilizado por la consola CRaSH para administrar el listado de políticas de castigo.
  *
  * @author <a href="https://wiki.quarksoft.net/display/~cachavez">Carlos Chávez Melena</a>
  */
 @SuppressWarnings("GroovyUnusedDeclaration")
 @Usage("administración de las Políticas de Castigo")
-@Man("""Comando que prove las siguientes operaciones sobre las Políticas de Castigo:
+@Man("""Comando que provee las siguientes operaciones sobre las Políticas de Castigo:
 Sustituir las políticas vigentes actuales por nuevas Políticas de Castigo.
 Consultar las Políticas de Castigo con base en una fecha de vigencia.""")
 class PoliticasCastigoCommand {
@@ -54,20 +54,20 @@ class PoliticasCastigoCommand {
 en formato centenas '.' decimales""")
     void actualizar(InvocationContext context,
                    @Usage("porcentaje de castigo para Diamante.")
-                   @Man("Porcentaje de castigo para Diamante (ej 60, 54.57)")
+                   @Man("Porcentaje de castigo para Diamante (ej. 60, 54.57)")
                    @Required @Option(names = ["d", "porcentajeDiamante"]) String porcentajeDiamante,
                    @Usage("porcentaje de castigo para Alhaja.")
-                   @Man("Porcentaje de castigo para Alhaja (ej 110.1, 30)")
+                   @Man("Porcentaje de castigo para Alhaja (ej. 110.1, 30)")
                    @Required @Option(names = ["a", "porcentajeAlhaja"])String porcentajeAlhaja,
                    @Usage("porcentaje de castigo para Complemento.")
-                   @Man("Porcentaje de castigo para Complemento (ej 45, 92.03)")
+                   @Man("Porcentaje de castigo para Complemento (ej. 45, 92.03)")
                    @Required @Option(names = ["c", "porcentajeComplemento"])String porcentajeComplemento) {
         FactorPoliticasCastigoFactory fabricaVo =
             context.attributes["spring.beanfactory"].getBean(FactorPoliticasCastigoFactory)
         PoliticasCastigoFactory fabrica = context.attributes["spring.beanfactory"].getBean(PoliticasCastigoFactory);
 
         /**
-         * Convierte el porcentaje de castigo ingresao a factor.
+         * Convierte el porcentaje de castigo ingresado a factor.
          */
         try {
             BigDecimal fd = convertirAFactor(porcentajeDiamante)
@@ -78,13 +78,13 @@ en formato centenas '.' decimales""")
             PoliticasCastigo entidad = fabrica.crearPersistibleCon(vo, DateTime.now());
 
             entidad.actualizar();
-            out.println("El Listado de Politicas de Castigo fue actualizado correctamente.", green)
+            out.println("El Listado de Políticas de Castigo fue actualizado correctamente.", green)
         } catch (RuntimeException e) {
             LOGGER.info("Error al procesar la solicitud", e)
             out.println(e.getMessage(), red);
         } catch (Exception e) {
-            LOGGER.info("Ocurrio un error al guardar las politicas de castigo", e)
-            out.println("Ocurrió un error inesperado al actualizar el Listado de Politicas de Castigo", red)
+            LOGGER.info("Ocurrio un error al guardar las políticas de castigo", e)
+            out.println("Ocurrió un error inesperado al actualizar el Listado de Políticas de Castigo", red)
         }
     }
 
@@ -116,8 +116,8 @@ en formato centenas '.' decimales""")
             LOGGER.info("No se encontro resultado", e)
             procesarMensajeError(fechaVigencia)
         } catch (Exception e) {
-            LOGGER.info("Error al recuperar las politicas de castigo", e)
-            out.println("Ocurrió un error inesperado al consultar el Listado de Politicas de Castigo", red)
+            LOGGER.info("Error al recuperar las políticas de castigo", e)
+            out.println("Ocurrió un error inesperado al consultar el Listado de Políticas de Castigo", red)
         }
     }
 
@@ -132,7 +132,7 @@ en formato centenas '.' decimales""")
         try {
             BigDecimal numero = valor.toBigDecimal()
             /**
-             * Convierte el porcentaje de castigo ingresao a factor.
+             * Convierte el porcentaje de castigo ingresado a factor.
              */
             ValidadorNumero.validarPositivo(numero) / FACTOR
         } catch (NumberFormatException e) {
@@ -180,7 +180,7 @@ en formato centenas '.' decimales""")
     }
 
     /**
-     * Crea el mensaje cuando se presenta un error en la consulta de las politicas
+     * Crea el mensaje cuando se presenta un error en la consulta de las políticas
      *
      * @param fecha Fecha de consulta.
      *
@@ -196,7 +196,7 @@ en formato centenas '.' decimales""")
             msj = "vigente."
         }
 
-        out.println("No existe un Listado de Politicas de Castigo $msj", red)
+        out.println("No existe un Listado de Políticas de Castigo $msj", red)
     }
 
     /**
@@ -206,7 +206,7 @@ en formato centenas '.' decimales""")
      *
      * @return {@link DateTime}
      *
-     * @throws IllegalArgumentException Si el formato no es valido o es una fecha futura.
+     * @throws IllegalArgumentException Si el formato no es válido o es una fecha futura.
      */
     private static DateTime convertirAFecha(String valor) {
         DateTime fecha
@@ -231,7 +231,7 @@ en formato centenas '.' decimales""")
     }
 
     /**
-     * Recupera las politicas de castigo vigentes o por fecha especificada.
+     * Recupera las políticas de castigo vigentes o por fecha especificada.
      *
      * @param repositorio Repositorio para recuperar los datos.
      * @param fecha Fecha de consulta.
