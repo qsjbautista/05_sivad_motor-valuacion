@@ -76,7 +76,7 @@ public class PoliticasCastigoITest {
     @Transactional
     public void actualizarTest() {
         Map<Class<? extends Pieza>, BigDecimal> vo = fabricaVo
-            .crearCon(BigDecimal.valueOf(30), BigDecimal.valueOf(40), BigDecimal.valueOf(40));
+            .crearCon(BigDecimal.valueOf(0.30), BigDecimal.valueOf(0.40), BigDecimal.valueOf(0.40));
         assertNotNull(vo);
 
         DateTime fecha = DateTime.now();
@@ -165,7 +165,7 @@ public class PoliticasCastigoITest {
 
         PoliticasCastigo test = fabrica.crearCon(vo, fecha);
         PoliticasCastigo test3 = fabrica.crearCon(vo, fecha);
-        PoliticasCastigo test4 = fabrica.crearCon(vo, fecha.plusMinutes(1));
+        PoliticasCastigo test4 = fabrica.crearCon(vo, fecha.minusHours(1));
 
         assertEquals(test, test);
         assertFalse(test.equals(null));
