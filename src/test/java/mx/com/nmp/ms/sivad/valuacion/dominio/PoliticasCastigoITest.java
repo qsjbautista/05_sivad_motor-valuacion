@@ -12,11 +12,18 @@ import mx.com.nmp.ms.sivad.valuacion.dominio.factory.FactorPoliticasCastigoFacto
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.PoliticasCastigoFactory;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.PoliticasCastigo;
+import mx.com.nmp.ms.sivad.valuacion.dominio.repository.PoliticasCastigoRepository;
+import mx.com.nmp.ms.sivad.valuacion.infrastructure.jpa.dominio.PoliticasCastigoJpa;
+import mx.com.nmp.ms.sivad.valuacion.infrastructure.jpa.repository.PoliticasCastigoJpaRepository;
 import org.joda.time.DateTime;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
@@ -27,6 +34,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
 
 /**
  * Clase de pruebas para {@link PoliticasCastigo}
@@ -42,8 +51,20 @@ public class PoliticasCastigoITest {
     @Inject
     private PoliticasCastigoFactory fabrica;
 
+    @Inject
+    private PoliticasCastigoRepository repositorio;
+
+    @MockBean
+    private PoliticasCastigoJpaRepository mock;
+
     public PoliticasCastigoITest() {
         super();
+    }
+
+    @Before
+    public void inicializar() {
+        ReflectionTestUtils.setField(repositorio, "repositorio", mock);
+        ReflectionTestUtils.setField(fabrica, "repositorio", repositorio);
     }
 
     /**
@@ -85,6 +106,7 @@ public class PoliticasCastigoITest {
 
         assertNotNull(test);
 
+        when(mock.saveAndFlush(any(PoliticasCastigoJpa.class))).thenReturn(new PoliticasCastigoJpa());
         test.actualizar();
 
         assertEquals(vo, test.getFactores());
