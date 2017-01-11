@@ -121,6 +121,15 @@ public class PrendaFactoryImpl implements PrendaFactory {
      * {@inheritDoc}
      */
     @Override
+    public Prenda create(List<Pieza> piezas) {
+        final Prenda.Builder builder = getBuilder(piezas, mapaEstrategiaAvaluos);
+        return create(builder);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Prenda create(Prenda.Builder builder) {
         validarBuilder(builder);
         return getInstancia(constructor, builder, politicasCastigoRepository);

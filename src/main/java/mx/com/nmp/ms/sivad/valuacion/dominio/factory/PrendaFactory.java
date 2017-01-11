@@ -4,8 +4,11 @@
  */
 package mx.com.nmp.ms.sivad.valuacion.dominio.factory;
 
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Prenda;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto.PrendaDTO;
+
+import java.util.List;
 
 /**
  * Interface que define el contrato para la fabricación de entidades tipo {@link Prenda}.
@@ -21,6 +24,14 @@ public interface PrendaFactory {
      * @return La entidad creada.
      */
     public Prenda create(PrendaDTO prendaDTO);
+
+    /**
+     * Permite crear una entidad de tipo {@link Prenda} con base en los argumentos recibidos.
+     *
+     * @param piezas Lista de piezas que conforman la prenda.
+     * @return La entidad creada.
+     */
+    public Prenda create(List<Pieza> piezas);
 
     /**
      * Permite crear una entidad de tipo {@link Prenda} con base en el builder recibido.

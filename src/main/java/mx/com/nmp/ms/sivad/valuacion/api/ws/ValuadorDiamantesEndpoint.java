@@ -1,32 +1,132 @@
+/**
+ * Proyecto:        NMP - Microservicio de Motor de Valuación
+ * Quarksoft S.A.P.I. de C.V. – Todos los derechos reservados. Para uso exclusivo de Nacional Monte de Piedad.
+ */
 package mx.com.nmp.ms.sivad.valuacion.api.ws;
 
+import mx.com.nmp.ms.sivad.valuacion.api.ws.exception.WebServiceExceptionCodes;
+import mx.com.nmp.ms.sivad.valuacion.api.ws.exception.WebServiceExceptionFactory;
+import mx.com.nmp.ms.sivad.valuacion.dominio.exception.ValuacionException;
+import mx.com.nmp.ms.sivad.valuacion.dominio.factory.AlhajaFactory;
+import mx.com.nmp.ms.sivad.valuacion.dominio.factory.ComplementarioFactory;
+import mx.com.nmp.ms.sivad.valuacion.dominio.factory.DiamanteFactory;
+import mx.com.nmp.ms.sivad.valuacion.dominio.factory.PrendaFactory;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Complementario;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto.AlhajaDTO;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto.ComplementarioDTO;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto.DiamanteDTO;
 import mx.com.nmp.ms.sivad.valuacion.ws.diamantes.ValuadorDiamantesService;
 import mx.com.nmp.ms.sivad.valuacion.ws.diamantes.datatypes.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.ObjectUtils;
 
-import java.math.BigDecimal;
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
- * @author osanchez
+ * Implementación de ValuadorDiamantesService, la cual expone los servicios que permitirán realizar
+ * la valuación de las prendas.
+ *
+ * @author osanchez, ngonzalez
  */
 public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
 
+    /**
+     * Utilizada para manipular los mensajes informativos y de error.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(ValuadorDiamantesEndpoint.class);
 
     /**
-     * @param parameters
-     * @return returns mx.com.nmp.ms.sivad.valuacion.ws.diamantes.datatypes.ValuarPrendaBasicoResponse
+     * Referencia
+     */
+    @Inject
+    private PrendaFactory prendaFactory;
+
+    /**
+     * Referencia hacia la fábrica de entidades tipo {@link mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Alhaja}.
+     */
+    @Inject
+    private AlhajaFactory alhajaFactory;
+
+    /**
+     * Referencia hacia la fábrica de entidades tipo {@link mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Diamante}.
+     */
+    @Inject
+    private DiamanteFactory diamanteFactory;
+
+    /**
+     * Referencia hacia la fábrica de entidades tipo {@link Complementario}.
+     */
+    @Inject
+    private ComplementarioFactory complementarioFactory;
+
+    /**
+     * Mapa utilizado para mantener la relación de la pieza original con la pieza valuada.
+     */
+    private Map<Pieza, mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza> relacionPiezas;
+
+
+
+    // METODOS
+
+    /**
+     * Servicio que permite valuar una pieza compuesta de alhajas, diamantes y/o complemento con base en
+     * las tablas de referencia: industriales y comerciales.
+     *
+     * @param parameters La pieza compuesta que se desea valuar.
+     * @return Se devuelve el mensaje de entrada enriquecido con los valores (mínimo, promedio y máximo)
+     * correspondientes a cada elemento valuado de la pieza (Alhaja / Diamante / Complemento); así como
+     * los valores (mínimo, promedio y máximo) correspondientes al valor total de la Prenda.
      */
     @Override
     public ValuarPrendaBasicoResponse valuarPrendaBasico(ValuarPrendaBasicoRequest parameters) {
-        LOGGER.info(">> valuarPrendaBasico({})", parameters);
+        LOGGER.info(">> valuarPrendaBasico({}).", parameters);
 
+        // SE CONSTRUYE LA PRENDA QUE SE VA A VALUAR.
         Prenda prenda = parameters.getPrenda();
-        prenda.getAvaluo().setValorMinimo(BigDecimal.ONE);
-        prenda.getAvaluo().setValorPromedio(BigDecimal.ONE);
-        prenda.getAvaluo().setValorMaximo(BigDecimal.TEN);
+        List<mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza> piezas = crearListaPiezas(prenda);
 
+        mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Prenda prendaValuable;
+        try {
+            prendaValuable = prendaFactory.create(piezas);
+        } catch (IllegalArgumentException e) {
+            LOGGER.error("<< valuarPrendaBasico. " +
+                WebServiceExceptionCodes.NMPMV003.getMessageException());
+
+            throw WebServiceExceptionFactory.crearWebServiceExceptionCon(
+                WebServiceExceptionCodes.NMPMV003.getCodeException(),
+                WebServiceExceptionCodes.NMPMV003.getMessageException(), e);
+        }
+
+        mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.Avaluo avaluo;
+        try {
+            avaluo = prendaValuable.valuar();
+        } catch (ValuacionException e) {
+            LOGGER.error("<< valuarPrendaBasico. " +
+                WebServiceExceptionCodes.NMPMV009.getMessageException());
+
+            throw WebServiceExceptionFactory.crearWebServiceExceptionCon(
+                WebServiceExceptionCodes.NMPMV009.getCodeException(),
+                WebServiceExceptionCodes.NMPMV009.getMessageException(), e);
+        } catch (Exception e) {
+            LOGGER.error("<< valuarPrendaBasico. " +
+                WebServiceExceptionCodes.NMPMV010.getMessageException());
+
+            throw WebServiceExceptionFactory.crearWebServiceExceptionCon(
+                WebServiceExceptionCodes.NMPMV010.getCodeException(),
+                WebServiceExceptionCodes.NMPMV010.getMessageException(), e);
+        }
+
+        // SE REALIZA LA ASIGNACIÓN DE LOS AVALÚOS POR PIEZA Y DEL AVALÚO TOTAL.
+        prenda = asignarAvaluos(prenda);
+        prenda.getAvaluo().setValorMinimo(avaluo.valorMinimo());
+        prenda.getAvaluo().setValorPromedio(avaluo.valorPromedio());
+        prenda.getAvaluo().setValorMaximo(avaluo.valorMaximo());
+
+        // SE CONSTRUYE EL RESPONSE CON LA RESPUESTA DEL SERVICIO.
         ValuarPrendaBasicoResponse response = new ValuarPrendaBasicoResponse();
         response.setPrendaValuada(prenda);
 
@@ -34,21 +134,255 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
     }
 
     /**
-     * @param parameters
-     * @return returns mx.com.nmp.ms.sivad.valuacion.ws.diamantes.datatypes.ValuarPrendaNMPResponse
+     * Servicio que permite valuar una pieza compuesta de alhajas, diamantes y/o complemento con base en
+     * una metodología de cálculo utilizada por NMP.
+     *
+     * @param parameters La pieza compuesta que se desea valuar.
+     * @return Se devuelve el mensaje de entrada enriquecido con los valores (mínimo, promedio y máximo)
+     * correspondientes a cada elemento valuado de la pieza (Alhaja / Diamante / Complemento); así como
+     * los valores (mínimo, promedio y máximo) correspondientes al valor total de la Prenda.
      */
     @Override
     public ValuarPrendaNMPResponse valuarPrendaNMP(ValuarPrendaNMPRequest parameters) {
-        LOGGER.info(">> valuarPrendaNMP({})", parameters);
+        LOGGER.info(">> valuarPrendaNMP({}).", parameters);
 
-        Prenda prenda = parameters.getPrenda();
-        prenda.getAvaluo().setValorMinimo(BigDecimal.ZERO);
-        prenda.getAvaluo().setValorPromedio(BigDecimal.TEN);
-        prenda.getAvaluo().setValorMaximo(BigDecimal.TEN);
+        LOGGER.error("<< valuarPrendaNMP. " +
+            WebServiceExceptionCodes.NMPMV001.getMessageException());
 
-        ValuarPrendaNMPResponse response = new ValuarPrendaNMPResponse();
-        response.setPrendaValuada(prenda);
-
-        return response;
+        throw WebServiceExceptionFactory.crearWebServiceExceptionCon(
+            WebServiceExceptionCodes.NMPMV001.getCodeException(),
+            WebServiceExceptionCodes.NMPMV001.getMessageException());
     }
+
+    /**
+     * Metodo auxiliar utilizado para crear la lista de piezas que serán valuadas con base en la información del
+     * argumento recibido.
+     *
+     * @param prenda La prenda con la información que será utilizada para realizar la valuación.
+     * @return La lista de piezas que conforman la prenda.
+     */
+    private List<mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza> crearListaPiezas(Prenda prenda) {
+        LOGGER.debug(">> crearListaPiezas({}).", prenda);
+
+        List<mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza> piezas = new ArrayList<>();
+        for (Pieza pieza : prenda.getPieza()) {
+
+            // SE VALIDA QUE SOLAMENTE HAYA UNA PIEZA VALUABLE (ALHAJA, DIAMANTE O COMPLEMENTO) DENTRO DE LA PIEZA.
+            int numPiezasValuables = 0;
+
+            if (!ObjectUtils.isEmpty(pieza.getAlhaja())) {
+                numPiezasValuables++;
+            }
+
+            if (!ObjectUtils.isEmpty(pieza.getDiamante())) {
+                numPiezasValuables++;
+            }
+
+            if (!ObjectUtils.isEmpty(pieza.getComplemento())) {
+                numPiezasValuables++;
+            }
+
+            if (numPiezasValuables == 0) {
+                LOGGER.error("<< crearListaPiezas. " +
+                    WebServiceExceptionCodes.NMPMV007.getMessageException());
+
+                throw WebServiceExceptionFactory.crearWebServiceExceptionCon(
+                    WebServiceExceptionCodes.NMPMV007.getCodeException(),
+                    WebServiceExceptionCodes.NMPMV007.getMessageException());
+            }
+
+            if (numPiezasValuables > 1) {
+                LOGGER.error("<< crearListaPiezas. " +
+                    WebServiceExceptionCodes.NMPMV008.getMessageException());
+
+                throw WebServiceExceptionFactory.crearWebServiceExceptionCon(
+                    WebServiceExceptionCodes.NMPMV008.getCodeException(),
+                    WebServiceExceptionCodes.NMPMV008.getMessageException());
+            }
+
+            // SE CREA LA PIEZA VALUABLE.
+            if (!ObjectUtils.isEmpty(pieza.getAlhaja())) {
+                if (pieza.getCantidad() > 1) {
+                    LOGGER.error("<< crearListaPiezas. " +
+                        WebServiceExceptionCodes.NMPMV002.getMessageException());
+
+                    throw WebServiceExceptionFactory.crearWebServiceExceptionCon(
+                        WebServiceExceptionCodes.NMPMV002.getCodeException(),
+                        WebServiceExceptionCodes.NMPMV002.getMessageException());
+                }
+
+                mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Alhaja alhaja =
+                    crearAlhaja(pieza.getAlhaja());
+                relacionPiezas.put(pieza, alhaja);
+                piezas.add(alhaja);
+            } else if (!ObjectUtils.isEmpty(pieza.getDiamante())) {
+                mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Diamante diamante =
+                    crearDiamante(pieza.getCantidad(), pieza.getDiamante());
+                relacionPiezas.put(pieza, diamante);
+                piezas.add(diamante);
+            } else if (!ObjectUtils.isEmpty(pieza.getComplemento())) {
+                Complementario complementario =
+                    crearComplementario(pieza.getCantidad(), pieza.getComplemento());
+                relacionPiezas.put(pieza, complementario);
+                piezas.add(complementario);
+            }
+        }
+
+        return piezas;
+    }
+
+    /**
+     * Metodo auxiliar utilizado para crear una entidad de tipo
+     * {@link mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Alhaja}
+     * con base en la información del argumento recibido.
+     *
+     * @param alhaja La información de la pieza de tipo alhaja.
+     * @return El objeto {@link mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Alhaja} creado.
+     */
+    private mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Alhaja crearAlhaja(Alhaja alhaja) {
+        LOGGER.debug(">> crearAlhaja({}).", alhaja);
+
+        AlhajaDTO alhajaDTO = new AlhajaDTO(
+            alhaja.getMetal(),
+            alhaja.getColor(),
+            alhaja.getCalidad(),
+            alhaja.getRango(),
+            alhaja.getPeso(),
+            alhaja.getIncremento(),
+            alhaja.getDesplazamiento(),
+            crearValorExperto(alhaja.getValorExperto()));
+
+        mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Alhaja alhajaValuable;
+
+        try {
+            alhajaValuable = alhajaFactory.create(alhajaDTO);
+        } catch (IllegalArgumentException e) {
+            LOGGER.error("<< crearAlhaja. " +
+                WebServiceExceptionCodes.NMPMV004.getMessageException());
+
+            throw WebServiceExceptionFactory.crearWebServiceExceptionCon(
+                WebServiceExceptionCodes.NMPMV004.getCodeException(),
+                WebServiceExceptionCodes.NMPMV004.getMessageException(), e);
+        }
+
+        return alhajaValuable;
+    }
+
+    /**
+     * Metodo auxiliar utilizado para crear una entidad de tipo
+     * {@link mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Diamante}
+     * con base en la información de los argumentos recibidos.
+     *
+     * @param numeroDePiezas El número de piezas con características idénticas.
+     * @param diamante La información de la pieza de tipo diamante.
+     * @return El objeto {@link mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Diamante} creado.
+     */
+    private mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Diamante crearDiamante(int numeroDePiezas,
+                                                                                Diamante diamante) {
+        LOGGER.debug(">> crearDiamante({}, {}).", numeroDePiezas, diamante);
+
+        DiamanteDTO diamanteDTO = new DiamanteDTO(
+            numeroDePiezas,
+            diamante.getCorte(),
+            diamante.getColor(),
+            diamante.getClaridad(),
+            diamante.getQuilataje(),
+            diamante.getCertificado(),
+            crearValorExperto(diamante.getValorExperto()));
+
+        mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Diamante diamanteValuable;
+
+        try {
+            diamanteValuable = diamanteFactory.create(diamanteDTO);
+        } catch (IllegalArgumentException e) {
+            LOGGER.error("<< crearDiamante. " +
+                WebServiceExceptionCodes.NMPMV005.getMessageException());
+
+            throw WebServiceExceptionFactory.crearWebServiceExceptionCon(
+                WebServiceExceptionCodes.NMPMV005.getCodeException(),
+                WebServiceExceptionCodes.NMPMV005.getMessageException(), e);
+        }
+
+        return diamanteValuable;
+    }
+
+    /**
+     * Metodo auxiliar utilizado para crear una entidad de tipo
+     * {@link mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Complementario}
+     * con base en la información de los argumentos recibidos.
+     *
+     * @param numeroDePiezas El número de piezas con características idénticas.
+     * @param complemento La información de la pieza complementaria.
+     * @return El objeto {@link mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Complementario} creado.
+     */
+    private Complementario crearComplementario(int numeroDePiezas,
+                                               Complemento complemento) {
+        LOGGER.debug(">> crearComplementario({}, {}).", numeroDePiezas, complemento);
+
+        ComplementarioDTO complementarioDTO = new ComplementarioDTO(
+            numeroDePiezas,
+            crearValorExperto(complemento.getValorExperto()));
+
+        Complementario complementoValuable;
+
+        try {
+            complementoValuable = complementarioFactory.create(complementarioDTO);
+        } catch (IllegalArgumentException e) {
+            LOGGER.error("<< crearComplementario. " +
+                WebServiceExceptionCodes.NMPMV006.getMessageException());
+
+            throw WebServiceExceptionFactory.crearWebServiceExceptionCon(
+                WebServiceExceptionCodes.NMPMV006.getCodeException(),
+                WebServiceExceptionCodes.NMPMV006.getMessageException(), e);
+        }
+
+        return complementoValuable;
+    }
+
+    /**
+     * Metodo auxiliar utilizado para crear una entidad de tipo
+     * {@link mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto}
+     * con base en la información del argumento recibido.
+     *
+     * @param valorExperto El valor estimado por un experto.
+     * @return El objeto {@link mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto} creado.
+     */
+    private mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto crearValorExperto(ValorExperto valorExperto) {
+        LOGGER.debug(">> crearValorExperto({}).", valorExperto);
+
+        mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto valExperto = null;
+
+        if (!ObjectUtils.isEmpty(valorExperto) && !ObjectUtils.isEmpty(valorExperto.getTotal())) {
+            valExperto =
+                new mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto(valorExperto.getTotal(),
+                    mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto.TipoEnum.TOTAL);
+        } else if (!ObjectUtils.isEmpty(valorExperto) && !ObjectUtils.isEmpty(valorExperto.getUnitario())) {
+            valExperto =
+                new mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto(valorExperto.getUnitario(),
+                    mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto.TipoEnum.UNITARIO);
+        }
+
+        return valExperto;
+    }
+
+    /**
+     * Metodo auxiliar utilizado para asignar los avalúos que resultaron para cada pieza de la prenda.
+     *
+     * @param prenda La prenda original a la cual se le asignarán los avalúos de sus piezas.
+     * @return La prenda original con los valores de los avalúos de cada una de sus piezas.
+     */
+    private Prenda asignarAvaluos(Prenda prenda) {
+        LOGGER.debug(">> asignarAvaluos({}, {}).", prenda);
+
+        for (Pieza pieza : prenda.getPieza()) {
+            mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza piezaValuada = relacionPiezas.get(pieza);
+
+            pieza.getAvaluo().setValorMinimo(piezaValuada.getAvaluo().valorMinimo());
+            pieza.getAvaluo().setValorPromedio(piezaValuada.getAvaluo().valorPromedio());
+            pieza.getAvaluo().setValorMaximo(piezaValuada.getAvaluo().valorMaximo());
+        }
+
+        return prenda;
+    }
+
 }
