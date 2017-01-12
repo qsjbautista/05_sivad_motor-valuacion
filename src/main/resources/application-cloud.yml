@@ -1,9 +1,9 @@
 # ===================================================================
 # Configuración Spring Boot
 #
-# Configuración para el profile de Spring "dev".
-# Aquí puedes establecer la configuración necesaria para el perfil de
-# desarrollo.
+# Configuración para el profile de Spring "cloud".
+# Aquí puedes establecer la configuración necesaria para el perfil
+# en la nube.
 # ===================================================================
 
 # ===================================================================
@@ -12,11 +12,11 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 server:
-    port: 8085
+    port: 80
 management:
     shell:
         ssh:
-            port: 2085
+            port: 2000
 
 spring:
     datasource:
