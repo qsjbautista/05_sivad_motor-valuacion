@@ -49,7 +49,7 @@
         <jacoco-maven-plugin.version>0.7.7.201606060606</jacoco-maven-plugin.version>
 
         <!-- variables para profiles -->
-        <metrics.profile/>
+        <profile.metrics/>
 	</properties>
 
 	<dependencyManagement>
@@ -415,7 +415,7 @@
         <profile>
             <id>metrics</id>
             <properties>
-                <metrics.profile>,metrics</metrics.profile>
+                <profile.metrics>,metrics</profile.metrics>
             </properties>
         </profile>
 
@@ -450,7 +450,7 @@
                 <!-- configuración de logger -->
                 <logback.loglevel>DEBUG</logback.loglevel>
                 <!-- perfiles Spring por defecto -->
-                <spring.profiles.active>dev${metrics.profile}</spring.profiles.active>
+                <spring.profiles.active>dev${profile.metrics}</spring.profiles.active>
             </properties>
         </profile>
 
@@ -482,7 +482,7 @@
                 <!-- configuración de logger -->
                 <logback.loglevel>INFO</logback.loglevel>
                 <!-- perfiles Spring por defecto -->
-                <spring.profiles.active>ensamble${metrics.profile}</spring.profiles.active>
+                <spring.profiles.active>ensamble${profile.metrics}</spring.profiles.active>
             </properties>
         </profile>
 
@@ -509,7 +509,7 @@
                 <!-- configuración de logger -->
                 <logback.loglevel>INFO</logback.loglevel>
                 <!-- perfiles Spring por defecto -->
-                <spring.profiles.active>cloud${metrics.profile}</spring.profiles.active>
+                <spring.profiles.active>cloud${profile.metrics}</spring.profiles.active>
             </properties>
         </profile>
     </profiles>
