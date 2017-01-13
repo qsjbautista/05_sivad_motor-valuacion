@@ -23,6 +23,8 @@ public enum DomainExceptionCodes {
         "El peso de la alhaja no debe ser nulo."),
     ALHAJA_VALOR_EXPERTO_NO_SOPORTADO("ALHAJA_VALOR_EXPERTO_NO_SOPORTADO",
         "Valor experto tipo unitario no soportado para alhajas."),
+    COMPLEMENTARIO_VALOR_EXPERTO_NULO("COMPLEMENTARIO_VALOR_EXPERTO_NULO",
+        "El valor experto de la pieza complementaria no debe ser nulo."),
     DIAMANTE_CLARIDAD_NULA("DIAMANTE_CLARIDAD_NULA",
         "La claridad del diamante no debe ser nula."),
     DIAMANTE_COLOR_NULO("DIAMANTE_COLOR_NULO",

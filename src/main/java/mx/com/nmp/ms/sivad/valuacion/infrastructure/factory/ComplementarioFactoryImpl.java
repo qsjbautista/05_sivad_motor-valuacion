@@ -12,7 +12,6 @@ import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto;
 import mx.com.nmp.ms.sivad.valuacion.dominio.validador.ValidadorNumero;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-import org.springframework.util.ObjectUtils;
 
 import java.lang.reflect.Constructor;
 
@@ -91,14 +90,15 @@ public class ComplementarioFactoryImpl implements ComplementarioFactory {
      * @param builder Objeto constructor de la entidad.
      */
     private static void validarBuilder(final Complementario.Builder builder) {
-        Assert.notNull(builder, DomainExceptionCodes.BUILDER_NULO.getMessageException());
+        Assert.notNull(builder,
+            DomainExceptionCodes.BUILDER_NULO.getMessageException());
+        Assert.notNull(builder.getValorExperto(),
+            DomainExceptionCodes.COMPLEMENTARIO_VALOR_EXPERTO_NULO.getMessageException());
+        Assert.notNull(builder.getValorExperto().getValor(),
+            DomainExceptionCodes.COMPLEMENTARIO_VALOR_EXPERTO_NULO.getMessageException());
 
         ValidadorNumero.validarPositivo(builder.getNumeroDePiezas());
-
-        if (!ObjectUtils.isEmpty(builder.getValorExperto()) &&
-            !ObjectUtils.isEmpty(builder.getValorExperto().getValor())) {
-            ValidadorNumero.validarPositivo(builder.getValorExperto().getValor());
-        }
+        ValidadorNumero.validarPositivo(builder.getValorExperto().getValor());
     }
 
 }

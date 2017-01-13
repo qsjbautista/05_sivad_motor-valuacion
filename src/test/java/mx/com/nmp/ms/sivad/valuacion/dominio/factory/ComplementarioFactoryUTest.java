@@ -16,7 +16,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.inject.Inject;
 import java.math.BigDecimal;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Clase de prueba utilizada para validar el comportamiento de la clase {@link ComplementarioFactory}.
@@ -63,7 +64,7 @@ public class ComplementarioFactoryUTest {
      * NÚMERO DE PIEZAS - 1
      * VALOR EXPERTO - NO NULO
      */
-    @Test()
+    @Test
     public void crearComplementarioTest01() {
         ComplementarioDTO complementarioDTO =
             new ComplementarioDTO(NUM_PIEZAS, VALOR_EXPERTO);
@@ -124,15 +125,12 @@ public class ComplementarioFactoryUTest {
      * NÚMERO DE PIEZAS - 1
      * VALOR EXPERTO - NULO
      */
-    @Test()
+    @Test(expected = IllegalArgumentException.class)
     public void crearComplementarioTest05() {
         ComplementarioDTO complementarioDTO =
             new ComplementarioDTO(NUM_PIEZAS, null);
 
-        Complementario complementario = complementarioFactory.create(complementarioDTO);
-        assertNotNull(complementario);
-        assertEquals(NUM_PIEZAS, complementario.getNumeroDePiezas());
-        assertNull(complementario.getValorExperto());
+        complementarioFactory.create(complementarioDTO);
     }
 
     /**
@@ -141,15 +139,12 @@ public class ComplementarioFactoryUTest {
      * NÚMERO DE PIEZAS - 1
      * VALOR EXPERTO - NO NULO SIN VALOR
      */
-    @Test()
+    @Test(expected = IllegalArgumentException.class)
     public void crearComplementarioTest06() {
         ComplementarioDTO complementarioDTO =
             new ComplementarioDTO(NUM_PIEZAS, VALOR_EXPERTO_SIN_VALOR);
 
-        Complementario complementario = complementarioFactory.create(complementarioDTO);
-        assertNotNull(complementario);
-        assertEquals(NUM_PIEZAS, complementario.getNumeroDePiezas());
-        assertEquals(VALOR_EXPERTO_SIN_VALOR.getValor(), complementario.getValorExperto().getValor());
+        complementarioFactory.create(complementarioDTO);
     }
 
     /**

@@ -84,7 +84,7 @@ public class AlhajaFactoryUTest {
      * DESPLAZAMIENTO - NO NULO
      * VALOR EXPERTO - NO NULO
      */
-    @Test()
+    @Test
     public void crearAlhajaTest01() {
         AlhajaDTO alhajaDTO =
             new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO);
@@ -253,7 +253,7 @@ public class AlhajaFactoryUTest {
      * DESPLAZAMIENTO - NO NULO
      * VALOR EXPERTO - NO NULO
      */
-    @Test()
+    @Test
     public void crearAlhajaTest09() {
         AlhajaDTO alhajaDTO =
             new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, null, DESPLAZAMIENTO, VALOR_EXPERTO);
@@ -318,7 +318,7 @@ public class AlhajaFactoryUTest {
      * DESPLAZAMIENTO - NULO
      * VALOR EXPERTO - NO NULO
      */
-    @Test()
+    @Test
     public void crearAlhajaTest12() {
         AlhajaDTO alhajaDTO =
             new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, null, VALOR_EXPERTO);
@@ -383,7 +383,7 @@ public class AlhajaFactoryUTest {
      * DESPLAZAMIENTO - NO NULO
      * VALOR EXPERTO - NULO
      */
-    @Test()
+    @Test
     public void crearAlhajaTest15() {
         AlhajaDTO alhajaDTO =
             new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, null);
@@ -408,7 +408,7 @@ public class AlhajaFactoryUTest {
      * DESPLAZAMIENTO - NO NULO
      * VALOR EXPERTO - NO NULO SIN VALOR
      */
-    @Test()
+    @Test
     public void crearAlhajaTest16() {
         AlhajaDTO alhajaDTO =
             new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO_SIN_VALOR);

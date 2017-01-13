@@ -4,6 +4,7 @@
  */
 package mx.com.nmp.ms.sivad.valuacion.api.ws;
 
+import com.codahale.metrics.annotation.Timed;
 import mx.com.nmp.ms.sivad.valuacion.api.ws.exception.WebServiceExceptionCodes;
 import mx.com.nmp.ms.sivad.valuacion.api.ws.exception.WebServiceExceptionFactory;
 import mx.com.nmp.ms.sivad.valuacion.dominio.exception.ValuacionException;
@@ -23,6 +24,7 @@ import org.springframework.util.ObjectUtils;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,11 +65,6 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
     @Inject
     private ComplementarioFactory complementarioFactory;
 
-    /**
-     * Mapa utilizado para mantener la relación de la pieza original con la pieza valuada.
-     */
-    private Map<Pieza, mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza> relacionPiezas;
-
 
 
     // METODOS
@@ -82,18 +79,22 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
      * los valores (mínimo, promedio y máximo) correspondientes al valor total de la Prenda.
      */
     @Override
+    @Timed
     public ValuarPrendaBasicoResponse valuarPrendaBasico(ValuarPrendaBasicoRequest parameters) {
         LOGGER.info(">> valuarPrendaBasico({}).", parameters);
 
+        // MAPA UTILIZADO PARA MANTENER LA RELACIÓN DE LA PIEZA ORIGINAL CON LA PIEZA VALUADA.
+        Map<Pieza, mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza> relacionPiezas = new HashMap<>();
+
         // SE CONSTRUYE LA PRENDA QUE SE VA A VALUAR.
         Prenda prenda = parameters.getPrenda();
-        List<mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza> piezas = crearListaPiezas(prenda);
+        List<mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza> piezas = crearListaPiezas(prenda, relacionPiezas);
 
         mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Prenda prendaValuable;
         try {
             prendaValuable = prendaFactory.create(piezas);
         } catch (IllegalArgumentException e) {
-            LOGGER.error("<< valuarPrendaBasico. " +
+            LOGGER.error("<< valuarPrendaBasico. {}",
                 WebServiceExceptionCodes.NMPMV003.getMessageException());
 
             throw WebServiceExceptionFactory.crearWebServiceExceptionCon(
@@ -105,14 +106,14 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
         try {
             avaluo = prendaValuable.valuar();
         } catch (ValuacionException e) {
-            LOGGER.error("<< valuarPrendaBasico. " +
+            LOGGER.error("<< valuarPrendaBasico. {}",
                 WebServiceExceptionCodes.NMPMV009.getMessageException());
 
             throw WebServiceExceptionFactory.crearWebServiceExceptionCon(
                 WebServiceExceptionCodes.NMPMV009.getCodeException(),
                 WebServiceExceptionCodes.NMPMV009.getMessageException(), e);
         } catch (Exception e) {
-            LOGGER.error("<< valuarPrendaBasico. " +
+            LOGGER.error("<< valuarPrendaBasico. {}",
                 WebServiceExceptionCodes.NMPMV010.getMessageException());
 
             throw WebServiceExceptionFactory.crearWebServiceExceptionCon(
@@ -121,10 +122,13 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
         }
 
         // SE REALIZA LA ASIGNACIÓN DE LOS AVALÚOS POR PIEZA Y DEL AVALÚO TOTAL.
-        prenda = asignarAvaluos(prenda);
-        prenda.getAvaluo().setValorMinimo(avaluo.valorMinimo());
-        prenda.getAvaluo().setValorPromedio(avaluo.valorPromedio());
-        prenda.getAvaluo().setValorMaximo(avaluo.valorMaximo());
+        prenda = asignarAvaluosPiezas(prenda, relacionPiezas);
+
+        Avaluo avaluoPrenda = new Avaluo();
+        avaluoPrenda.setValorMinimo(avaluo.valorMinimo());
+        avaluoPrenda.setValorPromedio(avaluo.valorPromedio());
+        avaluoPrenda.setValorMaximo(avaluo.valorMaximo());
+        prenda.setAvaluo(avaluoPrenda);
 
         // SE CONSTRUYE EL RESPONSE CON LA RESPUESTA DEL SERVICIO.
         ValuarPrendaBasicoResponse response = new ValuarPrendaBasicoResponse();
@@ -143,10 +147,11 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
      * los valores (mínimo, promedio y máximo) correspondientes al valor total de la Prenda.
      */
     @Override
+    @Timed
     public ValuarPrendaNMPResponse valuarPrendaNMP(ValuarPrendaNMPRequest parameters) {
         LOGGER.info(">> valuarPrendaNMP({}).", parameters);
 
-        LOGGER.error("<< valuarPrendaNMP. " +
+        LOGGER.error("<< valuarPrendaNMP. {}",
             WebServiceExceptionCodes.NMPMV001.getMessageException());
 
         throw WebServiceExceptionFactory.crearWebServiceExceptionCon(
@@ -159,9 +164,12 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
      * argumento recibido.
      *
      * @param prenda La prenda con la información que será utilizada para realizar la valuación.
+     * @param relacionPiezas El mapa que mantiene la relación de la pieza original con la pieza valuada.
      * @return La lista de piezas que conforman la prenda.
      */
-    private List<mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza> crearListaPiezas(Prenda prenda) {
+    private List<mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza> crearListaPiezas(Prenda prenda,
+        Map<Pieza, mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza> relacionPiezas) {
+
         LOGGER.debug(">> crearListaPiezas({}).", prenda);
 
         List<mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza> piezas = new ArrayList<>();
@@ -183,7 +191,7 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
             }
 
             if (numPiezasValuables == 0) {
-                LOGGER.error("<< crearListaPiezas. " +
+                LOGGER.error("<< crearListaPiezas. {}",
                     WebServiceExceptionCodes.NMPMV007.getMessageException());
 
                 throw WebServiceExceptionFactory.crearWebServiceExceptionCon(
@@ -192,7 +200,7 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
             }
 
             if (numPiezasValuables > 1) {
-                LOGGER.error("<< crearListaPiezas. " +
+                LOGGER.error("<< crearListaPiezas. {}",
                     WebServiceExceptionCodes.NMPMV008.getMessageException());
 
                 throw WebServiceExceptionFactory.crearWebServiceExceptionCon(
@@ -203,7 +211,7 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
             // SE CREA LA PIEZA VALUABLE.
             if (!ObjectUtils.isEmpty(pieza.getAlhaja())) {
                 if (pieza.getCantidad() > 1) {
-                    LOGGER.error("<< crearListaPiezas. " +
+                    LOGGER.error("<< crearListaPiezas. {}",
                         WebServiceExceptionCodes.NMPMV002.getMessageException());
 
                     throw WebServiceExceptionFactory.crearWebServiceExceptionCon(
@@ -257,7 +265,7 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
         try {
             alhajaValuable = alhajaFactory.create(alhajaDTO);
         } catch (IllegalArgumentException e) {
-            LOGGER.error("<< crearAlhaja. " +
+            LOGGER.error("<< crearAlhaja. {}",
                 WebServiceExceptionCodes.NMPMV004.getMessageException());
 
             throw WebServiceExceptionFactory.crearWebServiceExceptionCon(
@@ -295,7 +303,7 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
         try {
             diamanteValuable = diamanteFactory.create(diamanteDTO);
         } catch (IllegalArgumentException e) {
-            LOGGER.error("<< crearDiamante. " +
+            LOGGER.error("<< crearDiamante. {}",
                 WebServiceExceptionCodes.NMPMV005.getMessageException());
 
             throw WebServiceExceptionFactory.crearWebServiceExceptionCon(
@@ -328,7 +336,7 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
         try {
             complementoValuable = complementarioFactory.create(complementarioDTO);
         } catch (IllegalArgumentException e) {
-            LOGGER.error("<< crearComplementario. " +
+            LOGGER.error("<< crearComplementario. {}",
                 WebServiceExceptionCodes.NMPMV006.getMessageException());
 
             throw WebServiceExceptionFactory.crearWebServiceExceptionCon(
@@ -369,17 +377,21 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
      * Metodo auxiliar utilizado para asignar los avalúos que resultaron para cada pieza de la prenda.
      *
      * @param prenda La prenda original a la cual se le asignarán los avalúos de sus piezas.
+     * @param relacionPiezas El mapa que mantiene la relación de la pieza original con la pieza valuada.
      * @return La prenda original con los valores de los avalúos de cada una de sus piezas.
      */
-    private Prenda asignarAvaluos(Prenda prenda) {
+    private Prenda asignarAvaluosPiezas(Prenda prenda,
+        Map<Pieza, mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza> relacionPiezas) {
         LOGGER.debug(">> asignarAvaluos({}, {}).", prenda);
 
         for (Pieza pieza : prenda.getPieza()) {
             mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza piezaValuada = relacionPiezas.get(pieza);
 
-            pieza.getAvaluo().setValorMinimo(piezaValuada.getAvaluo().valorMinimo());
-            pieza.getAvaluo().setValorPromedio(piezaValuada.getAvaluo().valorPromedio());
-            pieza.getAvaluo().setValorMaximo(piezaValuada.getAvaluo().valorMaximo());
+            Avaluo avaluo = new Avaluo();
+            avaluo.setValorMinimo(piezaValuada.getAvaluo().valorMinimo());
+            avaluo.setValorPromedio(piezaValuada.getAvaluo().valorPromedio());
+            avaluo.setValorMaximo(piezaValuada.getAvaluo().valorMaximo());
+            pieza.setAvaluo(avaluo);
         }
 
         return prenda;

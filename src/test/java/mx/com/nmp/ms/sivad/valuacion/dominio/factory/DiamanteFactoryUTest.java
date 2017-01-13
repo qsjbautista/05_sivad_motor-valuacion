@@ -79,7 +79,7 @@ public class DiamanteFactoryUTest {
      * CERTIFICADO - NO NULO
      * VALOR EXPERTO - NO NULO
      */
-    @Test()
+    @Test
     public void crearDiamanteTest01() {
         DiamanteDTO diamanteDTO =
             new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO);
@@ -282,7 +282,7 @@ public class DiamanteFactoryUTest {
      * CERTIFICADO - NULO
      * VALOR EXPERTO - NO NULO
      */
-    @Test()
+    @Test
     public void crearDiamanteTest11() {
         DiamanteDTO diamanteDTO =
             new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR, CLARIDAD, QUILATES, null, VALOR_EXPERTO);
@@ -308,7 +308,7 @@ public class DiamanteFactoryUTest {
      * CERTIFICADO - NO NULO
      * VALOR EXPERTO - NULO
      */
-    @Test()
+    @Test
     public void crearDiamanteTest12() {
         DiamanteDTO diamanteDTO =
             new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, null);
@@ -334,7 +334,7 @@ public class DiamanteFactoryUTest {
      * CERTIFICADO - NO NULO
      * VALOR EXPERTO - NO NULO SIN VALOR
      */
-    @Test()
+    @Test
     public void crearDiamanteTest13() {
         DiamanteDTO diamanteDTO =
             new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO_SIN_VALOR);

@@ -98,7 +98,7 @@ public class PrendaFactoryUTest {
      * 1 - Diamante
      * 1 - Complementario
      */
-    @Test()
+    @Test
     public void crearPrendaTest01() {
         AlhajaDTO alhajaDTO =
             new AlhajaDTO(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO);
@@ -167,7 +167,7 @@ public class PrendaFactoryUTest {
      * 0 - Diamante
      * 0 - Complementario
      */
-    @Test()
+    @Test
     public void crearPrendaTest03() {
         AlhajaDTO alhajaDTO =
             new AlhajaDTO(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO);
@@ -191,7 +191,7 @@ public class PrendaFactoryUTest {
      * 1 - Diamante
      * 0 - Complementario
      */
-    @Test()
+    @Test
     public void crearPrendaTest04() {
         DiamanteDTO diamanteDTO =
             new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO);
@@ -215,7 +215,7 @@ public class PrendaFactoryUTest {
      * 0 - Diamante
      * 1 - Complementario
      */
-    @Test()
+    @Test
     public void crearPrendaTest05() {
         ComplementarioDTO complementarioDTO =
             new ComplementarioDTO(NUM_PIEZAS, VALOR_EXPERTO);
