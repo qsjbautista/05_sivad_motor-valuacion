@@ -7,7 +7,6 @@ package mx.com.nmp.ms.sivad.valuacion.dominio.factory;
 import mx.com.nmp.ms.sivad.valuacion.MotorValuacionApplication;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.*;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto.*;
-import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.Avaluo;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,9 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -146,13 +143,8 @@ public class PrendaFactoryUTest {
         piezas.add(diamante);
         piezas.add(complementario);
 
-        Map<Class<? extends Pieza>, Avaluo> mapaEstrategiaAvaluos = new HashMap<>();
-        mapaEstrategiaAvaluos.put(Alhaja.class, null);
-        mapaEstrategiaAvaluos.put(Diamante.class, null);
-        mapaEstrategiaAvaluos.put(Complementario.class, null);
-
         Prenda prenda =
-            prendaFactory.create(getBuilder(piezas, mapaEstrategiaAvaluos));
+            prendaFactory.create(getBuilder(piezas));
 
         assertNotNull(prenda);
         assertNotNull(prenda.getPiezas());
@@ -267,21 +259,14 @@ public class PrendaFactoryUTest {
      * Metodo auxiliar utilizado para crear el builder de Prenda a partir de sus atributos.
      *
      * @param piezas Lista de piezas de las que se compone la prenda.
-     * @param mapaEstrategiaAvaluos Mapa de estrategia de avalúos por tipo de pieza.
      * @return El builder creado.
      */
-    private Prenda.Builder getBuilder(final List<Pieza> piezas,
-                                      final Map<Class<? extends Pieza>, Avaluo> mapaEstrategiaAvaluos) {
+    private Prenda.Builder getBuilder(final List<Pieza> piezas) {
         return new Prenda.Builder() {
 
             @Override
             public List<Pieza> getPiezas() {
                 return piezas;
-            }
-
-            @Override
-            public Map<Class<? extends Pieza>, Avaluo> getMapaEstrategiaAvaluos() {
-                return mapaEstrategiaAvaluos;
             }
 
         };

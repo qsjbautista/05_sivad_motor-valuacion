@@ -8,7 +8,6 @@ import mx.com.nmp.ms.sivad.valuacion.dominio.exception.DomainExceptionCodes;
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.*;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.*;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto.*;
-import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.Avaluo;
 import mx.com.nmp.ms.sivad.valuacion.dominio.repository.PoliticasCastigoRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -37,11 +36,6 @@ public class PrendaFactoryImpl implements PrendaFactory {
      * Referencia al constructor de la entidad.
      */
     private final Constructor<Prenda> constructor;
-
-    /**
-     * Mapa de estrategia de avalúos por tipo de pieza.
-     */
-    private Map<Class<? extends Pieza>, Avaluo> mapaEstrategiaAvaluos;
 
     /**
      * Mapa de estrategia de fábricas por tipo de pieza.
@@ -86,18 +80,16 @@ public class PrendaFactoryImpl implements PrendaFactory {
             PoliticasCastigoRepository.class);
 
         mapaEstrategiaFactory = new HashMap<>();
-        mapaEstrategiaAvaluos = new HashMap<>();
     }
 
+    /**
+     * Configuración inicial.
+     */
     @PostConstruct
     private void inicializar() {
         mapaEstrategiaFactory.put(AlhajaDTO.class, alhajaFactory);
         mapaEstrategiaFactory.put(DiamanteDTO.class, diamanteFactory);
         mapaEstrategiaFactory.put(ComplementarioDTO.class, complementarioFactory);
-
-        mapaEstrategiaAvaluos.put(Alhaja.class, null);
-        mapaEstrategiaAvaluos.put(Diamante.class, null);
-        mapaEstrategiaAvaluos.put(Complementario.class, null);
     }
 
     /**
@@ -113,7 +105,7 @@ public class PrendaFactoryImpl implements PrendaFactory {
             }
         }
 
-        final Prenda.Builder builder = getBuilder(piezas, mapaEstrategiaAvaluos);
+        final Prenda.Builder builder = getBuilder(piezas);
         return create(builder);
     }
 
@@ -122,7 +114,7 @@ public class PrendaFactoryImpl implements PrendaFactory {
      */
     @Override
     public Prenda create(List<Pieza> piezas) {
-        final Prenda.Builder builder = getBuilder(piezas, mapaEstrategiaAvaluos);
+        final Prenda.Builder builder = getBuilder(piezas);
         return create(builder);
     }
 
@@ -139,21 +131,14 @@ public class PrendaFactoryImpl implements PrendaFactory {
      * Crea un objeto constructor a partir del valor de los argumentos.
      *
      * @param piezas Lista de piezas de las que se compone la prenda.
-     * @param mapaEstrategiaAvaluos Mapa de estrategia de avalúos por tipo de pieza.
      * @return El objeto constructor creado.
      */
-    private static Prenda.Builder getBuilder(final List<Pieza> piezas,
-                                             final Map<Class<? extends Pieza>, Avaluo> mapaEstrategiaAvaluos) {
+    private static Prenda.Builder getBuilder(final List<Pieza> piezas) {
         return new Prenda.Builder() {
 
             @Override
             public List<Pieza> getPiezas() {
                 return piezas;
-            }
-
-            @Override
-            public Map<Class<? extends Pieza>, Avaluo> getMapaEstrategiaAvaluos() {
-                return mapaEstrategiaAvaluos;
             }
 
         };

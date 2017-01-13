@@ -27,7 +27,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -208,13 +207,8 @@ public class PrendaUTest {
         piezas.add(diamante);
         piezas.add(complementario);
 
-        Map<Class<? extends Pieza>, Avaluo> mapaEstrategiaAvaluos = new HashMap<>();
-        mapaEstrategiaAvaluos.put(Alhaja.class, null);
-        mapaEstrategiaAvaluos.put(Diamante.class, null);
-        mapaEstrategiaAvaluos.put(Complementario.class, null);
-
         Prenda prenda =
-            prendaFactory.create(getBuilder(piezas, mapaEstrategiaAvaluos));
+            prendaFactory.create(getBuilder(piezas));
 
         BigDecimalConsumidor valorGramoOro = getBigDecimalConsumidor(
             AV_ALHAJA_VALOR_GRAMO_ORO);
@@ -268,11 +262,8 @@ public class PrendaUTest {
         List<Pieza> piezas = new ArrayList<>();
         piezas.add(alhaja);
 
-        Map<Class<? extends Pieza>, Avaluo> mapaEstrategiaAvaluos = new HashMap<>();
-        mapaEstrategiaAvaluos.put(Alhaja.class, null);
-
         Prenda prenda =
-            prendaFactory.create(getBuilder(piezas, mapaEstrategiaAvaluos));
+            prendaFactory.create(getBuilder(piezas));
 
         BigDecimalConsumidor valorGramoOro = getBigDecimalConsumidor(
             AV_ALHAJA_VALOR_GRAMO_ORO);
@@ -312,11 +303,8 @@ public class PrendaUTest {
         List<Pieza> piezas = new ArrayList<>();
         piezas.add(diamante);
 
-        Map<Class<? extends Pieza>, Avaluo> mapaEstrategiaAvaluos = new HashMap<>();
-        mapaEstrategiaAvaluos.put(Diamante.class, null);
-
         Prenda prenda =
-            prendaFactory.create(getBuilder(piezas, mapaEstrategiaAvaluos));
+            prendaFactory.create(getBuilder(piezas));
 
         ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
             AV_DIAMANTE_VALOR_COMERCIAL_MINIMO, AV_DIAMANTE_VALOR_COMERCIAL_MEDIO, AV_DIAMANTE_VALOR_COMERCIAL_MAXIMO);
@@ -356,11 +344,8 @@ public class PrendaUTest {
         List<Pieza> piezas = new ArrayList<>();
         piezas.add(complementario);
 
-        Map<Class<? extends Pieza>, Avaluo> mapaEstrategiaAvaluos = new HashMap<>();
-        mapaEstrategiaAvaluos.put(Complementario.class, null);
-
         Prenda prenda =
-            prendaFactory.create(getBuilder(piezas, mapaEstrategiaAvaluos));
+            prendaFactory.create(getBuilder(piezas));
 
         PoliticasCastigo politicasCastigo = getPoliticasCastigo(
             PC_FACTOR_DIAMANTE, PC_FACTOR_ALHAJA, PC_FACTOR_COMPLEMENTARIO);
@@ -385,12 +370,7 @@ public class PrendaUTest {
     public void crearPrendaTest05() {
         List<Pieza> piezas = null;
 
-        Map<Class<? extends Pieza>, Avaluo> mapaEstrategiaAvaluos = new HashMap<>();
-        mapaEstrategiaAvaluos.put(Alhaja.class, null);
-        mapaEstrategiaAvaluos.put(Diamante.class, null);
-        mapaEstrategiaAvaluos.put(Complementario.class, null);
-
-        prendaFactory.create(getBuilder(piezas, mapaEstrategiaAvaluos));
+        prendaFactory.create(getBuilder(piezas));
     }
 
     /**
@@ -402,12 +382,7 @@ public class PrendaUTest {
     public void crearPrendaTest06() {
         List<Pieza> piezas = new ArrayList<>();
 
-        Map<Class<? extends Pieza>, Avaluo> mapaEstrategiaAvaluos = new HashMap<>();
-        mapaEstrategiaAvaluos.put(Alhaja.class, null);
-        mapaEstrategiaAvaluos.put(Diamante.class, null);
-        mapaEstrategiaAvaluos.put(Complementario.class, null);
-
-        prendaFactory.create(getBuilder(piezas, mapaEstrategiaAvaluos));
+        prendaFactory.create(getBuilder(piezas));
     }
 
     /**
@@ -434,13 +409,8 @@ public class PrendaUTest {
         piezas.add(diamante);
         piezas.add(complementario);
 
-        Map<Class<? extends Pieza>, Avaluo> mapaEstrategiaAvaluos = new HashMap<>();
-        mapaEstrategiaAvaluos.put(Alhaja.class, null);
-        mapaEstrategiaAvaluos.put(Diamante.class, null);
-        mapaEstrategiaAvaluos.put(Complementario.class, null);
-
         Prenda prenda =
-            prendaFactory.create(getBuilder(piezas, mapaEstrategiaAvaluos));
+            prendaFactory.create(getBuilder(piezas));
 
         BigDecimalConsumidor valorGramoOro = getBigDecimalConsumidor(
             AV_ALHAJA_VALOR_GRAMO_ORO);
@@ -482,21 +452,14 @@ public class PrendaUTest {
      * Metodo auxiliar utilizado para crear el builder de Prenda a partir de sus atributos.
      *
      * @param piezas Lista de piezas de las que se compone la prenda.
-     * @param mapaEstrategiaAvaluos Mapa de estrategia de avalúos por tipo de pieza.
      * @return El builder creado.
      */
-    private Prenda.Builder getBuilder(final List<Pieza> piezas,
-                                      final Map<Class<? extends Pieza>, Avaluo> mapaEstrategiaAvaluos) {
+    private Prenda.Builder getBuilder(final List<Pieza> piezas) {
         return new Prenda.Builder() {
 
             @Override
             public List<Pieza> getPiezas() {
                 return piezas;
-            }
-
-            @Override
-            public Map<Class<? extends Pieza>, Avaluo> getMapaEstrategiaAvaluos() {
-                return mapaEstrategiaAvaluos;
             }
 
         };

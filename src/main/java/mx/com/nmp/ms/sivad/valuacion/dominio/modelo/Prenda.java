@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,11 +42,6 @@ public class Prenda implements PiezaValuable {
     private Avaluo avaluo;
 
     /**
-     * Mapa de estrategia de avalúos por tipo de pieza.
-     */
-    private Map<Class<? extends Pieza>, Avaluo> mapaEstrategiaAvaluos;
-
-    /**
      * Referencia hacia el repositorio de políticas de castigo.
      */
     private PoliticasCastigoRepository politicasCastigoRepository;
@@ -61,13 +57,6 @@ public class Prenda implements PiezaValuable {
          * @return La lista de piezas de tipo {@link Pieza}.
          */
         List<Pieza> getPiezas();
-
-        /**
-         * Permite obtener el mapa de estrategia de avalúos por tipo de pieza.
-         *
-         * @return El mapa de estrategia de avalúos por tipo de pieza.
-         */
-        Map<Class<? extends Pieza>, Avaluo> getMapaEstrategiaAvaluos();
 
     }
 
@@ -85,7 +74,6 @@ public class Prenda implements PiezaValuable {
         super();
 
         this.piezas = builder.getPiezas();
-        this.mapaEstrategiaAvaluos = builder.getMapaEstrategiaAvaluos();
         this.politicasCastigoRepository = politicasCastigoRepository;
     }
 
@@ -98,6 +86,9 @@ public class Prenda implements PiezaValuable {
     @Timed
     public Avaluo valuar() {
         LOGGER.info(">> valuar");
+
+        // MAPA DE ESTRATEGIA DE AVALÚOS POR TIPO DE PIEZA.
+        Map<Class<? extends Pieza>, Avaluo> mapaEstrategiaAvaluos = new HashMap<>();
 
 
         // SE VALÚAN LAS PIEZAS.
