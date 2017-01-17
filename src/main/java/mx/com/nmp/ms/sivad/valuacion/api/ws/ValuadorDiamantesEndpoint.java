@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
 
 import javax.inject.Inject;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -256,8 +257,12 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
             alhaja.getCalidad(),
             alhaja.getRango(),
             alhaja.getPeso(),
-            alhaja.getIncremento(),
-            alhaja.getDesplazamiento(),
+            ((!ObjectUtils.isEmpty(alhaja.getIncremento()) &&
+                (alhaja.getIncremento().compareTo(BigDecimal.ZERO) > 0))
+                ? alhaja.getIncremento() : null),
+            ((!ObjectUtils.isEmpty(alhaja.getDesplazamiento()) &&
+                (alhaja.getDesplazamiento().compareTo(BigDecimal.ZERO) > 0))
+                ? alhaja.getDesplazamiento() : null),
             crearValorExperto(alhaja.getValorExperto()));
 
         mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Alhaja alhajaValuable;

@@ -126,18 +126,36 @@ public class DiamanteFactoryImpl implements DiamanteFactory {
      * @param builder Objeto constructor de la entidad.
      */
     private static void validarBuilder(final Diamante.Builder builder) {
-        Assert.notNull(builder, DomainExceptionCodes.BUILDER_NULO.getMessageException());
-        Assert.notNull(builder.getCorte(), DomainExceptionCodes.DIAMANTE_CORTE_NULO.getMessageException());
-        Assert.notNull(builder.getColor(), DomainExceptionCodes.DIAMANTE_COLOR_NULO.getMessageException());
-        Assert.notNull(builder.getClaridad(), DomainExceptionCodes.DIAMANTE_CLARIDAD_NULA.getMessageException());
-        Assert.notNull(builder.getQuilates(), DomainExceptionCodes.DIAMANTE_QUILATES_NULO.getMessageException());
+        Assert.notNull(builder,
+            DomainExceptionCodes.BUILDER_NULO.getMessageException());
 
-        ValidadorNumero.validarPositivo(builder.getNumeroDePiezas());
-        ValidadorNumero.validarPositivo(builder.getQuilates());
+        ValidadorNumero.validarPositivo(builder.getNumeroDePiezas(),
+            DomainExceptionCodes.DIAMANTE_NUM_PIEZAS_MENOR_IGUAL_CERO.getMessageException());
+
+        Assert.notNull(builder.getCorte(),
+            DomainExceptionCodes.DIAMANTE_CORTE_NULO.getMessageException());
+        Assert.hasText(builder.getCorte(),
+            DomainExceptionCodes.DIAMANTE_CORTE_VACIO.getMessageException());
+
+        Assert.notNull(builder.getColor(),
+            DomainExceptionCodes.DIAMANTE_COLOR_NULO.getMessageException());
+        Assert.hasText(builder.getColor(),
+            DomainExceptionCodes.DIAMANTE_COLOR_VACIO.getMessageException());
+
+        Assert.notNull(builder.getClaridad(),
+            DomainExceptionCodes.DIAMANTE_CLARIDAD_NULA.getMessageException());
+        Assert.hasText(builder.getClaridad(),
+            DomainExceptionCodes.DIAMANTE_CLARIDAD_VACIA.getMessageException());
+
+        Assert.notNull(builder.getQuilates(),
+            DomainExceptionCodes.DIAMANTE_QUILATES_NULO.getMessageException());
+        ValidadorNumero.validarPositivo(builder.getQuilates(),
+            DomainExceptionCodes.DIAMANTE_QUILATES_MENOR_IGUAL_CERO.getMessageException());
 
         if (!ObjectUtils.isEmpty(builder.getValorExperto()) &&
             !ObjectUtils.isEmpty(builder.getValorExperto().getValor())) {
-            ValidadorNumero.validarPositivo(builder.getValorExperto().getValor());
+            ValidadorNumero.validarPositivo(builder.getValorExperto().getValor(),
+                DomainExceptionCodes.DIAMANTE_VALOR_EXPERTO_MENOR_IGUAL_CERO.getMessageException());
         }
     }
 

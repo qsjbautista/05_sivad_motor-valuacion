@@ -92,13 +92,17 @@ public class ComplementarioFactoryImpl implements ComplementarioFactory {
     private static void validarBuilder(final Complementario.Builder builder) {
         Assert.notNull(builder,
             DomainExceptionCodes.BUILDER_NULO.getMessageException());
+
+        ValidadorNumero.validarPositivo(builder.getNumeroDePiezas(),
+            DomainExceptionCodes.COMPLEMENTARIO_NUM_PIEZAS_MENOR_IGUAL_CERO.getMessageException());
+
         Assert.notNull(builder.getValorExperto(),
             DomainExceptionCodes.COMPLEMENTARIO_VALOR_EXPERTO_NULO.getMessageException());
         Assert.notNull(builder.getValorExperto().getValor(),
             DomainExceptionCodes.COMPLEMENTARIO_VALOR_EXPERTO_NULO.getMessageException());
 
-        ValidadorNumero.validarPositivo(builder.getNumeroDePiezas());
-        ValidadorNumero.validarPositivo(builder.getValorExperto().getValor());
+        ValidadorNumero.validarPositivo(builder.getValorExperto().getValor(),
+            DomainExceptionCodes.COMPLEMENTARIO_VALOR_EXPERTO_MENOR_IGUAL_CERO.getMessageException());
     }
 
 }

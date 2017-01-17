@@ -26,36 +26,56 @@ public final class ValidadorNumero {
     }
 
     /**
-     * Método que valida si {@code valor} es mayor que cero.
+     * Metodo que valida si {@code valor} es mayor que cero.
      *
-     * @param valor Valor numérico a validarPositivo.
-     *
+     * @param valor El valor numérico a validarPositivo.
      * @return {@code valor} si es mayor que cero.
-     *
      * @throws IllegalArgumentException Cuando {@code valor} es menor o igual que cero.
      */
     public static BigDecimal validarPositivo(BigDecimal valor) {
+        return validarPositivo(valor, "El valor debe ser mayor que 0.");
+    }
+
+    /**
+     * Metodo que valida si {@code valor} es mayor que cero.
+     *
+     * @param valor El valor numérico a validarPositivo.
+     * @param msg El mensaje de error cuando el valor es menor a cero.
+     * @return {@code valor} si es mayor que cero.
+     * @throws IllegalArgumentException Cuando {@code valor} es menor o igual que cero.
+     */
+    public static BigDecimal validarPositivo(BigDecimal valor, String msg) {
         Assert.notNull(valor, "El valor no debe ser nulo");
 
         if (valor.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("El valor debe ser mayor que 0.");
+            throw new IllegalArgumentException(msg);
         }
 
         return valor;
     }
 
     /**
-     * Método que valida si {@code valor} es mayor que cero.
+     * Metodo que valida si {@code valor} es mayor que cero.
      *
-     * @param valor Valor numérico a validarPositivo.
-     *
-     * @return valor {@code valor} si es mayor que cero.
-     *
+     * @param valor El valor numérico a validarPositivo.
+     * @return {@code valor} si es mayor que cero.
      * @throws IllegalArgumentException Cuando {@code valor} es menor o igual que cero.
      */
     public static int validarPositivo(int valor) {
+        return validarPositivo(valor, "El valor debe ser mayor que 0.");
+    }
+
+    /**
+     * Metodo que valida si {@code valor} es mayor que cero.
+     *
+     * @param valor El valor numérico a validarPositivo.
+     * @param msg El mensaje de error cuando el valor es menor a cero.
+     * @return {@code valor} si es mayor que cero.
+     * @throws IllegalArgumentException Cuando {@code valor} es menor o igual que cero.
+     */
+    public static int validarPositivo(int valor, String msg) {
         if (valor <= 0) {
-            throw new IllegalArgumentException("El valor debe ser mayor que 0.");
+            throw new IllegalArgumentException(msg);
         }
 
         return valor;

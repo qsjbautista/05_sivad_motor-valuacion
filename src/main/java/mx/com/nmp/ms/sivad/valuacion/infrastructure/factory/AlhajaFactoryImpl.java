@@ -132,31 +132,48 @@ public class AlhajaFactoryImpl implements AlhajaFactory {
      * @param builder Objeto constructor de la entidad.
      */
     private static void validarBuilder(final Alhaja.Builder builder) {
-        Assert.notNull(builder, DomainExceptionCodes.BUILDER_NULO.getMessageException());
-        Assert.notNull(builder.getMetal(), DomainExceptionCodes.ALHAJA_METAL_NULO.getMessageException());
-        Assert.notNull(builder.getPeso(), DomainExceptionCodes.ALHAJA_PESO_NULO.getMessageException());
+        Assert.notNull(builder,
+            DomainExceptionCodes.BUILDER_NULO.getMessageException());
+
+        Assert.notNull(builder.getMetal(),
+            DomainExceptionCodes.ALHAJA_METAL_NULO.getMessageException());
+        Assert.hasText(builder.getMetal(),
+            DomainExceptionCodes.ALHAJA_METAL_VACIO.getMessageException());
+
+        Assert.notNull(builder.getPeso(),
+            DomainExceptionCodes.ALHAJA_PESO_NULO.getMessageException());
+        ValidadorNumero.validarPositivo(builder.getPeso(),
+            DomainExceptionCodes.ALHAJA_PESO_MENOR_IGUAL_CERO.getMessageException());
 
         if (builder.getMetal().equals(TipoMetalEnum.ORO.getTipo())) {
-            Assert.notNull(builder.getColor(), DomainExceptionCodes.ALHAJA_COLOR_NULO.getMessageException());
-            Assert.notNull(builder.getCalidad(), DomainExceptionCodes.ALHAJA_CALIDAD_NULA.getMessageException());
+            Assert.notNull(builder.getColor(),
+                DomainExceptionCodes.ALHAJA_COLOR_NULO.getMessageException());
+            Assert.hasText(builder.getColor(),
+                DomainExceptionCodes.ALHAJA_COLOR_VACIO.getMessageException());
+            Assert.notNull(builder.getCalidad(),
+                DomainExceptionCodes.ALHAJA_CALIDAD_NULA.getMessageException());
+            Assert.hasText(builder.getCalidad(),
+                DomainExceptionCodes.ALHAJA_CALIDAD_VACIA.getMessageException());
         }
 
-        ValidadorNumero.validarPositivo(builder.getPeso());
-
         if (!ObjectUtils.isEmpty(builder.getIncremento())) {
-            ValidadorNumero.validarPositivo(builder.getIncremento());
+            ValidadorNumero.validarPositivo(builder.getIncremento(),
+                DomainExceptionCodes.ALHAJA_INCREMENTO_MENOR_IGUAL_CERO.getMessageException());
         }
 
         if (!ObjectUtils.isEmpty(builder.getDesplazamiento())) {
-            ValidadorNumero.validarPositivo(builder.getDesplazamiento());
+            ValidadorNumero.validarPositivo(builder.getDesplazamiento(),
+                DomainExceptionCodes.ALHAJA_DESPLAZAMIENTO_MENOR_IGUAL_CERO.getMessageException());
         }
 
         if (!ObjectUtils.isEmpty(builder.getValorExperto()) &&
             !ObjectUtils.isEmpty(builder.getValorExperto().getValor())) {
-            ValidadorNumero.validarPositivo(builder.getValorExperto().getValor());
+            ValidadorNumero.validarPositivo(builder.getValorExperto().getValor(),
+                DomainExceptionCodes.ALHAJA_VALOR_EXPERTO_MENOR_IGUAL_CERO.getMessageException());
 
             if (builder.getValorExperto().getTipo().equals(ValorExperto.TipoEnum.UNITARIO)) {
-                throw new IllegalArgumentException(DomainExceptionCodes.ALHAJA_VALOR_EXPERTO_NO_SOPORTADO.getMessageException());
+                throw new IllegalArgumentException(
+                    DomainExceptionCodes.ALHAJA_VALOR_EXPERTO_NO_SOPORTADO.getMessageException());
             }
         }
     }

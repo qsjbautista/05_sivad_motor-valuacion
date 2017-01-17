@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory
  * @author <a href="https://wiki.quarksoft.net/display/~cachavez">Carlos Chávez Melena</a>
  */
 @SuppressWarnings("GroovyUnusedDeclaration")
-@Usage("administración de las Políticas de Castigo")
+@Usage("Administración de las Políticas de Castigo")
 @Man("""Comando que provee las siguientes operaciones sobre las Políticas de Castigo:
 Sustituir las políticas vigentes actuales por nuevas Políticas de Castigo.
 Consultar las Políticas de Castigo con base en una fecha de vigencia.""")
@@ -49,7 +49,7 @@ class PoliticasCastigoCommand {
 
     @Command
     @SuppressWarnings("GroovyAssignabilityCheck")
-    @Usage("permite actualizar la lista de políticas de castigo.")
+    @Usage("Permite actualizar la lista de políticas de castigo.")
     @Man("""Permite sustituir las políticas vigentes actuales por nuevas Políticas de Castigo,
 en formato centenas '.' decimales""")
     void actualizar(InvocationContext context,
@@ -90,7 +90,7 @@ en formato centenas '.' decimales""")
 
     @Command
     @SuppressWarnings("GroovyAssignabilityCheck")
-    @Usage("permite consultar la lista de políticas de castigo.")
+    @Usage("Permite consultar la lista de políticas de castigo.")
     @Man("Permite consultar las Políticas de Castigo con base en una fecha de vigencia.")
     def consultar(InvocationContext context,
                   @Usage("fecha de vigencia.")
