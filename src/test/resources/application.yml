@@ -25,14 +25,14 @@ spring:
         open-in-view: false
         show-sql: true
         hibernate:
-            ddl-auto: create-drop
+            ddl-auto: none
             naming:
                 strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
         properties:
             hibernate.cache.use_second_level_cache: false
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: true
-            hibernate.hbm2ddl.auto: create-drop
+            hibernate.hbm2ddl.auto: none
     properties:
         jadira.usertype.databaseZone: jvm
         jadira.usertype.javaZone: jvm
