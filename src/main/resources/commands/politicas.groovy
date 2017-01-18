@@ -29,6 +29,7 @@ import org.joda.time.format.DateTimeFormatter
 import org.joda.time.format.ISODateTimeFormat
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.dao.DataIntegrityViolationException
 
 /**
  * Utilizado por la consola CRaSH para administrar el listado de políticas de castigo.
@@ -79,6 +80,9 @@ en formato centenas '.' decimales""")
 
             entidad.actualizar();
             out.println("El Listado de Políticas de Castigo fue actualizado correctamente.", green)
+        } catch (DataIntegrityViolationException e) {
+            LOGGER.info("Error al procesar la solicitud", e)
+            out.println("El valor capturado es demasiado grande, máximo 3 dígitos enteros.", red);
         } catch (RuntimeException e) {
             LOGGER.info("Error al procesar la solicitud", e)
             out.println(e.getMessage(), red);
