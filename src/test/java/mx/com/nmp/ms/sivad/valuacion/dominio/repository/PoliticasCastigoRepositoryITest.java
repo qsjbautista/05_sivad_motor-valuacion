@@ -79,7 +79,7 @@ public class PoliticasCastigoRepositoryITest {
      */
     @Test(expected = PoliticaCastigoNoEncontradaException.class)
     public void consultarVigentesNoDatosTest() {
-        test.consultar(DateTime.now());
+        test.consultar();
     }
 
     /**
