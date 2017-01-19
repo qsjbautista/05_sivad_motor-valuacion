@@ -58,7 +58,7 @@ public class ValuadorDiamantesEndpointSystemTest {
     private static final String COLOR_A = "Amarillo";
     private static final String COLOR_D = "D";
     private static final String CORTE = "Oval";
-    private static final String METAL = "AG";
+    private static final String METAL = "AU";
     private static final String PIEZA_ALHAJA_ID = "1234567891";
     private static final String PIEZA_COMPLEMENTO_ID = "1234567892";
     private static final String PIEZA_DIAMANTE_ID = "1234567893";

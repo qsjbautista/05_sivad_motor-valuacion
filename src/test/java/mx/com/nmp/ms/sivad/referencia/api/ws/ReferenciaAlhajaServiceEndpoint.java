@@ -20,7 +20,7 @@ public class ReferenciaAlhajaServiceEndpoint implements ReferenciaAlhajaService 
 
     private static final String CALIDAD = "14";
     private static final String COLOR_A = "Amarillo";
-    private static final String METAL = "AG";
+    private static final String METAL = "AU";
     private static final String RANGO = "F1";
 
     private static final BigDecimal DESPLAZAMIENTO =
