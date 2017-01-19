@@ -42,6 +42,11 @@ spring:
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: true
             hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
+            # La siguiente configuración evita el error:
+            # Unexpected error trying to gauge level of JDBC REF_CURSOR support : null
+            # Lo anterior es visible al activar logging para org.hibernate a nivel DEBUG,
+            # sin ello se manifiesta como NullPointerException en cacheAdvisor al levantar el contexto
+            hibernate.temp.use_jdbc_metadata_defaults: false
 
 # ===================================================================
 # Propiedades especificas de la aplicacion (microservicio)
