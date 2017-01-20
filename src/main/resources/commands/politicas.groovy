@@ -37,21 +37,21 @@ import org.springframework.dao.DataIntegrityViolationException
  * @author <a href="https://wiki.quarksoft.net/display/~cachavez">Carlos Chávez Melena</a>
  */
 @SuppressWarnings("GroovyUnusedDeclaration")
-@Usage("Administración de las Políticas de Castigo")
-@Man("""Comando que provee las siguientes operaciones sobre las Políticas de Castigo:
-Sustituir las políticas vigentes actuales por nuevas Políticas de Castigo.
-Consultar las Políticas de Castigo con base en una fecha de vigencia.""")
+@Usage("Administraci\u00f3n de las Pol\u00edticas de Castigo")
+@Man("""Comando que provee las siguientes operaciones sobre las Pol\u00edticas de Castigo:
+Sustituir las pol\u00edticas vigentes actuales por nuevas Pol\u00edticas de Castigo.
+Consultar las Pol\u00edticas de Castigo con base en una fecha de vigencia.""")
 class PoliticasCastigoCommand {
     private static final Logger LOGGER = LoggerFactory.getLogger(PoliticasCastigoCommand)
 
-    private static final DateTimeFormatter FORMATO_FECHA = ISODateTimeFormat.dateHourMinuteSecond();
+    private static final DateTimeFormatter FORMATO_FECHA = ISODateTimeFormat.dateHourMinuteSecond()
 
     private static final BigDecimal FACTOR = BigDecimal.valueOf(100)
 
     @Command
     @SuppressWarnings("GroovyAssignabilityCheck")
-    @Usage("Permite actualizar la lista de políticas de castigo.")
-    @Man("""Permite sustituir las políticas vigentes actuales por nuevas Políticas de Castigo,
+    @Usage("Permite actualizar la lista de pol\u00edticas de castigo.")
+    @Man("""Permite sustituir las pol\u00edticas vigentes actuales por nuevas Pol\u00edticas de Castigo,
 en formato centenas '.' decimales""")
     void actualizar(InvocationContext context,
                    @Usage("porcentaje de castigo para Diamante.")
@@ -65,7 +65,7 @@ en formato centenas '.' decimales""")
                    @Required @Option(names = ["c", "porcentajeComplemento"])String porcentajeComplemento) {
         FactorPoliticasCastigoFactory fabricaVo =
             context.attributes["spring.beanfactory"].getBean(FactorPoliticasCastigoFactory)
-        PoliticasCastigoFactory fabrica = context.attributes["spring.beanfactory"].getBean(PoliticasCastigoFactory);
+        PoliticasCastigoFactory fabrica = context.attributes["spring.beanfactory"].getBean(PoliticasCastigoFactory)
 
         /**
          * Convierte el porcentaje de castigo ingresado a factor.
@@ -75,30 +75,30 @@ en formato centenas '.' decimales""")
             BigDecimal fa = convertirAFactor(porcentajeAlhaja)
             BigDecimal fc = convertirAFactor(porcentajeComplemento)
 
-            Map<Class<? extends Pieza>, BigDecimal> vo = fabricaVo.crearCon(fd, fa, fc);
-            PoliticasCastigo entidad = fabrica.crearPersistibleCon(vo, DateTime.now());
+            Map<Class<? extends Pieza>, BigDecimal> vo = fabricaVo.crearCon(fd, fa, fc)
+            PoliticasCastigo entidad = fabrica.crearPersistibleCon(vo, DateTime.now())
 
-            entidad.actualizar();
-            out.println("El Listado de Políticas de Castigo fue actualizado correctamente.", green)
+            entidad.actualizar()
+            out.println("El Listado de Pol\u00edticas de Castigo fue actualizado correctamente.", green)
         } catch (DataIntegrityViolationException e) {
             LOGGER.info("Error al procesar la solicitud", e)
-            out.println("El valor capturado es demasiado grande, máximo 3 dígitos enteros.", red);
-        } catch (RuntimeException e) {
+            out.println("El valor capturado es demasiado grande, m\u00e1ximo 3 d\u00edgitos enteros.", red)
+        } catch (IllegalArgumentException e) {
             LOGGER.info("Error al procesar la solicitud", e)
-            out.println(e.getMessage(), red);
+            out.println(e.getMessage(), red)
         } catch (Exception e) {
-            LOGGER.info("Ocurrio un error al guardar las políticas de castigo", e)
-            out.println("Ocurrió un error inesperado al actualizar el Listado de Políticas de Castigo", red)
+            LOGGER.info("Ocurri\u00f3 un error al guardar las políticas de castigo", e)
+            out.println("Ocurri\u00f3 un error inesperado al actualizar el Listado de Pol\u00edticas de Castigo", red)
         }
     }
 
     @Command
     @SuppressWarnings("GroovyAssignabilityCheck")
-    @Usage("Permite consultar la lista de políticas de castigo.")
-    @Man("Permite consultar las Políticas de Castigo con base en una fecha de vigencia.")
-    def consultar(InvocationContext context,
-                  @Usage("fecha de vigencia.")
-                  @Man("Fecha de vigencia con la cual se consultaran las políticas de castigo.")
+    @Usage("Permite consultar la lista de pol\u00edticas de castigo.")
+    @Man("Permite consultar las Pol\u00edticas de Castigo con base en una fecha de vigencia.")
+    consultar(InvocationContext context,
+              @Usage("fecha de vigencia.")
+                  @Man("Fecha de vigencia con la cual se consultaran las pol\u00edticas de castigo.")
                   @Argument String fecha) {
         DateTime fechaVigencia = null
 
@@ -120,8 +120,8 @@ en formato centenas '.' decimales""")
             LOGGER.info("No se encontro resultado", e)
             procesarMensajeError(fechaVigencia)
         } catch (Exception e) {
-            LOGGER.info("Error al recuperar las políticas de castigo", e)
-            out.println("Ocurrió un error inesperado al consultar el Listado de Políticas de Castigo", red)
+            LOGGER.info("Error al recuperar las pol\u00edticas de castigo", e)
+            out.println("Ocurri\u00f3 un error inesperado al consultar el Listado de Políticas de Castigo", red)
         }
     }
 
@@ -140,11 +140,11 @@ en formato centenas '.' decimales""")
              */
             ValidadorNumero.validarPositivo(numero) / FACTOR
         } catch (NumberFormatException e) {
-            final String MSJ_ERROR = "El formato del número [$valor] no es valido"
+            final String MSJ_ERROR = "El formato del n\u00famero [$valor] no es valido"
             LOGGER.info(MSJ_ERROR, e)
             throw new NumberFormatException(MSJ_ERROR)
         } catch (IllegalArgumentException e) {
-            final String MSJ_ERROR = "El valor del número [$valor] debe ser positivo mayor a cero"
+            final String MSJ_ERROR = "El valor del n\u00famero [$valor] debe ser positivo mayor a cero"
             LOGGER.info(MSJ_ERROR, e)
             throw new IllegalArgumentException(MSJ_ERROR)
         }
@@ -200,7 +200,7 @@ en formato centenas '.' decimales""")
             msj = "vigente."
         }
 
-        out.println("No existe un Listado de Políticas de Castigo $msj", red)
+        out.println("No existe un Listado de Pol\u00edticas de Castigo $msj", red)
     }
 
     /**
