@@ -1,5 +1,6 @@
 package mx.com.nmp.ms.sivad.valuacion.config;
 
+import mx.com.nmp.ms.arquetipo.profile.NmpProfile;
 import mx.com.nmp.ms.sivad.valuacion.api.ws.ValuadorDiamantesEndpoint;
 import mx.com.nmp.ms.sivad.valuacion.ws.diamantes.ValuadorDiamantesService;
 import org.apache.cxf.Bus;
@@ -10,8 +11,12 @@ import org.apache.cxf.transport.servlet.CXFServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 
+import javax.inject.Inject;
 import javax.xml.ws.Endpoint;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * Configuración de web services.
@@ -19,6 +24,9 @@ import javax.xml.ws.Endpoint;
  */
 @Configuration
 public class WebServiceConfiguration {
+
+    @Inject
+    private Environment env;
 
     /**
      * Configura la ruta en la que serán expuestos los web services
@@ -38,10 +46,14 @@ public class WebServiceConfiguration {
     @Bean(name = Bus.DEFAULT_BUS_ID)
     public SpringBus springBus() {
         final SpringBus springBus = new SpringBus();
-        LoggingFeature loggingFeature = new LoggingFeature();
-        loggingFeature.setPrettyLogging(true);
-        loggingFeature.initialize(springBus);
-        springBus.getFeatures().add(loggingFeature);
+
+        Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
+        if (activeProfiles.contains(NmpProfile.DEV)) {
+            LoggingFeature loggingFeature = new LoggingFeature();
+            loggingFeature.setPrettyLogging(true);
+            loggingFeature.initialize(springBus);
+            springBus.getFeatures().add(loggingFeature);
+        }
 
         return springBus;
     }
