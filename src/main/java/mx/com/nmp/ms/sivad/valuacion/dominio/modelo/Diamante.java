@@ -177,9 +177,10 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
             valorComercialMaximo = valorExperto.getValor();
         }
 
-        LOGGER.debug("Valor Comercial Minimo: [{}]", valorComercialMinimo);
-        LOGGER.debug("Valor Comercial Medio: [{}]", valorComercialMedio);
-        LOGGER.debug("Valor Comercial Maximo: [{}]", valorComercialMaximo);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Valor Comercial Minimo: [{}]; Medio: [{}]; Maximo: [{}]",
+                valorComercialMinimo, valorComercialMedio, valorComercialMaximo);
+        }
 
         // EN CASO DE EXISTIR CERTIFICADO SE APLICA EL INCREMENTO.
         if (!ObjectUtils.isEmpty(certificadoDiamante)) {
@@ -192,9 +193,10 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
                 valorComercialMedio = valorComercialMedio.multiply(incrementoPorCertificado);
                 valorComercialMaximo = valorComercialMaximo.multiply(incrementoPorCertificado);
 
-                LOGGER.debug("Valor Comercial Minimo: [{}]", valorComercialMinimo);
-                LOGGER.debug("Valor Comercial Medio: [{}]", valorComercialMedio);
-                LOGGER.debug("Valor Comercial Maximo: [{}]", valorComercialMaximo);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Valor Comercial Minimo: [{}]; Medio: [{}]; Maximo: [{}]",
+                        valorComercialMinimo, valorComercialMedio, valorComercialMaximo);
+                }
             }
         }
 
@@ -210,9 +212,10 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
                 valorComercialMaximo = valorComercialMaximo.multiply(numPiezas);
             }
 
-            LOGGER.debug("Valor Comercial Minimo: [{}]", valorComercialMinimo);
-            LOGGER.debug("Valor Comercial Medio: [{}]", valorComercialMedio);
-            LOGGER.debug("Valor Comercial Maximo: [{}]", valorComercialMaximo);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Valor Comercial Minimo: [{}]; Medio: [{}]; Maximo: [{}]",
+                    valorComercialMinimo, valorComercialMedio, valorComercialMaximo);
+            }
         }
 
         // SE CREA EL AVALÚO CON BASE EN LOS VALORES COMERCIALES DEFINITIVOS.

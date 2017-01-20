@@ -137,9 +137,11 @@ public class Prenda implements PiezaValuable {
      * @return Un avalúo con la suma de los dos.
      */
     private Avaluo sumarAvaluos(Avaluo avaluoUno, Avaluo avaluoDos) {
-        LOGGER.debug(">> sumarAvaluos. " +
-            "Avaluo 1: [" + ((avaluoUno != null) ? avaluoUno.toString() : "null") + "], " +
-            "Avaluo 2: [" + ((avaluoDos != null) ? avaluoDos.toString() : "null") + "].");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(">> sumarAvaluos. " +
+                "Avaluo 1: [" + ((avaluoUno != null) ? avaluoUno.toString() : "null") + "], " +
+                "Avaluo 2: [" + ((avaluoDos != null) ? avaluoDos.toString() : "null") + "].");
+        }
 
         if (avaluoUno == null) {
             return AvaluoFactory.crearCon(
@@ -153,8 +155,10 @@ public class Prenda implements PiezaValuable {
             avaluoUno.valorPromedio().add(avaluoDos.valorPromedio()),
             avaluoUno.valorMaximo().add(avaluoDos.valorMaximo()));
 
-        LOGGER.debug("<< sumarAvaluos. " +
-            "Avaluo Result: [" + ((result != null) ? result.toString() : "null") + "].");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("<< sumarAvaluos. " +
+                "Avaluo Result: [" + ((result != null) ? result.toString() : "null") + "].");
+        }
 
         return result;
     }
@@ -167,17 +171,21 @@ public class Prenda implements PiezaValuable {
      * @return El avalúo con el factor de castigo aplicado.
      */
     private Avaluo aplicarPoliticaCastigo(Avaluo avaluo, BigDecimal factor) {
-        LOGGER.debug(">> aplicarPoliticaCastigo. " +
-            "Avaluo: [" + ((avaluo != null) ? avaluo.toString() : "null") + "], " +
-            "Factor: [" + ((factor != null) ? factor.toString() : "null") + "].");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(">> aplicarPoliticaCastigo. " +
+                "Avaluo: [" + ((avaluo != null) ? avaluo.toString() : "null") + "], " +
+                "Factor: [" + ((factor != null) ? factor.toString() : "null") + "].");
+        }
 
         Avaluo result = AvaluoFactory.crearCon(
             avaluo.valorMinimo().multiply(factor),
             avaluo.valorPromedio().multiply(factor),
             avaluo.valorMaximo().multiply(factor));
 
-        LOGGER.debug("<< aplicarPoliticaCastigo. " +
-            "Avaluo Result: [" + ((result != null) ? result.toString() : "null") + "].");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("<< aplicarPoliticaCastigo. " +
+                "Avaluo Result: [" + ((result != null) ? result.toString() : "null") + "].");
+        }
 
         return result;
     }
