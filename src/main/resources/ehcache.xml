@@ -42,4 +42,10 @@
            timeToLiveSeconds="600"
            timeToIdleSeconds="300"/>
 
+    <cache name = "PoliticasCastigoJpaRepository.findFirstByOrderByFechaListadoDesc"
+           eternal="false"
+           overflowToDisk="false"
+           timeToLiveSeconds="600"
+           timeToIdleSeconds="300"/>
+
 </ehcache>

@@ -9,6 +9,7 @@ package mx.com.nmp.ms.sivad.valuacion.infrastructure.jpa.repository;
 
 import mx.com.nmp.ms.sivad.valuacion.infrastructure.jpa.dominio.PoliticasCastigoJpa;
 import org.joda.time.DateTime;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public interface PoliticasCastigoJpaRepository extends JpaRepository<PoliticasCa
      *
      * @return Polticas de castigo.
      */
+    @Cacheable("PoliticasCastigoJpaRepository.findFirstByOrderByFechaListadoDesc")
     PoliticasCastigoJpa findFirstByOrderByFechaListadoDesc();
 
     /**
