@@ -108,7 +108,8 @@ public class PoliticasCastigoRepositoryITest {
     @Transactional
     @Sql("/bd/test-data-politicas-castigo-h2.sql")
     public void consultarVigentesTest() {
-        PoliticasCastigo resultado = test.consultar();
+        List<PoliticasCastigo> res = test.consultar(DateTime.parse("2017-01-05"));
+        PoliticasCastigo resultado = res.get(0);
 
         assertNotNull(resultado);
         assertNotNull(resultado.getFechaListado());

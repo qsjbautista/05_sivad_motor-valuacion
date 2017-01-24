@@ -11,7 +11,9 @@ package mx.com.nmp.ms.sivad.valuacion.dominio.modelo;
  */
 public enum TipoMetalEnum {
 
-    ORO("AU");
+    ORO("AU"),
+
+    PLATA("AG");
 
     /**
      * Tipo de metal.

@@ -257,9 +257,7 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
             alhaja.getCalidad(),
             alhaja.getRango(),
             alhaja.getPeso(),
-            ((!ObjectUtils.isEmpty(alhaja.getIncremento()) &&
-                (alhaja.getIncremento().compareTo(BigDecimal.ZERO) > 0))
-                ? alhaja.getIncremento() : null),
+            alhaja.getIncremento(),
             ((!ObjectUtils.isEmpty(alhaja.getDesplazamiento()) &&
                 (alhaja.getDesplazamiento().compareTo(BigDecimal.ZERO) > 0))
                 ? alhaja.getDesplazamiento() : null),

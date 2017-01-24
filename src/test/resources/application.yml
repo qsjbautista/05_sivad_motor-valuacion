@@ -14,8 +14,6 @@ spring:
     application:
         name: sivad-motor-valuacion
     datasource:
-        initialize: true
-        schema: classpath:/schema-h2.sql
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:h2:mem:motor_valuacion;DB_CLOSE_DELAY=-1
         name:
@@ -27,13 +25,14 @@ spring:
         open-in-view: false
         show-sql: true
         hibernate:
-            ddl-auto: none
+            ddl-auto: create-drop
             naming:
                 strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
         properties:
             hibernate.cache.use_second_level_cache: false
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: true
+            hibernate.hbm2ddl.auto: create-drop
     properties:
         jadira.usertype.databaseZone: jvm
         jadira.usertype.javaZone: jvm

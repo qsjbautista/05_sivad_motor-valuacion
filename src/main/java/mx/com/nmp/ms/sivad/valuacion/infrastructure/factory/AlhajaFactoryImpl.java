@@ -150,15 +150,14 @@ public class AlhajaFactoryImpl implements AlhajaFactory {
                 DomainExceptionCodes.ALHAJA_COLOR_NULO.getMessageException());
             Assert.hasText(builder.getColor(),
                 DomainExceptionCodes.ALHAJA_COLOR_VACIO.getMessageException());
+        }
+
+        if (builder.getMetal().equals(TipoMetalEnum.ORO.getTipo())
+                || builder.getMetal().equals(TipoMetalEnum.PLATA.getTipo())) {
             Assert.notNull(builder.getCalidad(),
                 DomainExceptionCodes.ALHAJA_CALIDAD_NULA.getMessageException());
             Assert.hasText(builder.getCalidad(),
                 DomainExceptionCodes.ALHAJA_CALIDAD_VACIA.getMessageException());
-        }
-
-        if (!ObjectUtils.isEmpty(builder.getIncremento())) {
-            ValidadorNumero.validarPositivo(builder.getIncremento(),
-                DomainExceptionCodes.ALHAJA_INCREMENTO_MENOR_IGUAL_CERO.getMessageException());
         }
 
         if (!ObjectUtils.isEmpty(builder.getDesplazamiento())) {
@@ -166,15 +165,9 @@ public class AlhajaFactoryImpl implements AlhajaFactory {
                 DomainExceptionCodes.ALHAJA_DESPLAZAMIENTO_MENOR_IGUAL_CERO.getMessageException());
         }
 
-        if (!ObjectUtils.isEmpty(builder.getValorExperto()) &&
-            !ObjectUtils.isEmpty(builder.getValorExperto().getValor())) {
+        if (!ObjectUtils.isEmpty(builder.getValorExperto())) {
             ValidadorNumero.validarPositivo(builder.getValorExperto().getValor(),
                 DomainExceptionCodes.ALHAJA_VALOR_EXPERTO_MENOR_IGUAL_CERO.getMessageException());
-
-            if (builder.getValorExperto().getTipo().equals(ValorExperto.TipoEnum.UNITARIO)) {
-                throw new IllegalArgumentException(
-                    DomainExceptionCodes.ALHAJA_VALOR_EXPERTO_NO_SOPORTADO.getMessageException());
-            }
         }
     }
 

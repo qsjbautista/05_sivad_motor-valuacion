@@ -82,7 +82,7 @@ public class PrendaUTest {
     private static final BigDecimal AV_ALHAJA_VALOR_GRAMO_ORO =
         new BigDecimal(100.00D).setScale(3, BigDecimal.ROUND_HALF_UP);
     private static final BigDecimal AV_ALHAJA =
-        new BigDecimal(3993.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
+        new BigDecimal(120).setScale(2, BigDecimal.ROUND_HALF_UP);
 
 
     // UTILIZADAS PARA EL AVALÚO DE DIAMANTES.

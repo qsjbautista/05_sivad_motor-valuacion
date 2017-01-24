@@ -28,6 +28,8 @@ import java.math.BigDecimal;
 public class Alhaja extends Pieza implements CaracteristicasGramoOroProveedor, MetalCalidadRangoProveedor {
     private static final Logger LOGGER = LoggerFactory.getLogger(Alhaja.class);
 
+    private static final BigDecimal FACTOR = BigDecimal.valueOf(100);
+
     /**
      * Referencia hacia el conector con el sistema de tablas de referencia.
      */
@@ -216,27 +218,35 @@ public class Alhaja extends Pieza implements CaracteristicasGramoOroProveedor, M
      * Realiza el cálculo para obtener el precio de ésta alhaja.
      */
     private void realizarValuacion() {
-        BigDecimal precioGramo = recuperarPrecioGramoMetal();
-        LOGGER.debug("Valor por gramo de {} = {}", metal, precioGramo);
+        BigDecimal avaluoAlhaja;
 
-        BigDecimal precioMetal = precioGramo.multiply(peso);
-        LOGGER.debug("Aplicando peso {}gr = {}", peso, precioMetal);
+        if (ObjectUtils.isEmpty(valorExperto)) {
+            BigDecimal precioGramo = recuperarPrecioGramoMetal();
+            LOGGER.debug("Valor por gramo de {} = {}", metal, precioGramo);
 
-        BigDecimal factor = recuperarFactor();
-        BigDecimal conFactor = precioMetal.multiply(factor);
-        LOGGER.debug("Aplicando factor {} = {}", factor, conFactor);
+            BigDecimal precioMetal = precioGramo.multiply(peso);
+            LOGGER.debug("Aplicando peso {}gr = {}", peso, precioMetal);
 
-        BigDecimal vl = recuperarValorExperto();
-        BigDecimal conValorExperto = conFactor.add(vl);
-        LOGGER.debug("Aplicando valor experto {} = {}", vl, conValorExperto);
+            BigDecimal inc = recuperarIncremento();
+            LOGGER.debug("Incremento a aplicar {}", inc);
 
-        BigDecimal inc = recuperarIncremento();
-        BigDecimal conIncremento = conValorExperto.multiply(inc);
-        LOGGER.debug("Aplicando incremento {} = {}", inc, conIncremento);
+            BigDecimal desp = recuperarDesplazamiento();
+            LOGGER.debug("Desplazamiento a aplicar {}", desp);
 
-        BigDecimal desp = recuperarDesplazamiento();
-        BigDecimal avaluoAlhaja = conIncremento.multiply(desp);
-        LOGGER.debug("Aplicando desplazamiento {} = {}", desp, avaluoAlhaja);
+            BigDecimal inc_desp = inc.add(desp);
+            BigDecimal div_inc_desp = inc_desp
+                .divide(FACTOR, 4, BigDecimal.ROUND_HALF_UP);
+            BigDecimal fac_inc_des = BigDecimal.ONE.add(div_inc_desp);
+            BigDecimal conIncDes = precioMetal.multiply(fac_inc_des);
+            LOGGER.debug("Aplicando incremento desplazamiento {} = {}", fac_inc_des, conIncDes);
+
+            BigDecimal factor = recuperarFactor();
+            avaluoAlhaja = conIncDes.multiply(factor);
+            LOGGER.debug("Aplicando factor {} = {}", factor, avaluoAlhaja);
+        } else {
+            avaluoAlhaja = recuperarValorExperto();
+            LOGGER.debug("No se valua se usa valor experto {}", avaluoAlhaja);
+        }
 
         avaluo = AvaluoFactory.crearCon(avaluoAlhaja, avaluoAlhaja, avaluoAlhaja);
     }
@@ -277,7 +287,7 @@ public class Alhaja extends Pieza implements CaracteristicasGramoOroProveedor, M
      * @return Verdadero si se tienen los datos para solicitar el factor, falso si no.
      */
     private boolean isValidFactorRequest() {
-        return !(ObjectUtils.isEmpty(metal) || (ObjectUtils.isEmpty(calidad) || ObjectUtils.isEmpty(rango)));
+        return !(ObjectUtils.isEmpty(metal) || ObjectUtils.isEmpty(rango));
     }
 
     /**
@@ -286,8 +296,13 @@ public class Alhaja extends Pieza implements CaracteristicasGramoOroProveedor, M
      * @return Avaluó del experto.
      */
     private BigDecimal recuperarValorExperto() {
-        if (ObjectUtils.isEmpty(valorExperto) || metal.equals(TipoMetalEnum.ORO.getTipo())) {
+        /*if (ObjectUtils.isEmpty(valorExperto) || metal.equals(TipoMetalEnum.ORO.getTipo())) {
             return BigDecimal.ZERO;
+        } else {
+            return valorExperto.getValor();
+        }*/
+        if (ValorExperto.TipoEnum.UNITARIO == valorExperto.getTipo()) {
+            return valorExperto.getValor().multiply(BigDecimal.valueOf(numeroDePiezas));
         } else {
             return valorExperto.getValor();
         }
@@ -300,7 +315,7 @@ public class Alhaja extends Pieza implements CaracteristicasGramoOroProveedor, M
      */
     private BigDecimal recuperarIncremento() {
         if (ObjectUtils.isEmpty(incremento)) {
-            return BigDecimal.ONE;
+            return BigDecimal.ZERO;
         } else {
             return incremento;
         }
@@ -313,7 +328,7 @@ public class Alhaja extends Pieza implements CaracteristicasGramoOroProveedor, M
      */
     private BigDecimal recuperarDesplazamiento() {
         if (ObjectUtils.isEmpty(desplazamiento)) {
-            return BigDecimal.ONE;
+            return BigDecimal.ZERO;
         } else {
             return desplazamiento;
         }

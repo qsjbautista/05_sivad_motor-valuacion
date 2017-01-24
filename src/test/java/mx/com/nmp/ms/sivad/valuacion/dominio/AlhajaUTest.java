@@ -138,7 +138,7 @@ public class AlhajaUTest {
     public void valuarMetalOroPesoFactorIncrementoTest() {
         addComportamientoGramoOro(BigDecimal.valueOf(312.500));
         addComportamientoFactor(BigDecimal.valueOf(1.25));
-        BigDecimal valor = BigDecimal.valueOf(1076.5625);
+        BigDecimal valor = BigDecimal.valueOf(838.890625);
         Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
 
         Alhaja test = fabrica.create(getBuilder(TipoMetalEnum.ORO.getTipo(), "AU_AM", "10_Q", "F2",
@@ -162,11 +162,11 @@ public class AlhajaUTest {
     public void valuarMetalOroPesoFactorIncrementoDesplazamientoTest() {
         addComportamientoGramoOro(BigDecimal.valueOf(312.500));
         addComportamientoFactor(BigDecimal.valueOf(1.25));
-        BigDecimal valor = BigDecimal.valueOf(1345.703125);
+        BigDecimal valor = BigDecimal.valueOf(869.53125);
         Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
 
         Alhaja test = fabrica.create(getBuilder(TipoMetalEnum.ORO.getTipo(), "AU_AM", "10_Q", "F2",
-            BigDecimal.valueOf(2.12), BigDecimal.valueOf(1.30), BigDecimal.valueOf(1.25), null));
+            BigDecimal.valueOf(2.12), BigDecimal.valueOf(5), null, null));
 
         assertNotNull(test);
 
@@ -207,7 +207,7 @@ public class AlhajaUTest {
     @Test
     public void valuarMetalPlataPesoIncrementoTest() {
         addComportamientoGramoMetal(BigDecimal.valueOf(600.000));
-        BigDecimal valor = BigDecimal.valueOf(1653.6);
+        BigDecimal valor = BigDecimal.valueOf(1288.536);
         Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
 
         Alhaja test = fabrica.create(getBuilder("PT", null, null, null, BigDecimal.valueOf(2.12),
@@ -230,7 +230,7 @@ public class AlhajaUTest {
     @Test
     public void valuarMetalPlataPesoIncrementoDesplazamientoTest() {
         addComportamientoGramoMetal(BigDecimal.valueOf(600.000));
-        BigDecimal valor = BigDecimal.valueOf(2067);
+        BigDecimal valor = BigDecimal.valueOf(1304.436);
         Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
 
         Alhaja test = fabrica.create(getBuilder("PT", null, null, null, BigDecimal.valueOf(2.12),
@@ -253,11 +253,11 @@ public class AlhajaUTest {
     @Test
     public void valuarMetalPlataPesoIncrementoDesplazamientoValorExpertoTest() {
         addComportamientoGramoMetal(BigDecimal.valueOf(600.000));
-        BigDecimal valor = BigDecimal.valueOf(3692);
+        BigDecimal valor = BigDecimal.valueOf(1000);
         Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
 
-        Alhaja test = fabrica.create(getBuilder("PT", null, null, null, BigDecimal.valueOf(2.12),
-            BigDecimal.valueOf(1.30), BigDecimal.valueOf(1.25),
+        Alhaja test = fabrica.create(getBuilder("OT", null, null, null, BigDecimal.valueOf(2.12),
+            null, null,
             new ValorExperto(BigDecimal.valueOf(1000), ValorExperto.TipoEnum.TOTAL)));
 
         assertNotNull(test);
@@ -277,7 +277,7 @@ public class AlhajaUTest {
     @Test
     public void valuarMetalAGPesoIncrementoDesplazamientoValorExpertoTest() {
         addComportamientoGramoMetal(BigDecimal.valueOf(8.000));
-        BigDecimal valor = BigDecimal.valueOf(76.31);
+        BigDecimal valor = BigDecimal.valueOf(30);
         Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
 
         Alhaja test = fabrica.create(getBuilder("AG", null, "CL_999", null, BigDecimal.valueOf(2.12),
@@ -302,12 +302,10 @@ public class AlhajaUTest {
     public void valuarMetalAGFactorTest() {
         addComportamientoGramoMetal(BigDecimal.valueOf(8.000));
         addComportamientoFactorError();
-        BigDecimal valor = BigDecimal.valueOf(76.31);
-        Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
 
         Alhaja test = fabrica.create(getBuilder("AG", null, "CL_999", "F1", BigDecimal.valueOf(2.12),
             BigDecimal.valueOf(1.30), BigDecimal.valueOf(1.25),
-            new ValorExperto(BigDecimal.valueOf(30), ValorExperto.TipoEnum.TOTAL)));
+            null));
 
         assertNotNull(test);
 

@@ -10,7 +10,7 @@
     <defaultCache
         eternal="false"
         overflowToDisk="false"
-        />
+    />
 
     <cache name = "TablasDeReferenciaAlhajas.obtenerValorGramoOro.cache"
            eternal="false"
@@ -37,6 +37,12 @@
            timeToIdleSeconds="300"/>
 
     <cache name = "TablasDeReferenciaDiamantes.obtenerValorComercial.cache"
+           eternal="false"
+           overflowToDisk="false"
+           timeToLiveSeconds="600"
+           timeToIdleSeconds="300"/>
+
+    <cache name = "PoliticasCastigoJpaRepository.findFirstByOrderByFechaListadoDesc"
            eternal="false"
            overflowToDisk="false"
            timeToLiveSeconds="600"
