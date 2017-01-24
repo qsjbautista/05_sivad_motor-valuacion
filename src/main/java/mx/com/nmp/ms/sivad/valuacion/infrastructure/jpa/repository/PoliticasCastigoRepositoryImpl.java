@@ -17,6 +17,7 @@ import mx.com.nmp.ms.sivad.valuacion.infrastructure.jpa.dominio.PoliticasCastigo
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ObjectUtils;
 
@@ -78,6 +79,7 @@ public class PoliticasCastigoRepositoryImpl implements PoliticasCastigoRepositor
      * {@inheritDoc}
      */
     @Override
+    @CacheEvict(cacheNames = "PoliticasCastigoJpaRepository.findFirstByOrderByFechaListadoDesc", allEntries = true)
     public void actualizar(@NotNull PoliticasCastigo entidad) {
         LOGGER.info(">> actualizar({})", entidad);
 
