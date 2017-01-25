@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="c999d22b-d95c-4b99-a179-ea02e6e2cb1a" activeEnvironment="Default" name="Bus - Motor Valuacion" resourceRoot="" soapui-version="5.3.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="bbd910ba-51aa-426e-b7bd-ff6f150ad551" wsaVersion="NONE" name="ValuadorService" type="wsdl" bindingName="{http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios}ValuadorService" soapVersion="1_1" anonymous="optional" definition="http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios?wsdl"><con:part><con:url>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios?wsdl</con:url><con:content><![CDATA[<WL5G3N0:definitions targetNamespace="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" xmlns:WL5G3N2="http://schemas.xmlsoap.org/soap/envelope/" xmlns:WL5G3N3="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" xmlns:WL5G3N4="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios" xmlns:WL5G3N5="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+    <s:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:datatypes="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:head="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:valuacion="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+      <s:include schemaLocation="http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios?SCHEMA%2FOperacionPrendaria%2FMotorDePrecios%2FResources%2FSchemas%2FNMPMotordePreciosElementosXSD"/>
+      <s:import namespace="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" schemaLocation="http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios?SCHEMA%2FCommon%2FXSD%2FNMPStandardHeader"/>
+      <s:import namespace="http://schemas.xmlsoap.org/soap/envelope/" schemaLocation="http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios?SCHEMA%2FCommon%2FXSD%2FNMPStandardFault.xsd"/>
+    </s:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="inputHeader">
+    <WL5G3N0:part element="WL5G3N1:headerMessage" name="input"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="outputHeader">
+    <WL5G3N0:part element="WL5G3N1:headerMessageResponse" name="output"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="Fault">
+    <WL5G3N0:part element="WL5G3N2:Fault" name="fault"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="ValuarPrendaBasicoIn">
+    <WL5G3N0:part element="WL5G3N3:valuarPrendaBasicoRequest" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="ValuarPrendaBasicoOut">
+    <WL5G3N0:part element="WL5G3N3:valuarPrendaBasicoResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="ValuarPrendaNMPIn">
+    <WL5G3N0:part element="WL5G3N3:valuarPrendaNMPRequest" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="ValuarPrendaNMPOut">
+    <WL5G3N0:part element="WL5G3N3:valuarPrendaNMPResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="ValuadorDiamantesService">
+    <WL5G3N0:operation name="valuarPrendaBasico">
+      <WL5G3N0:input message="WL5G3N4:ValuarPrendaBasicoIn"/>
+      <WL5G3N0:output message="WL5G3N4:ValuarPrendaBasicoOut"/>
+      <WL5G3N0:fault message="WL5G3N4:Fault" name="fault"/>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="valuarPrendaNMP">
+      <WL5G3N0:input message="WL5G3N4:ValuarPrendaNMPIn"/>
+      <WL5G3N0:output message="WL5G3N4:ValuarPrendaNMPOut"/>
+      <WL5G3N0:fault message="WL5G3N4:Fault" name="fault"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="ValuadorService" type="WL5G3N4:ValuadorDiamantesService">
+    <WL5G3N5:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="valuarPrendaBasico">
+      <WL5G3N5:operation soapAction="http://servicios.montedepiedad.com.mx/NMP/MotordePrecios/diamantes/valuarPrendaBasico" style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N5:body use="literal"/>
+        <WL5G3N5:header message="WL5G3N4:inputHeader" part="input" use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N5:body use="literal"/>
+        <WL5G3N5:header message="WL5G3N4:outputHeader" part="output" use="literal"/>
+      </WL5G3N0:output>
+      <WL5G3N0:fault name="fault">
+        <WL5G3N5:fault name="fault"/>
+      </WL5G3N0:fault>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="valuarPrendaNMP">
+      <WL5G3N5:operation soapAction="http://servicios.montedepiedad.com.mx/NMP/MotordePrecios/diamantes/valuarPrendaNMP" style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N5:body use="literal"/>
+        <WL5G3N5:header message="WL5G3N4:inputHeader" part="input" use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N5:body use="literal"/>
+        <WL5G3N5:header message="WL5G3N4:outputHeader" part="output" use="literal"/>
+      </WL5G3N0:output>
+      <WL5G3N0:fault name="fault">
+        <WL5G3N5:fault name="fault"/>
+      </WL5G3N0:fault>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="ValuadorServiceQSService">
+    <WL5G3N0:documentation>OSB Service</WL5G3N0:documentation>
+    <WL5G3N0:port binding="WL5G3N4:ValuadorService" name="ValuadorServiceQSPort">
+      <WL5G3N5:address location="http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios?SCHEMA%2FCommon%2FXSD%2FNMPStandardHeader</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:NMPsh="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader">
+  <!--Header Message-->
+  <xs:element name="headerMessage" type="NMPsh:HeaderMessage"/>
+  <xs:element name="headerMessageResponse" type="HeaderMessageResponse"/>
+  <xs:complexType name="HeaderMessage">
+    <xs:sequence>
+      <xs:element name="usuario" type="xs:string" minOccurs="1"/>
+      <xs:element name="idConsumidor" type="xs:string" minOccurs="1"/>
+      <xs:element name="idDestino" type="xs:string" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HeaderMessageResponse">
+    <xs:complexContent>
+      <xs:extension base="HeaderMessage">
+        <xs:sequence>
+          <xs:element name="codigoRespuesta" type="xs:int"/>
+          <xs:element name="descripcionRespuesta" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios?SCHEMA%2FCommon%2FXSD%2FNMPStandardFault.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://schemas.xmlsoap.org/soap/envelope/" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nmp="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardMessage">
+  <xs:import schemaLocation="http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios?SCHEMA%2FCommon%2FXSD%2FNMPStandardMessage" namespace="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardMessage"/>
+  <xs:complexType name="SoapFaultType">
+    <xs:sequence>
+      <xs:element name="faultcode" type="xs:string" minOccurs="1"/>
+      <xs:element name="faultstring" type="xs:string" minOccurs="1"/>
+      <xs:element name="detail" type="nmp:messageErrorNmpType" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Fault" type="soap:SoapFaultType"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios?SCHEMA%2FCommon%2FXSD%2FNMPStandardMessage</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardMessage" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPtandardMessage" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:NMPsm="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardMessage">
+  <!--Error Message-->
+  <xs:element name="messageError" type="NMPsm:MessageError"/>
+  <xs:element name="messageResponse" type="NMPsm:MessageResponse"/>
+  <xs:complexType name="MessageError">
+    <xs:sequence>
+      <xs:element name="codigoError" type="xs:string" minOccurs="0"/>
+      <xs:element name="descripcionError" type="xs:string" minOccurs="0"/>
+      <xs:element name="tipoError" type="xs:string" minOccurs="0"/>
+      <xs:element name="severidad" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MessageResponse">
+    <xs:sequence>
+      <xs:element name="codigo" type="xs:int" minOccurs="0"/>
+      <xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="messageErrorNmpType">
+    <xs:sequence>
+      <xs:element name="messageError" type="NMPsm:MessageError"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios?SCHEMA%2FOperacionPrendaria%2FMotorDePrecios%2FResources%2FSchemas%2FNMPMotordePreciosElementosXSD</con:url><con:content><![CDATA[<s:schema targetNamespace="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" elementFormDefault="qualified" version="1.0" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:t="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos" xmlns="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos">
+  <s:import namespace="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos" schemaLocation="http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios?SCHEMA%2FOperacionPrendaria%2FMotorDePrecios%2FResources%2FSchemas%2FNMPMotordePreciosTiposXSD"/>
+  <s:element name="valuarPrendaBasicoRequest">
+    <s:complexType>
+      <s:sequence>
+        <s:element name="prenda" type="t:Prenda"/>
+      </s:sequence>
+    </s:complexType>
+  </s:element>
+  <s:element name="valuarPrendaBasicoResponse">
+    <s:complexType>
+      <s:sequence>
+        <s:element name="prendaValuada" type="t:Prenda"/>
+      </s:sequence>
+    </s:complexType>
+  </s:element>
+  <s:element name="valuarPrendaNMPRequest">
+    <s:complexType>
+      <s:sequence>
+        <s:element name="prenda" type="t:Prenda"/>
+      </s:sequence>
+    </s:complexType>
+  </s:element>
+  <s:element name="valuarPrendaNMPResponse">
+    <s:complexType>
+      <s:sequence>
+        <s:element name="prendaValuada" type="t:Prenda"/>
+      </s:sequence>
+    </s:complexType>
+  </s:element>
+</s:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios?SCHEMA%2FOperacionPrendaria%2FMotorDePrecios%2FResources%2FSchemas%2FNMPMotordePreciosTiposXSD</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos" elementFormDefault="qualified" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos">
+  <xs:complexType name="Prenda">
+    <xs:sequence>
+      <xs:element name="id" nillable="true" type="xs:string"/>
+      <xs:element name="ramo" type="xs:string"/>
+      <xs:element name="subramo" type="xs:string"/>
+      <xs:element name="tipo" type="xs:string"/>
+      <xs:element name="avaluo" nillable="true" type="Avaluo"/>
+      <xs:element maxOccurs="unbounded" name="pieza" type="Pieza"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Avaluo">
+    <xs:sequence>
+      <xs:element default="0.0" name="valorMinimo" type="xs:decimal"/>
+      <xs:element default="0.0" name="valorPromedio" type="xs:decimal"/>
+      <xs:element default="0.0" name="valorMaximo" type="xs:decimal"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Pieza">
+    <xs:sequence>
+      <xs:element name="id" type="xs:string"/>
+      <xs:element default="1" name="cantidad" type="xs:int"/>
+      <xs:element name="avaluo" type="Avaluo"/>
+      <xs:element minOccurs="0" name="diamante" type="Diamante"/>
+      <xs:element minOccurs="0" name="alhaja" type="Alhaja"/>
+      <xs:element minOccurs="0" name="complemento" type="Complemento"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Diamante">
+    <xs:sequence>
+      <xs:element name="corte" type="xs:string"/>
+      <xs:element name="forma" type="xs:string"/>
+      <xs:element name="color" type="xs:string"/>
+      <xs:element name="claridad" type="xs:string"/>
+      <xs:element default="0.0" name="quilataje" type="xs:decimal"/>
+      <xs:element name="certificado" nillable="true" type="xs:string"/>
+      <xs:element name="valorExperto" type="ValorExperto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ValorExperto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="unitario" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="total" type="xs:decimal"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Alhaja">
+    <xs:sequence>
+      <xs:element name="tipo" type="xs:string"/>
+      <xs:element name="forma" type="xs:string"/>
+      <xs:element name="metal" type="xs:string"/>
+      <xs:element name="color" nillable="true" type="xs:string"/>
+      <xs:element name="rango" nillable="true" type="xs:string"/>
+      <xs:element name="calidad" nillable="true" type="xs:string"/>
+      <xs:element default="0.0" name="peso" type="xs:decimal"/>
+      <xs:element name="condicion" type="xs:string"/>
+      <xs:element name="valorExperto" type="ValorExperto"/>
+      <xs:element default="0.0" name="incremento" type="xs:decimal"/>
+      <xs:element default="0.0" name="desplazamiento" type="xs:decimal"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Complemento">
+    <xs:sequence>
+      <xs:element name="tipo" type="xs:string"/>
+      <xs:element name="peso" type="xs:string"/>
+      <xs:element name="valorExperto" type="ValorExperto"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios</con:endpoint></con:endpoints><con:operation id="32b7e57b-7161-49b2-a7fc-00bca4aab20b" isOneWay="false" action="http://servicios.montedepiedad.com.mx/NMP/MotordePrecios/diamantes/valuarPrendaBasico" name="valuarPrendaBasico" bindingOperationName="valuarPrendaBasico" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="027200db-b3d2-418c-981a-4aa51631800f" name="Request Prueba"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nmp="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" xmlns:elem="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" xmlns:tip="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos">\r
+   <soapenv:Header>\r
+      <nmp:headerMessage>\r
+         <nmp:usuario>MIDAS</nmp:usuario>\r
+         <nmp:idConsumidor>17</nmp:idConsumidor>\r
+         <nmp:idDestino>20</nmp:idDestino>\r
+      </nmp:headerMessage>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <elem:valuarPrendaBasicoRequest>\r
+         <elem:prenda>\r
+            <tip:id>?</tip:id>\r
+            <tip:ramo>?</tip:ramo>\r
+            <tip:subramo>?</tip:subramo>\r
+            <tip:tipo>?</tip:tipo>\r
+            <tip:avaluo>\r
+               <tip:valorMinimo>0.0</tip:valorMinimo>\r
+               <tip:valorPromedio>0.0</tip:valorPromedio>\r
+               <tip:valorMaximo>0.0</tip:valorMaximo>\r
+            </tip:avaluo>\r
+            <!-- DIAMANTE -->\r
+            <tip:pieza>\r
+               <tip:id>?</tip:id>\r
+               <tip:cantidad>1</tip:cantidad>\r
+               <tip:avaluo>\r
+                  <tip:valorMinimo>0.0</tip:valorMinimo>\r
+                  <tip:valorPromedio>0.0</tip:valorPromedio>\r
+                  <tip:valorMaximo>0.0</tip:valorMaximo>\r
+               </tip:avaluo>\r
+               <tip:diamante>\r
+                  <tip:corte>?</tip:corte>\r
+                  <tip:forma>?</tip:forma>\r
+                  <tip:color>?</tip:color>\r
+                  <tip:claridad>?</tip:claridad>\r
+                  <tip:quilataje>0.0</tip:quilataje>\r
+                  <tip:certificado>?</tip:certificado>\r
+                  <tip:valorExperto>\r
+                     <tip:unitario>0.0</tip:unitario>\r
+                     <tip:total>0.0</tip:total>\r
+                  </tip:valorExperto>\r
+               </tip:diamante>\r
+            </tip:pieza>\r
+            <!--  -->
+            <tip:pieza>
+               <tip:id>?</tip:id>
+               <tip:cantidad>1</tip:cantidad>
+               <tip:avaluo>
+                  <tip:valorMinimo>0.0</tip:valorMinimo>
+                  <tip:valorPromedio>0.0</tip:valorPromedio>
+                  <tip:valorMaximo>0.0</tip:valorMaximo>
+               </tip:avaluo>
+               <tip:alhaja>
+                  <tip:tipo>?</tip:tipo>
+                  <tip:forma>?</tip:forma>
+                  <tip:metal>?</tip:metal>
+                  <tip:color>?</tip:color>
+                  <tip:rango>?</tip:rango>
+                  <tip:calidad>?</tip:calidad>
+                  <tip:peso>0.0</tip:peso>
+                  <tip:condicion>?</tip:condicion>
+                  <tip:valorExperto>
+                     <tip:unitario>0</tip:unitario>
+                     <tip:total>0</tip:total>
+                  </tip:valorExperto>
+                  <tip:incremento>0.0</tip:incremento>
+                  <tip:desplazamiento>0.0</tip:desplazamiento>
+               </tip:alhaja>
+            </tip:pieza>
+		<!-- COMPLEMENTO -->
+            <tip:pieza>
+               <tip:id>?</tip:id>
+               <tip:cantidad>1</tip:cantidad>
+               <tip:avaluo>
+                  <tip:valorMinimo>0.0</tip:valorMinimo>
+                  <tip:valorPromedio>0.0</tip:valorPromedio>
+                  <tip:valorMaximo>0.0</tip:valorMaximo>
+               </tip:avaluo>
+               <tip:complemento>
+                  <tip:tipo>?</tip:tipo>
+                  <tip:peso>?</tip:peso>
+                  <tip:valorExperto>
+                     <tip:unitario>0</tip:unitario>
+                     <tip:total>0</tip:total>
+                  </tip:valorExperto>
+               </tip:complemento>
+            </tip:pieza>
+         </elem:prenda>\r
+      </elem:valuarPrendaBasicoRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://servicios.montedepiedad.com.mx/NMP/MotordePrecios/diamantes/valuarPrendaBasico"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="0bb4518c-7b69-44ee-9870-5321760f3726" isOneWay="false" action="http://servicios.montedepiedad.com.mx/NMP/MotordePrecios/diamantes/valuarPrendaNMP" name="valuarPrendaNMP" bindingOperationName="valuarPrendaNMP" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="2e6e898c-5f9d-4645-b00b-0c1815ac629f" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nmp="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" xmlns:elem="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" xmlns:tip="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos">\r
+   <soapenv:Header>\r
+      <nmp:headerMessage>\r
+         <nmp:usuario>MIDAS</nmp:usuario>\r
+         <nmp:idConsumidor>17</nmp:idConsumidor>\r
+         <nmp:idDestino>20</nmp:idDestino>\r
+      </nmp:headerMessage>\r
+   </soapenv:Header>\r
+   <soapenv:Body>\r
+      <elem:valuarPrendaNMPRequest>\r
+         <elem:prenda>\r
+            <tip:id>?</tip:id>\r
+            <tip:ramo>?</tip:ramo>\r
+            <tip:subramo>?</tip:subramo>\r
+            <tip:tipo>?</tip:tipo>\r
+            <tip:avaluo>\r
+               <tip:valorMinimo>0.0</tip:valorMinimo>\r
+               <tip:valorPromedio>0.0</tip:valorPromedio>\r
+               <tip:valorMaximo>0.0</tip:valorMaximo>\r
+            </tip:avaluo>\r
+            <!--DIAMANTE-->\r
+            <tip:pieza>\r
+               <tip:id>?</tip:id>\r
+               <tip:cantidad>1</tip:cantidad>\r
+               <tip:avaluo>\r
+                  <tip:valorMinimo>0.0</tip:valorMinimo>\r
+                  <tip:valorPromedio>0.0</tip:valorPromedio>\r
+                  <tip:valorMaximo>0.0</tip:valorMaximo>\r
+               </tip:avaluo>\r
+               <tip:diamante>\r
+                  <tip:corte>?</tip:corte>\r
+                  <tip:forma>?</tip:forma>\r
+                  <tip:color>?</tip:color>\r
+                  <tip:claridad>?</tip:claridad>\r
+                  <tip:quilataje>0.0</tip:quilataje>\r
+                  <tip:certificado>?</tip:certificado>\r
+                  <tip:valorExperto>\r
+                     <tip:unitario>0.0</tip:unitario>\r\r
+                     <tip:total>0.0</tip:total>\r
+                  </tip:valorExperto>\r
+               </tip:diamante>\r
+            </tip:pieza>\r
+            <!--ALHAJA-->
+            <tip:pieza>
+               <tip:id>?</tip:id>
+               <tip:cantidad>1</tip:cantidad>
+               <tip:avaluo>
+                  <tip:valorMinimo>0.0</tip:valorMinimo>
+                  <tip:valorPromedio>0.0</tip:valorPromedio>
+                  <tip:valorMaximo>0.0</tip:valorMaximo>
+               </tip:avaluo>
+               <tip:alhaja>
+                  <tip:tipo>?</tip:tipo>
+                  <tip:forma>?</tip:forma>
+                  <tip:metal>?</tip:metal>
+                  <tip:color>?</tip:color>
+                  <tip:rango>?</tip:rango>
+                  <tip:calidad>?</tip:calidad>
+                  <tip:peso>0.0</tip:peso>
+                  <tip:condicion>?</tip:condicion>
+                  <tip:valorExperto>
+                     <tip:unitario>0.0</tip:unitario>
+                     <tip:total>0.0</tip:total>
+                  </tip:valorExperto>
+                  <tip:incremento>0.0</tip:incremento>
+                  <tip:desplazamiento>0.0</tip:desplazamiento>
+               </tip:alhaja>
+            </tip:pieza>
+		<!--COMPLEMENTO-->
+            <tip:pieza>
+               <tip:id>?</tip:id>
+               <tip:cantidad>1</tip:cantidad>
+               <tip:avaluo>
+                  <tip:valorMinimo>0.0</tip:valorMinimo>
+                  <tip:valorPromedio>0.0</tip:valorPromedio>
+                  <tip:valorMaximo>0.0</tip:valorMaximo>
+               </tip:avaluo>
+               <tip:complemento>
+                  <tip:tipo>?</tip:tipo>
+                  <tip:peso>?</tip:peso>
+                  <tip:valorExperto>
+                     <tip:unitario>0.0</tip:unitario>
+                     <tip:total>0.0</tip:total>
+                  </tip:valorExperto>
+               </tip:complemento>
+            </tip:pieza>
+         </elem:prenda>\r
+      </elem:valuarPrendaNMPRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://servicios.montedepiedad.com.mx/NMP/MotordePrecios/diamantes/valuarPrendaNMP"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
