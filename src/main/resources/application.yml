@@ -31,3 +31,7 @@ valuacion:
         wsdlLocation: http://localhost:8084/soap-api/ReferenciaDiamanteService?wsdl
   avaluo:
     redondeo: DOS_DECIMALES_ROUND_HALF_UP
+
+soap:
+  mensaje:
+    mostrar: false

@@ -8,6 +8,7 @@ import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.feature.LoggingFeature;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.transport.servlet.CXFServlet;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +25,9 @@ import java.util.Collection;
  */
 @Configuration
 public class WebServiceConfiguration {
+
+    @Value("${soap.mensaje.mostrar}")
+    private Boolean mostrarSoap;
 
     @Inject
     private Environment env;
@@ -48,7 +52,7 @@ public class WebServiceConfiguration {
         final SpringBus springBus = new SpringBus();
 
         Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
-        if (activeProfiles.contains(NmpProfile.DEV)) {
+        if (mostrarSoap) {
             LoggingFeature loggingFeature = new LoggingFeature();
             loggingFeature.setPrettyLogging(true);
             loggingFeature.initialize(springBus);
