@@ -1,6 +1,5 @@
 package mx.com.nmp.ms.sivad.valuacion.config;
 
-import mx.com.nmp.ms.arquetipo.profile.NmpProfile;
 import mx.com.nmp.ms.sivad.valuacion.api.ws.ValuadorDiamantesEndpoint;
 import mx.com.nmp.ms.sivad.valuacion.ws.diamantes.ValuadorDiamantesService;
 import org.apache.cxf.Bus;
@@ -16,8 +15,6 @@ import org.springframework.core.env.Environment;
 
 import javax.inject.Inject;
 import javax.xml.ws.Endpoint;
-import java.util.Arrays;
-import java.util.Collection;
 
 /**
  * Configuración de web services.
@@ -51,7 +48,6 @@ public class WebServiceConfiguration {
     public SpringBus springBus() {
         final SpringBus springBus = new SpringBus();
 
-        Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
         if (mostrarSoap) {
             LoggingFeature loggingFeature = new LoggingFeature();
             loggingFeature.setPrettyLogging(true);
