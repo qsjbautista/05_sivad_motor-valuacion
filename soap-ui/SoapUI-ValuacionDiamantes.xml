@@ -292,7 +292,7 @@
          </dat:prenda>
       </dat:valuarPrendaNMPRequest>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://nmp.com.mx/ms/valuacion/ws/diamantes/valuarPrendaNMP"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="48b60188-8105-45bd-ba96-879feb3a919e" name="ValuadorDiamantesEndpointServiceSoapBinding TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="02aed8f0-55a2-4000-883c-4e9f72ae2280" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="valuarPrendaBasico TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="39d58086-3abc-4c72-a75a-e53908ba2bea" name="valuarPrendaBasico"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ValuadorDiamantesEndpointServiceSoapBinding</con:interface><con:operation>valuarPrendaBasico</con:operation><con:request name="valuarPrendaBasico" id="30e480c5-83f0-4eec-8da4-49ad7949a497"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8085/soap-api/ValuadorDiamantes?wsdl</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dat="http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/datatypes/">
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://nmp.com.mx/ms/valuacion/ws/diamantes/valuarPrendaNMP"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="48b60188-8105-45bd-ba96-879feb3a919e" name="ValuadorDiamantesEndpointServiceSoapBinding TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="02aed8f0-55a2-4000-883c-4e9f72ae2280" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="valuarPrendaBasico TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="39d58086-3abc-4c72-a75a-e53908ba2bea" name="valuarPrendaBasico"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ValuadorDiamantesEndpointServiceSoapBinding</con:interface><con:operation>valuarPrendaBasico</con:operation><con:request name="valuarPrendaBasico" id="30e480c5-83f0-4eec-8da4-49ad7949a497"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://sivad-motor-valuacion.cfapps.io/soap-api/ValuadorDiamantes</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dat="http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/datatypes/">
    <soapenv:Header/>
    <soapenv:Body>
       <dat:valuarPrendaBasicoRequest>
@@ -380,7 +380,221 @@
          </dat:prenda>
       </dat:valuarPrendaBasicoRequest>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://nmp.com.mx/ms/valuacion/ws/diamantes/valuarPrendaBasico" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:loadTest id="7166eddd-7d10-4a6b-914d-f1260376a608" name="Carga Valuar Prenda"><con:settings><con:setting id="HttpSettings@close-connections">false</con:setting></con:settings><con:threadCount>5</con:threadCount><con:startDelay>0</con:startDelay><con:sampleInterval>250</con:sampleInterval><con:calculateTPSOnTimePassed>true</con:calculateTPSOnTimePassed><con:resetStatisticsOnThreadCountChange>true</con:resetStatisticsOnThreadCountChange><con:historyLimit>-1</con:historyLimit><con:testLimit>60</con:testLimit><con:limitType>TIME</con:limitType><con:loadStrategy><con:type>Simple</con:type></con:loadStrategy><con:assertion type="Step Status" name="Step Status"/><con:maxAssertionErrors>100</con:maxAssertionErrors><con:cancelExcessiveThreads>true</con:cancelExcessiveThreads><con:strategyInterval>500</con:strategyInterval></con:loadTest><con:properties/></con:testCase><con:testCase id="f1ada00a-ad8d-4a2a-b23a-41e384ddc9fe" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="valuarPrendaNMP TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="f2a78aaf-b672-4d68-85ed-5e5fc0f95b7d" name="valuarPrendaNMP"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ValuadorDiamantesEndpointServiceSoapBinding</con:interface><con:operation>valuarPrendaNMP</con:operation><con:request name="valuarPrendaNMP" id="d4c69bee-232c-4c65-8e3d-8b8f7f75d6aa"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://sivad-motor-valuacion.cfapps.io/soap-api/ValuadorDiamantes</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dat="http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/datatypes/">
+</soapenv:Envelope>]]></con:request><con:assertion type="XPath Match" id="2855a7cc-9816-4926-8a78-57f9352dc5a0" name="XPath Match"><con:configuration><path>declare namespace ns1='http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/datatypes/';
+declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+//soap:Envelope[1]</path><content><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <valuarPrendaBasicoResponse xmlns="http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/datatypes/">
+      <prendaValuada>
+        <id>*</id>
+        <ramo>*</ramo>
+        <subramo>*</subramo>
+        <tipo>*</tipo>
+        <avaluo>
+          <valorMinimo>*</valorMinimo>
+          <valorPromedio>*</valorPromedio>
+          <valorMaximo>*</valorMaximo>
+        </avaluo>
+        <pieza>
+          <id>*</id>
+          <cantidad>*</cantidad>
+          <avaluo>
+            <valorMinimo>*</valorMinimo>
+            <valorPromedio>*</valorPromedio>
+            <valorMaximo>*</valorMaximo>
+          </avaluo>
+          <diamante>
+            <corte>*</corte>
+            <forma>*</forma>
+            <color>*</color>
+            <claridad>*</claridad>
+            <quilataje>*</quilataje>
+            <certificado xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <valorExperto/>
+          </diamante>
+        </pieza>
+        <pieza>
+          <id>*</id>
+          <cantidad>*</cantidad>
+          <avaluo>
+            <valorMinimo>*</valorMinimo>
+            <valorPromedio>*</valorPromedio>
+            <valorMaximo>*</valorMaximo>
+          </avaluo>
+          <alhaja>
+            <tipo>*</tipo>
+            <forma>*</forma>
+            <metal>*</metal>
+            <color>*</color>
+            <rango xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <calidad>*</calidad>
+            <peso>*</peso>
+            <condicion>*</condicion>
+            <valorExperto/>
+            <incremento>*</incremento>
+            <desplazamiento>*</desplazamiento>
+          </alhaja>
+        </pieza>
+        <pieza>
+          <id>*</id>
+          <cantidad>*</cantidad>
+          <avaluo>
+            <valorMinimo>*</valorMinimo>
+            <valorPromedio>*</valorPromedio>
+            <valorMaximo>*</valorMaximo>
+          </avaluo>
+          <complemento>
+            <tipo>*</tipo>
+            <peso>*</peso>
+            <valorExperto>
+              <unitario>*</unitario>
+            </valorExperto>
+          </complemento>
+        </pieza>
+      </prendaValuada>
+    </valuarPrendaBasicoResponse>
+  </soap:Body>
+</soap:Envelope>]]></content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://nmp.com.mx/ms/valuacion/ws/diamantes/valuarPrendaBasico" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="4c94396a-29ff-403f-a19c-377a44904752" name="valuarPrendaSinAlhaja"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ValuadorDiamantesEndpointServiceSoapBinding</con:interface><con:operation>valuarPrendaBasico</con:operation><con:request name="valuarPrendaSinAlhaja" id="30e480c5-83f0-4eec-8da4-49ad7949a497"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://sivad-motor-valuacion.cfapps.io/soap-api/ValuadorDiamantes</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dat="http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/datatypes/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dat:valuarPrendaBasicoRequest>
+         <dat:prenda>
+            <dat:id>?</dat:id>
+            <dat:ramo>AL</dat:ramo>
+            <dat:subramo>DI</dat:subramo>
+            <dat:tipo>DIAMANTE</dat:tipo>
+            <dat:avaluo>
+               <dat:valorMinimo>0.0</dat:valorMinimo>
+               <dat:valorPromedio>0.0</dat:valorPromedio>
+               <dat:valorMaximo>0.0</dat:valorMaximo>
+            </dat:avaluo>
+            <!--DIAMANTE-->
+            <dat:pieza>
+               <dat:id>?</dat:id>
+               <dat:cantidad>1</dat:cantidad>
+               <dat:avaluo>
+                  <dat:valorMinimo>0.0</dat:valorMinimo>
+                  <dat:valorPromedio>0.0</dat:valorPromedio>
+                  <dat:valorMaximo>0.0</dat:valorMaximo>
+               </dat:avaluo>
+               <!--Optional:-->
+               <dat:diamante>
+                  <dat:corte>Pear</dat:corte>
+                  <dat:forma>Pear</dat:forma>
+                  <dat:color>D</dat:color>
+                  <dat:claridad>IF</dat:claridad>
+                  <dat:quilataje>0.95</dat:quilataje>
+                  <!--dat:certificado>?</dat:certificado-->
+                  <dat:valorExperto>
+                     <!--dat:unitario>?</dat:unitario>
+                     <dat:total>?</dat:total-->
+                  </dat:valorExperto>
+               </dat:diamante>
+            </dat:pieza>
+            <!--ALHAJA-->
+            <!--dat:pieza>
+               <dat:id>?</dat:id>
+               <dat:cantidad>1</dat:cantidad>
+               <dat:avaluo>
+                  <dat:valorMinimo>0.0</dat:valorMinimo>
+                  <dat:valorPromedio>0.0</dat:valorPromedio>
+                  <dat:valorMaximo>0.0</dat:valorMaximo>
+               </dat:avaluo-->
+               <!--Optional:-->
+               <!--dat:alhaja>
+                  <dat:tipo>X</dat:tipo>
+                  <dat:forma>Anillo</dat:forma>
+                  <dat:metal>AU</dat:metal>
+                  <dat:color>AU_AM</dat:color-->
+                  <!--dat:rango>?</dat:rango-->
+                  <!--dat:calidad>18_Q</dat:calidad>
+                  <dat:peso>0.5</dat:peso>
+                  <dat:condicion>?</dat:condicion>
+                  <dat:valorExperto-->
+                     <!--dat:unitario>?</dat:unitario>
+                     <dat:total>?</dat:total-->
+                  <!--/dat:valorExperto>
+                  <dat:incremento>0.0</dat:incremento>
+                  <dat:desplazamiento>0.0</dat:desplazamiento>
+               </dat:alhaja>
+            </dat:pieza-->
+            <!--COMPLEMENTO-->
+            <dat:pieza>
+               <dat:id>?</dat:id>
+               <dat:cantidad>2</dat:cantidad>
+               <dat:avaluo>
+                  <dat:valorMinimo>0.0</dat:valorMinimo>
+                  <dat:valorPromedio>0.0</dat:valorPromedio>
+                  <dat:valorMaximo>0.0</dat:valorMaximo>
+               </dat:avaluo>
+               <!--Optional:-->
+               <dat:complemento>
+                  <dat:tipo>RUBI</dat:tipo>
+                  <dat:peso>0.75</dat:peso>
+                  <dat:valorExperto>
+                     <!--Optional:-->
+                     <dat:unitario>1000.00</dat:unitario>
+                     <!--Optional:-->
+                     <!--dat:total>?</dat:total-->
+                  </dat:valorExperto>
+               </dat:complemento>
+            </dat:pieza>
+         </dat:prenda>
+      </dat:valuarPrendaBasicoRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="XPath Match" id="2855a7cc-9816-4926-8a78-57f9352dc5a0" name="XPath Match"><con:configuration><path>declare namespace ns1='http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/datatypes/';
+declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+//soap:Envelope[1]</path><content><![CDATA[<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <valuarPrendaBasicoResponse xmlns="http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/datatypes/">
+      <prendaValuada>
+        <id>*</id>
+        <ramo>*</ramo>
+        <subramo>*</subramo>
+        <tipo>*</tipo>
+        <avaluo>
+          <valorMinimo>*</valorMinimo>
+          <valorPromedio>*</valorPromedio>
+          <valorMaximo>*</valorMaximo>
+        </avaluo>
+        <pieza>
+          <id>*</id>
+          <cantidad>*</cantidad>
+          <avaluo>
+            <valorMinimo>*</valorMinimo>
+            <valorPromedio>*</valorPromedio>
+            <valorMaximo>*</valorMaximo>
+          </avaluo>
+          <diamante>
+            <corte>*</corte>
+            <forma>*</forma>
+            <color>*</color>
+            <claridad>*</claridad>
+            <quilataje>*</quilataje>
+            <certificado xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <valorExperto/>
+          </diamante>
+        </pieza>
+        <pieza>
+          <id>*</id>
+          <cantidad>*</cantidad>
+          <avaluo>
+            <valorMinimo>*</valorMinimo>
+            <valorPromedio>*</valorPromedio>
+            <valorMaximo>*</valorMaximo>
+          </avaluo>
+          <complemento>
+            <tipo>*</tipo>
+            <peso>*</peso>
+            <valorExperto>
+              <unitario>*</unitario>
+            </valorExperto>
+          </complemento>
+        </pieza>
+      </prendaValuada>
+    </valuarPrendaBasicoResponse>
+  </soap:Body>
+</soap:Envelope>]]></content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://nmp.com.mx/ms/valuacion/ws/diamantes/valuarPrendaBasico" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:loadTest id="7166eddd-7d10-4a6b-914d-f1260376a608" name="Carga Valuar Prenda"><con:settings><con:setting id="HttpSettings@close-connections">false</con:setting></con:settings><con:threadCount>5</con:threadCount><con:startDelay>0</con:startDelay><con:sampleInterval>250</con:sampleInterval><con:calculateTPSOnTimePassed>true</con:calculateTPSOnTimePassed><con:resetStatisticsOnThreadCountChange>true</con:resetStatisticsOnThreadCountChange><con:historyLimit>-1</con:historyLimit><con:testLimit>60</con:testLimit><con:limitType>TIME</con:limitType><con:loadStrategy><con:type>Simple</con:type></con:loadStrategy><con:assertion type="Step Status" name="Step Status"/><con:maxAssertionErrors>100</con:maxAssertionErrors><con:cancelExcessiveThreads>true</con:cancelExcessiveThreads><con:strategyInterval>500</con:strategyInterval></con:loadTest><con:properties/></con:testCase><con:testCase id="f1ada00a-ad8d-4a2a-b23a-41e384ddc9fe" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="valuarPrendaNMP TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="f2a78aaf-b672-4d68-85ed-5e5fc0f95b7d" name="valuarPrendaNMP"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ValuadorDiamantesEndpointServiceSoapBinding</con:interface><con:operation>valuarPrendaNMP</con:operation><con:request name="valuarPrendaNMP" id="d4c69bee-232c-4c65-8e3d-8b8f7f75d6aa"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>https://sivad-motor-valuacion.cfapps.io/soap-api/ValuadorDiamantes</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:dat="http://nmp.com.mx/ms/sivad/valuacion/ws/diamantes/datatypes/">
    <soapenv:Header/>
    <soapenv:Body>
       <dat:valuarPrendaNMPRequest>

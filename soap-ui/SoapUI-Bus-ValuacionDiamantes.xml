@@ -228,7 +228,7 @@
       <xs:element name="valorExperto" type="ValorExperto"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios</con:endpoint></con:endpoints><con:operation id="32b7e57b-7161-49b2-a7fc-00bca4aab20b" isOneWay="false" action="http://servicios.montedepiedad.com.mx/NMP/MotordePrecios/diamantes/valuarPrendaBasico" name="valuarPrendaBasico" bindingOperationName="valuarPrendaBasico" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="027200db-b3d2-418c-981a-4aa51631800f" name="Request Excepcion"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nmp="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" xmlns:elem="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" xmlns:tip="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos">\r
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios</con:endpoint></con:endpoints><con:operation id="32b7e57b-7161-49b2-a7fc-00bca4aab20b" isOneWay="false" action="http://servicios.montedepiedad.com.mx/NMP/MotordePrecios/diamantes/valuarPrendaBasico" name="valuarPrendaBasico" bindingOperationName="valuarPrendaBasico" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="027200db-b3d2-418c-981a-4aa51631800f" name="Excepcion"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nmp="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" xmlns:elem="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" xmlns:tip="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos">\r
    <soapenv:Header>\r
       <nmp:headerMessage>\r
          <nmp:usuario>MIDAS</nmp:usuario>\r
@@ -317,7 +317,7 @@
          </elem:prenda>\r
       </elem:valuarPrendaBasicoRequest>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://servicios.montedepiedad.com.mx/NMP/MotordePrecios/diamantes/valuarPrendaBasico"/><con:wsrmConfig version="1.2"/></con:call><con:call id="9b6c6097-f5f4-43f9-bddc-f6c9efe772e6" name="Request Valuacion Simple"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nmp="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" xmlns:elem="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" xmlns:tip="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos">
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://servicios.montedepiedad.com.mx/NMP/MotordePrecios/diamantes/valuarPrendaBasico"/><con:wsrmConfig version="1.2"/></con:call><con:call id="9b6c6097-f5f4-43f9-bddc-f6c9efe772e6" name="Valuacion Simple"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nmp="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" xmlns:elem="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" xmlns:tip="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos">
    <soapenv:Header>
       <nmp:headerMessage>
          <nmp:usuario>MIDAS</nmp:usuario>
@@ -352,14 +352,14 @@
                   <tip:color>D</tip:color>
                   <tip:claridad>IF</tip:claridad>
                   <tip:quilataje>0.95</tip:quilataje>
-                  <tip:certificado>?</tip:certificado>
+                  <tip:certificado></tip:certificado>
                   <tip:valorExperto>
-                     <tip:unitario>0.0</tip:unitario>
-                     <tip:total>0.0</tip:total>
+                     <!--tip:unitario>0.0</tip:unitario>
+                     <tip:total>0.0</tip:total-->
                   </tip:valorExperto>
                </tip:diamante>
             </tip:pieza>
-            <!--  -->
+            <!-- ALHAJA -->
             <tip:pieza>
                <tip:id>?</tip:id>
                <tip:cantidad>1</tip:cantidad>
@@ -373,13 +373,13 @@
                   <tip:forma>Anillo</tip:forma>
                   <tip:metal>AU</tip:metal>
                   <tip:color>AU_AM</tip:color>
-                  <tip:rango>?</tip:rango>
+                  <tip:rango></tip:rango>
                   <tip:calidad>18_Q</tip:calidad>
                   <tip:peso>0.5</tip:peso>
                   <tip:condicion>?</tip:condicion>
                   <tip:valorExperto>
-                     <tip:unitario>0</tip:unitario>
-                     <tip:total>0</tip:total>
+                     <!--tip:unitario>0</tip:unitario>
+                     <tip:total>0</tip:total-->
                   </tip:valorExperto>
                   <tip:incremento>0.0</tip:incremento>
                   <tip:desplazamiento>0.0</tip:desplazamiento>
@@ -406,7 +406,7 @@
          </elem:prenda>
       </elem:valuarPrendaBasicoRequest>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://servicios.montedepiedad.com.mx/NMP/MotordePrecios/diamantes/valuarPrendaBasico"/><con:wsrmConfig version="1.2"/></con:call><con:call id="90d16e3a-e85f-475e-922d-f2fc3aaed57a" name="Request Error Complemento"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nmp="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" xmlns:elem="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" xmlns:tip="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos">
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://servicios.montedepiedad.com.mx/NMP/MotordePrecios/diamantes/valuarPrendaBasico"/><con:wsrmConfig version="1.2"/></con:call><con:call id="90d16e3a-e85f-475e-922d-f2fc3aaed57a" name="Error Complemento"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nmp="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" xmlns:elem="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" xmlns:tip="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos">
    <soapenv:Header>
       <nmp:headerMessage>
          <nmp:usuario>MIDAS</nmp:usuario>
@@ -443,8 +443,8 @@
                   <tip:quilataje>0.95</tip:quilataje>
                   <tip:certificado>?</tip:certificado>
                   <tip:valorExperto>
-                     <tip:unitario>0.0</tip:unitario>
-                     <tip:total>0.0</tip:total>
+                     <!--tip:unitario>0.0</tip:unitario>
+                     <tip:total>0.0</tip:total-->
                   </tip:valorExperto>
                </tip:diamante>
             </tip:pieza>
@@ -467,8 +467,8 @@
                   <tip:peso>0.5</tip:peso>
                   <tip:condicion>?</tip:condicion>
                   <tip:valorExperto>
-                     <tip:unitario>0</tip:unitario>
-                     <tip:total>0</tip:total>
+                     <!--tip:unitario>0</tip:unitario>
+                     <tip:total>0</tip:total-->
                   </tip:valorExperto>
                   <tip:incremento>0.0</tip:incremento>
                   <tip:desplazamiento>0.0</tip:desplazamiento>
@@ -495,7 +495,7 @@
          </elem:prenda>
       </elem:valuarPrendaBasicoRequest>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://servicios.montedepiedad.com.mx/NMP/MotordePrecios/diamantes/valuarPrendaBasico"/><con:wsrmConfig version="1.2"/></con:call><con:call id="dbf3d32a-dd86-41a4-abfd-ac4caf7ac6ea" name="Request Error Alhaja"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nmp="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" xmlns:elem="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" xmlns:tip="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos">
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://servicios.montedepiedad.com.mx/NMP/MotordePrecios/diamantes/valuarPrendaBasico"/><con:wsrmConfig version="1.2"/></con:call><con:call id="dbf3d32a-dd86-41a4-abfd-ac4caf7ac6ea" name="Error Alhaja"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nmp="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" xmlns:elem="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" xmlns:tip="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos">
    <soapenv:Header>
       <nmp:headerMessage>
          <nmp:usuario>MIDAS</nmp:usuario>
@@ -532,8 +532,8 @@
                   <tip:quilataje>0.95</tip:quilataje>
                   <tip:certificado>?</tip:certificado>
                   <tip:valorExperto>
-                     <tip:unitario>0.0</tip:unitario>
-                     <tip:total>0.0</tip:total>
+                     <!--tip:unitario>0.0</tip:unitario>
+                     <tip:total>0.0</tip:total-->
                   </tip:valorExperto>
                </tip:diamante>
             </tip:pieza>
@@ -556,8 +556,8 @@
                   <tip:peso>0.0</tip:peso>
                   <tip:condicion>?</tip:condicion>
                   <tip:valorExperto>
-                     <tip:unitario>0</tip:unitario>
-                     <tip:total>0</tip:total>
+                     <!--tip:unitario>0</tip:unitario>
+                     <tip:total>0</tip:total-->
                   </tip:valorExperto>
                   <tip:incremento>0.0</tip:incremento>
                   <tip:desplazamiento>0.0</tip:desplazamiento>
@@ -578,6 +578,254 @@
                   <tip:valorExperto>
                      <tip:unitario>0</tip:unitario>
                      <tip:total>0</tip:total>
+                  </tip:valorExperto>
+               </tip:complemento>
+            </tip:pieza>
+         </elem:prenda>
+      </elem:valuarPrendaBasicoRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://servicios.montedepiedad.com.mx/NMP/MotordePrecios/diamantes/valuarPrendaBasico"/><con:wsrmConfig version="1.2"/></con:call><con:call id="ae13317b-66ad-4285-84fe-b959cad6fd00" name="Valuacion Error Midas"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios</con:endpoint><con:request><![CDATA[<?xml version='1.0' encoding='UTF-8'?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+	<S:Header>
+		<ns5:headerMessage xmlns:ns5="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" xmlns:ns4="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" xmlns:ns3="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos" xmlns:ns2="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardMessage">
+			<ns5:usuario>MIDAS</ns5:usuario>
+			<ns5:idConsumidor>17</ns5:idConsumidor>
+			<ns5:idDestino>20</ns5:idDestino>
+		</ns5:headerMessage>
+	</S:Header>
+	<S:Body>
+		<ns4:valuarPrendaBasicoRequest xmlns:ns5="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" xmlns:ns4="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" xmlns:ns3="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos" xmlns:ns2="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardMessage">
+			<ns4:prenda>
+				<ns3:id xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+				<ns3:ramo>AL </ns3:ramo>
+				<ns3:subramo>DI </ns3:subramo>
+				<ns3:avaluo/>
+				<ns3:pieza>
+					<ns3:id>1</ns3:id>
+					<ns3:cantidad>1</ns3:cantidad>
+					<ns3:avaluo/>
+					<ns3:diamante>
+						<ns3:corte>Round</ns3:corte>
+						<ns3:color>D</ns3:color>
+						<ns3:claridad>IF</ns3:claridad>
+						<ns3:quilataje>0.10</ns3:quilataje>
+						<ns3:certificado xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+						<ns3:valorExperto/>
+					</ns3:diamante>
+				</ns3:pieza>
+				<ns3:pieza>
+					<ns3:id>2</ns3:id>
+					<ns3:cantidad>1</ns3:cantidad>
+					<ns3:avaluo/>
+					<ns3:alhaja>
+						<ns3:tipo>ANILLO</ns3:tipo>
+						<ns3:forma>redonda</ns3:forma>
+						<ns3:metal>AU</ns3:metal>
+						<ns3:color>AU_AM</ns3:color>
+						<ns3:rango>F3</ns3:rango>
+						<ns3:calidad>8_Q</ns3:calidad>
+						<ns3:peso>1</ns3:peso>
+						<ns3:condicion>EX</ns3:condicion>
+						<ns3:valorExperto/>
+						<ns3:incremento>10.00</ns3:incremento>
+					</ns3:alhaja>
+				</ns3:pieza>
+			</ns4:prenda>
+		</ns4:valuarPrendaBasicoRequest>
+	</S:Body>
+</S:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://servicios.montedepiedad.com.mx/NMP/MotordePrecios/diamantes/valuarPrendaBasico"/><con:wsrmConfig version="1.2"/></con:call><con:call id="1b82487f-5e84-4c2d-a4f5-bc494fe98826" name="Valuacion Error Midas valorMinimo"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios</con:endpoint><con:request><![CDATA[<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">\r
+   <S:Header>\r
+      <ns5:headerMessage xmlns:ns5="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" xmlns:ns4="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" xmlns:ns3="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos" xmlns:ns2="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardMessage">\r
+         <ns5:usuario>MIDAS</ns5:usuario>\r
+         <ns5:idConsumidor>17</ns5:idConsumidor>\r
+         <ns5:idDestino>20</ns5:idDestino>\r
+      </ns5:headerMessage>\r
+   </S:Header>\r
+   <S:Body>\r
+      <ns4:valuarPrendaBasicoRequest xmlns:ns5="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" xmlns:ns4="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" xmlns:ns3="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos" xmlns:ns2="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardMessage">\r
+         <ns4:prenda>\r
+            <ns3:id xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>\r
+            <ns3:ramo>AL</ns3:ramo>\r
+            <ns3:subramo>DI</ns3:subramo>\r
+            <ns3:tipo>DIAMANTES</ns3:tipo>\r
+            <ns3:avaluo/>\r
+            <ns3:pieza>\r
+               <ns3:id>1</ns3:id>\r
+               <ns3:cantidad>1</ns3:cantidad>\r
+               <ns3:avaluo/>\r
+               <ns3:diamante>\r
+                  <ns3:corte>Round</ns3:corte>\r
+                  <ns3:color>D</ns3:color>\r
+                  <ns3:claridad>IF</ns3:claridad>\r
+                  <ns3:quilataje>0.10</ns3:quilataje>\r
+                  <ns3:certificado xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>\r
+                  <ns3:valorExperto/>\r
+               </ns3:diamante>\r
+            </ns3:pieza>\r
+            <ns3:pieza>\r
+               <ns3:id>2</ns3:id>\r
+               <ns3:cantidad>1</ns3:cantidad>\r
+               <ns3:avaluo/>\r
+               <ns3:alhaja>\r
+                  <ns3:tipo>ANILLO</ns3:tipo>\r
+                  <ns3:forma>redonda</ns3:forma>\r
+                  <ns3:metal>AU</ns3:metal>\r
+                  <ns3:color>AU_AM</ns3:color>\r
+                  <ns3:rango>F1</ns3:rango>\r
+                  <ns3:calidad>8_Q</ns3:calidad>\r
+                  <ns3:peso>1</ns3:peso>\r
+                  <ns3:condicion>EX</ns3:condicion>\r
+                  <ns3:valorExperto/>\r
+                  <ns3:incremento>-4.00</ns3:incremento>\r
+               </ns3:alhaja>\r
+            </ns3:pieza>\r
+         </ns4:prenda>\r
+      </ns4:valuarPrendaBasicoRequest>\r
+   </S:Body>\r
+</S:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://servicios.montedepiedad.com.mx/NMP/MotordePrecios/diamantes/valuarPrendaBasico"/><con:wsrmConfig version="1.2"/></con:call><con:call id="6c645382-3760-49c8-b67f-94644daadd7c" name="Error Midas forma instead of color"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios</con:endpoint><con:request><![CDATA[<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">\r
+   <S:Header>\r
+      <ns5:headerMessage xmlns:ns5="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" xmlns:ns4="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" xmlns:ns3="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos" xmlns:ns2="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardMessage">\r
+         <ns5:usuario>MIDAS</ns5:usuario>\r
+         <ns5:idConsumidor>17</ns5:idConsumidor>\r
+         <ns5:idDestino>20</ns5:idDestino>\r
+      </ns5:headerMessage>\r
+   </S:Header>\r
+   <S:Body>\r
+      <ns4:valuarPrendaBasicoRequest xmlns:ns5="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" xmlns:ns4="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" xmlns:ns3="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos" xmlns:ns2="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardMessage">\r
+         <ns4:prenda>\r
+            <ns3:id xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>\r
+            <ns3:ramo>AL</ns3:ramo>\r
+            <ns3:subramo>DI</ns3:subramo>\r
+            <ns3:tipo>DIAMANTES</ns3:tipo>\r
+            <ns3:avaluo>\r
+               <ns3:valorMinimo>0</ns3:valorMinimo>\r
+               <ns3:valorPromedio>0</ns3:valorPromedio>\r
+               <ns3:valorMaximo>0</ns3:valorMaximo>\r
+            </ns3:avaluo>\r
+            <ns3:pieza>\r
+               <ns3:id>1</ns3:id>\r
+               <ns3:cantidad>1</ns3:cantidad>\r
+               <ns3:avaluo>\r
+                  <ns3:valorMinimo>0</ns3:valorMinimo>\r
+                  <ns3:valorPromedio>0</ns3:valorPromedio>\r
+                  <ns3:valorMaximo>0</ns3:valorMaximo>\r
+               </ns3:avaluo>\r
+               <ns3:diamante>\r
+                  <ns3:corte>Pear</ns3:corte>\r
+                  <ns3:color>D</ns3:color>\r
+                  <ns3:claridad>IF</ns3:claridad>\r
+                  <ns3:quilataje>0.10</ns3:quilataje>\r
+                  <ns3:certificado xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>\r
+                  <ns3:valorExperto/>\r
+               </ns3:diamante>\r
+            </ns3:pieza>\r
+            <ns3:pieza>\r
+               <ns3:id>2</ns3:id>\r
+               <ns3:cantidad>1</ns3:cantidad>\r
+               <ns3:avaluo>\r
+                  <ns3:valorMinimo>0</ns3:valorMinimo>\r
+                  <ns3:valorPromedio>0</ns3:valorPromedio>\r
+                  <ns3:valorMaximo>0</ns3:valorMaximo>\r
+               </ns3:avaluo>\r
+               <ns3:alhaja>\r
+                  <ns3:tipo>ANILLO</ns3:tipo>\r
+                  <ns3:forma>redonda</ns3:forma>\r
+                  <ns3:metal>AU</ns3:metal>\r
+                  <ns3:color>AU_AM</ns3:color>\r
+                  <ns3:rango>F1</ns3:rango>\r
+                  <ns3:calidad>8_Q</ns3:calidad>\r
+                  <ns3:peso>1</ns3:peso>\r
+                  <ns3:condicion>EX</ns3:condicion>\r
+                  <ns3:valorExperto/>\r
+                  <ns3:incremento>-4.00</ns3:incremento>\r
+               </ns3:alhaja>\r
+            </ns3:pieza>\r
+         </ns4:prenda>\r
+      </ns4:valuarPrendaBasicoRequest>\r
+   </S:Body>\r
+</S:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://servicios.montedepiedad.com.mx/NMP/MotordePrecios/diamantes/valuarPrendaBasico"/><con:wsrmConfig version="1.2"/></con:call><con:call id="aca1fa72-b218-45d7-802b-401dfc10d500" name="Valuacion Simple Sin Alhaja"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://10.30.3.15:8011/NMP/OperacionPrendaria/MotordePrecios</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nmp="http://servicios.montedepiedad.com.mx/NMP/Schema/NMPStandardHeader" xmlns:elem="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Elementos" xmlns:tip="http://servicios.montedepiedad.com.mx/NMP/Schema/MotordePrecios/Tipos">
+   <soapenv:Header>
+      <nmp:headerMessage>
+         <nmp:usuario>MIDAS</nmp:usuario>
+         <nmp:idConsumidor>17</nmp:idConsumidor>
+         <nmp:idDestino>20</nmp:idDestino>
+      </nmp:headerMessage>
+   </soapenv:Header>
+   <soapenv:Body>
+      <elem:valuarPrendaBasicoRequest>
+         <elem:prenda>
+            <tip:id>?</tip:id>
+            <tip:ramo>AL</tip:ramo>
+            <tip:subramo>DI</tip:subramo>
+            <tip:tipo>DIAMANTE</tip:tipo>
+            <tip:avaluo>
+               <tip:valorMinimo>0.0</tip:valorMinimo>
+               <tip:valorPromedio>0.0</tip:valorPromedio>
+               <tip:valorMaximo>0.0</tip:valorMaximo>
+            </tip:avaluo>
+            <!-- DIAMANTE -->
+            <tip:pieza>
+               <tip:id>?</tip:id>
+               <tip:cantidad>1</tip:cantidad>
+               <tip:avaluo>
+                  <tip:valorMinimo>0.0</tip:valorMinimo>
+                  <tip:valorPromedio>0.0</tip:valorPromedio>
+                  <tip:valorMaximo>0.0</tip:valorMaximo>
+               </tip:avaluo>
+               <tip:diamante>
+                  <tip:corte>Pear</tip:corte>
+                  <tip:forma>Pear</tip:forma>
+                  <tip:color>D</tip:color>
+                  <tip:claridad>IF</tip:claridad>
+                  <tip:quilataje>0.95</tip:quilataje>
+                  <tip:certificado></tip:certificado>
+                  <tip:valorExperto>
+                     <!--tip:unitario>0.0</tip:unitario>
+                     <tip:total>0.0</tip:total-->
+                  </tip:valorExperto>
+               </tip:diamante>
+            </tip:pieza>
+            <!-- ALHAJA -->
+            <!--tip:pieza>
+               <tip:id>?</tip:id>
+               <tip:cantidad>1</tip:cantidad>
+               <tip:avaluo>
+                  <tip:valorMinimo>0.0</tip:valorMinimo>
+                  <tip:valorPromedio>0.0</tip:valorPromedio>
+                  <tip:valorMaximo>0.0</tip:valorMaximo>
+               </tip:avaluo>
+               <tip:alhaja>
+                  <tip:tipo>?</tip:tipo>
+                  <tip:forma>Anillo</tip:forma>
+                  <tip:metal>AU</tip:metal>
+                  <tip:color>AU_AM</tip:color>
+                  <tip:rango></tip:rango>
+                  <tip:calidad>18_Q</tip:calidad>
+                  <tip:peso>0.5</tip:peso>
+                  <tip:condicion>?</tip:condicion>
+                  <tip:valorExperto-->
+                     <!--tip:unitario>0</tip:unitario>
+                     <tip:total>0</tip:total-->
+                  <!--/tip:valorExperto>
+                  <tip:incremento>0.0</tip:incremento>
+                  <tip:desplazamiento>0.0</tip:desplazamiento>
+               </tip:alhaja>
+            </tip:pieza-->
+		<!-- COMPLEMENTO -->
+            <tip:pieza>
+               <tip:id>?</tip:id>
+               <tip:cantidad>1</tip:cantidad>
+               <tip:avaluo>
+                  <tip:valorMinimo>0.0</tip:valorMinimo>
+                  <tip:valorPromedio>0.0</tip:valorPromedio>
+                  <tip:valorMaximo>0.0</tip:valorMaximo>
+               </tip:avaluo>
+               <tip:complemento>
+                  <tip:tipo>RUBI</tip:tipo>
+                  <tip:peso>0.75</tip:peso>
+                  <tip:valorExperto>
+                     <tip:unitario>1000.0</tip:unitario>
+                     <!--tip:total>0</tip:total-->
                   </tip:valorExperto>
                </tip:complemento>
             </tip:pieza>
