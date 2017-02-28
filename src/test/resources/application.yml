@@ -62,3 +62,8 @@ valuacion:
         wsdlLocation: http://localhost:10344/soap-api/ReferenciaDiamanteService?wsdl
   avaluo:
     redondeo: DOS_DECIMALES_ROUND_HALF_UP
+
+# mostrar o no mensajes soap entrantes y salientes
+soap:
+  mensaje:
+    mostrar: false

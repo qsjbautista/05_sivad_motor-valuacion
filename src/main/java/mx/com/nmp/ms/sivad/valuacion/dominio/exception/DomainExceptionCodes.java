@@ -66,7 +66,15 @@ public enum DomainExceptionCodes {
     LISTA_PIEZAS_NULA("LISTA_PIEZAS_NULA",
         "La lista de piezas no debe ser nula."),
     LISTA_PIEZAS_VACIA("LISTA_PIEZAS_VACIA",
-        "La lista de piezas no debe estar vacia.");
+        "La lista de piezas no debe estar vacia."),
+    MODIFICADOR_CONDICION_PRENDA_FECHA_LISTADO_NULA("MODIFICADOR_CONDICION_PRENDA_FECHA_LISTADO_NULA",
+        "La fecha del listado no debe ser nula."),
+    MODIFICADOR_CONDICION_PRENDA_LISTA_MODIFICADORES_NULA("MODIFICADOR_CONDICION_PRENDA_LISTA_MODIFICADORES_NULA",
+        "La lista de modificadores - condición prenda no debe ser nula."),
+    MODIFICADOR_CONDICION_PRENDA_LISTA_MODIFICADORES_VACIA("MODIFICADOR_CONDICION_PRENDA_LISTA_MODIFICADORES_VACIA",
+        "La lista de modificadores - condición prenda no debe estar vacia."),
+    MODIFICADOR_CONDICION_PRENDA_ULTIMA_ACTUALIZACION_NULA("MODIFICADOR_CONDICION_PRENDA_ULTIMA_ACTUALIZACION_NULA",
+        "La fecha de ultima actualizacion no debe ser nula.");
 
     /**
      * Código de la excepción.
