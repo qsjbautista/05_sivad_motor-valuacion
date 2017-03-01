@@ -201,11 +201,7 @@ public class ModificadorCondicionPrendaRepositoryImpl implements ModificadorCond
 
         // SE CONVIERTE EL LISTADO DE DOMINIO EN VIGENTE.
         ListadoModificadorCondicionPrendaJPA listadoNuevo = convertToListadoVigenteJPA(listado);
-
-        if (ObjectUtils.isEmpty(listadoNuevo.getUltimaActualizacion())) {
-            listadoNuevo.setUltimaActualizacion(DateTime.now());
-        }
-
+        listadoNuevo.setUltimaActualizacion(DateTime.now());
         listadoNuevo.setFechaListado(listado.getFechaListado());
         return convertToListadoDeDominio(listadoJpaRepository.save(listadoNuevo));
     }
