@@ -18,7 +18,10 @@ public class PrendaDTO {
      */
     private List<PiezaDTO> piezas;
 
-
+    /**
+     * Identificador de la condición fisica de la prenda.
+     */
+    private String condicionFisica;
 
     // METODOS
 
@@ -26,10 +29,12 @@ public class PrendaDTO {
      * Constructor.
      *
      * @param piezas La lista de piezas de las que se compone la prenda.
+     * @param  condicionFisica Identificador de la condición fisica de la prenda.
      */
-    public PrendaDTO(List<PiezaDTO> piezas) {
+    public PrendaDTO(List<PiezaDTO> piezas, String condicionFisica) {
         super();
         this.piezas = piezas;
+        this.condicionFisica = condicionFisica;
     }
 
 
@@ -42,6 +47,24 @@ public class PrendaDTO {
 
     public void setPiezas(List<PiezaDTO> piezas) {
         this.piezas = piezas;
+    }
+
+    /**
+     * Recupera el valor de {@code condicionFisica}
+     *
+     * @return Valor de {@code condicionFisica}
+     */
+    public String getCondicionFisica() {
+        return condicionFisica;
+    }
+
+    /**
+     * Establece el nuevo valor de {@code condicionFisica}
+     *
+     * @param condicionFisica Nuevo valor de {@code condicionFisica}
+     */
+    public void setCondicionFisica(String condicionFisica) {
+        this.condicionFisica = condicionFisica;
     }
 
     /**

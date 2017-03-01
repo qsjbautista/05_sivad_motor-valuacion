@@ -12,6 +12,7 @@ import mx.com.nmp.ms.sivad.valuacion.conector.consumidor.ValorComercialConsumido
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.*;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.*;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.Avaluo;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.CondicionPrendaVO;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto;
 import mx.com.nmp.ms.sivad.valuacion.dominio.repository.PoliticasCastigoRepository;
 import org.joda.time.DateTime;
@@ -460,6 +461,11 @@ public class PrendaUTest {
             @Override
             public List<Pieza> getPiezas() {
                 return piezas;
+            }
+
+            @Override
+            public CondicionPrendaVO getCondicionFisica() {
+                return null;
             }
 
         };

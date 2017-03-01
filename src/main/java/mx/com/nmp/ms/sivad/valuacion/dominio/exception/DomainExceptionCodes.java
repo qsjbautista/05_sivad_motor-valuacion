@@ -74,7 +74,8 @@ public enum DomainExceptionCodes {
     MODIFICADOR_CONDICION_PRENDA_LISTA_MODIFICADORES_VACIA("MODIFICADOR_CONDICION_PRENDA_LISTA_MODIFICADORES_VACIA",
         "La lista de modificadores - condición prenda no debe estar vacia."),
     MODIFICADOR_CONDICION_PRENDA_ULTIMA_ACTUALIZACION_NULA("MODIFICADOR_CONDICION_PRENDA_ULTIMA_ACTUALIZACION_NULA",
-        "La fecha de ultima actualizacion no debe ser nula.");
+        "La fecha de ultima actualizacion no debe ser nula."),
+    CODICION_FISICA_PRENDA("CODICION_FISICA_PRENDA", "La condicion fisica de la prenda no debe ser nula o vacia.");
 
     /**
      * Código de la excepción.

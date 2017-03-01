@@ -5,9 +5,12 @@
 package mx.com.nmp.ms.sivad.valuacion.dominio.modelo;
 
 import com.codahale.metrics.annotation.Timed;
+import mx.com.nmp.ms.sivad.valuacion.dominio.exception.ModificadorCondicionPrendaNoEncontradoException;
 import mx.com.nmp.ms.sivad.valuacion.dominio.exception.PoliticaCastigoNoEncontradaException;
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.AvaluoFactory;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.Avaluo;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.CondicionPrendaVO;
+import mx.com.nmp.ms.sivad.valuacion.dominio.repository.ModificadorCondicionPrendaRepository;
 import mx.com.nmp.ms.sivad.valuacion.dominio.repository.PoliticasCastigoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,9 +45,19 @@ public class Prenda implements PiezaValuable {
     private Avaluo avaluo;
 
     /**
+     * Identificador de la condición fisica de la prenda.
+     */
+    private CondicionPrendaVO condicionFisica;
+
+    /**
      * Referencia hacia el repositorio de políticas de castigo.
      */
     private PoliticasCastigoRepository politicasCastigoRepository;
+
+    /**
+     * Referencia hacia el repositorio modificador por condiciones fisicas de la prenda.
+     */
+    private ModificadorCondicionPrendaRepository condicionPrendaRepository;
 
     /**
      * Interface que define el contrato para crear entidades de tipo {@link Prenda}.
@@ -58,6 +71,12 @@ public class Prenda implements PiezaValuable {
          */
         List<Pieza> getPiezas();
 
+        /**
+         * Recupera el valor de {@code condicionFisica}
+         *
+         * @return Valor de {@code condicionFisica}
+         */
+        CondicionPrendaVO getCondicionFisica();
     }
 
 
@@ -70,11 +89,14 @@ public class Prenda implements PiezaValuable {
      * @param builder Referencia al objeto que contiene los datos necesarios para construir la entidad.
      * @param politicasCastigoRepository Referencia hacia el repositorio de políticas de castigo.
      */
-    private Prenda(Builder builder, PoliticasCastigoRepository politicasCastigoRepository) {
+    private Prenda(Builder builder, PoliticasCastigoRepository politicasCastigoRepository,
+                   ModificadorCondicionPrendaRepository condicionPrendaRepository) {
         super();
 
         this.piezas = builder.getPiezas();
+        this.condicionFisica = builder.getCondicionFisica();
         this.politicasCastigoRepository = politicasCastigoRepository;
+        this.condicionPrendaRepository = condicionPrendaRepository;
     }
 
     /**
@@ -125,8 +147,7 @@ public class Prenda implements PiezaValuable {
             avaluoTotal = sumarAvaluos(avaluoTotal, entry.getValue());
         }
 
-
-        return avaluoTotal;
+        return aplicarPorcentajeCondidicionesFisicas(avaluoTotal);
     }
 
     /**
@@ -188,6 +209,48 @@ public class Prenda implements PiezaValuable {
         }
 
         return result;
+    }
+
+    /**
+     * Metodo auxiliar utilizado para aplicar el factor correspondiente por condiciones fisicas de la prenda.
+     *
+     * @param avaluoTotal El avalúo.
+     *
+     * @return El avalúo con el factor aplicado.
+     */
+    private Avaluo aplicarPorcentajeCondidicionesFisicas(Avaluo avaluoTotal) {
+        LOGGER.debug(">> aplicarPorcentajeCondidicionesFisicas. [{}]", avaluoTotal);
+        BigDecimal factor = BigDecimal.ONE;
+
+        try {
+            ModificadorCondicionPrenda modificador = condicionPrendaRepository
+                .consultarModificadorCondicionPrendaVigente(condicionFisica);
+            factor = modificador.getFactor();
+            LOGGER.info("Factor por condiciones recuperado [{}]", factor);
+        } catch (ModificadorCondicionPrendaNoEncontradoException e) {
+            LOGGER.warn(String
+                    .format("No existe el modificador condicion prenda [%s]", condicionFisica.getCondicionPrenda()),
+                e);
+        } catch (Exception e) {
+            LOGGER.error("Ocurrió un error inesperado al consultar el modificador de codición fisica de la prenda", e);
+            throw e;
+        }
+
+        BigDecimal valorMinimo = avaluoTotal.valorMinimo().multiply(factor);
+        LOGGER.info("Aplicando factor {} * {} = {} ", avaluoTotal.valorMinimo(), factor, valorMinimo);
+
+        BigDecimal valorPromedio = avaluoTotal.valorPromedio().multiply(factor);
+        LOGGER.info("Aplicando factor {} * {} = {} ", avaluoTotal.valorPromedio(), factor, valorPromedio);
+
+        BigDecimal valorMaximo = avaluoTotal.valorMaximo().multiply(factor);
+        LOGGER.info("Aplicando factor {} * {} = {} ", avaluoTotal.valorMaximo(), factor, valorMaximo);
+
+
+        Avaluo resultado = AvaluoFactory.crearCon(valorMinimo, valorPromedio, valorMaximo);
+
+        LOGGER.debug("<< aplicarPorcentajeCondidicionesFisicas. Result: [{}]", resultado);
+
+        return resultado;
     }
 
 

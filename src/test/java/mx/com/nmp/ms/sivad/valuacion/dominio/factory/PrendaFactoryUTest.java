@@ -7,6 +7,7 @@ package mx.com.nmp.ms.sivad.valuacion.dominio.factory;
 import mx.com.nmp.ms.sivad.valuacion.MotorValuacionApplication;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.*;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto.*;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.CondicionPrendaVO;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -111,7 +112,7 @@ public class PrendaFactoryUTest {
         piezas.add(diamanteDTO);
         piezas.add(complementarioDTO);
 
-        PrendaDTO prendaDTO = new PrendaDTO(piezas);
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "");
         Prenda prenda = prendaFactory.create(prendaDTO);
 
         assertNotNull(prenda);
@@ -167,7 +168,7 @@ public class PrendaFactoryUTest {
         List<PiezaDTO> piezas = new ArrayList<>();
         piezas.add(alhajaDTO);
 
-        PrendaDTO prendaDTO = new PrendaDTO(piezas);
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "");
         Prenda prenda = prendaFactory.create(prendaDTO);
 
         assertNotNull(prenda);
@@ -191,7 +192,7 @@ public class PrendaFactoryUTest {
         List<PiezaDTO> piezas = new ArrayList<>();
         piezas.add(diamanteDTO);
 
-        PrendaDTO prendaDTO = new PrendaDTO(piezas);
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "");
         Prenda prenda = prendaFactory.create(prendaDTO);
 
         assertNotNull(prenda);
@@ -215,7 +216,7 @@ public class PrendaFactoryUTest {
         List<PiezaDTO> piezas = new ArrayList<>();
         piezas.add(complementarioDTO);
 
-        PrendaDTO prendaDTO = new PrendaDTO(piezas);
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "");
         Prenda prenda = prendaFactory.create(prendaDTO);
 
         assertNotNull(prenda);
@@ -235,7 +236,7 @@ public class PrendaFactoryUTest {
     public void crearPrendaTest06() {
         List<PiezaDTO> piezas = null;
 
-        PrendaDTO prendaDTO = new PrendaDTO(piezas);
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "");
         prendaFactory.create(prendaDTO);
     }
 
@@ -251,7 +252,7 @@ public class PrendaFactoryUTest {
     public void crearPrendaTest07() {
         List<PiezaDTO> piezas = new ArrayList<>();
 
-        PrendaDTO prendaDTO = new PrendaDTO(piezas);
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "");
         prendaFactory.create(prendaDTO);
     }
 
@@ -267,6 +268,11 @@ public class PrendaFactoryUTest {
             @Override
             public List<Pieza> getPiezas() {
                 return piezas;
+            }
+
+            @Override
+            public CondicionPrendaVO getCondicionFisica() {
+                return null;
             }
 
         };

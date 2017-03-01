@@ -93,7 +93,7 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
 
         mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Prenda prendaValuable;
         try {
-            prendaValuable = prendaFactory.create(piezas);
+            prendaValuable = prendaFactory.create(piezas, recuperarCondicionFisica(prenda));
         } catch (IllegalArgumentException e) {
             LOGGER.error("<< valuarPrendaBasico. {}",
                 WebServiceExceptionCodes.NMPMV003.getMessageException());
@@ -398,6 +398,27 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
         }
 
         return prenda;
+    }
+
+    /**
+     * Recupera la condición fisica de la prenda, por el momento se recupera de la {@link Alhaja}
+     * mas adelante deberia obtenerce directamente de la {@link Prenda}
+     *
+     * ToDo Cuando se valuen prendas sin alhajas cambiar {@link Alhaja#condicion} a la {@link Prenda}.
+     */
+    private static String recuperarCondicionFisica(Prenda prenda) {
+        for (Pieza p : prenda.getPieza()) {
+            if (!ObjectUtils.isEmpty(p.getAlhaja())) {
+                return p.getAlhaja().getCondicion();
+            }
+        }
+
+        LOGGER.error("No se encontro una alhaja en la lista de piezas," +
+            "si se realizaran valuaciones sin alhaja, cambiar la propiedad Alhaja.condicion a la Prenda");
+
+        // Este flujo no debera existir cuando se realice el cambio de Alhaja.condicion a la Prenda
+        // Se regresa XX para evitar la validacion de nulo o cadena vacia.
+        return "XX";
     }
 
 }

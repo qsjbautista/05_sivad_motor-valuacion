@@ -8,6 +8,8 @@ import mx.com.nmp.ms.sivad.valuacion.dominio.exception.DomainExceptionCodes;
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.*;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.*;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto.*;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.CondicionPrendaVO;
+import mx.com.nmp.ms.sivad.valuacion.dominio.repository.ModificadorCondicionPrendaRepository;
 import mx.com.nmp.ms.sivad.valuacion.dominio.repository.PoliticasCastigoRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -30,6 +32,7 @@ import static mx.com.nmp.ms.sivad.valuacion.infrastructure.factory.ConstructorUt
  * @author ngonzalez
  */
 @Component
+@SuppressWarnings("SpringAutowiredFieldsWarningInspection")
 public class PrendaFactoryImpl implements PrendaFactory {
 
     /**
@@ -66,6 +69,12 @@ public class PrendaFactoryImpl implements PrendaFactory {
     @Inject
     private PoliticasCastigoRepository politicasCastigoRepository;
 
+    /**
+     * Referencia hacia el repositorio modificador por condiciones fisicas de la prenda.
+     */
+    @Inject
+    private ModificadorCondicionPrendaRepository condicionPrendaRepository;
+
 
 
     // METODOS
@@ -77,7 +86,7 @@ public class PrendaFactoryImpl implements PrendaFactory {
         super();
 
         constructor = getConstructor(Prenda.class, Prenda.Builder.class,
-            PoliticasCastigoRepository.class);
+            PoliticasCastigoRepository.class, ModificadorCondicionPrendaRepository.class);
 
         mapaEstrategiaFactory = new HashMap<>();
     }
@@ -105,7 +114,7 @@ public class PrendaFactoryImpl implements PrendaFactory {
             }
         }
 
-        final Prenda.Builder builder = getBuilder(piezas);
+        final Prenda.Builder builder = getBuilder(piezas, prendaDTO.getCondicionFisica());
         return create(builder);
     }
 
@@ -113,8 +122,8 @@ public class PrendaFactoryImpl implements PrendaFactory {
      * {@inheritDoc}
      */
     @Override
-    public Prenda create(List<Pieza> piezas) {
-        final Prenda.Builder builder = getBuilder(piezas);
+    public Prenda create(List<Pieza> piezas, String condicionFisica) {
+        final Prenda.Builder builder = getBuilder(piezas, condicionFisica);
         return create(builder);
     }
 
@@ -124,7 +133,7 @@ public class PrendaFactoryImpl implements PrendaFactory {
     @Override
     public Prenda create(Prenda.Builder builder) {
         validarBuilder(builder);
-        return getInstancia(constructor, builder, politicasCastigoRepository);
+        return getInstancia(constructor, builder, politicasCastigoRepository, condicionPrendaRepository);
     }
 
     /**
@@ -133,12 +142,17 @@ public class PrendaFactoryImpl implements PrendaFactory {
      * @param piezas Lista de piezas de las que se compone la prenda.
      * @return El objeto constructor creado.
      */
-    private static Prenda.Builder getBuilder(final List<Pieza> piezas) {
+    private static Prenda.Builder getBuilder(final List<Pieza> piezas, final String condicionFisica) {
         return new Prenda.Builder() {
 
             @Override
             public List<Pieza> getPiezas() {
                 return piezas;
+            }
+
+            @Override
+            public CondicionPrendaVO getCondicionFisica() {
+                return new CondicionPrendaVO(condicionFisica);
             }
 
         };
@@ -153,6 +167,9 @@ public class PrendaFactoryImpl implements PrendaFactory {
         Assert.notNull(builder, DomainExceptionCodes.BUILDER_NULO.getMessageException());
         Assert.notNull(builder.getPiezas(), DomainExceptionCodes.LISTA_PIEZAS_NULA.getMessageException());
         Assert.notEmpty(builder.getPiezas(), DomainExceptionCodes.LISTA_PIEZAS_VACIA.getMessageException());
+        Assert.notNull(builder.getCondicionFisica(), DomainExceptionCodes.CODICION_FISICA_PRENDA.getMessageException());
+        Assert.hasText(builder.getCondicionFisica().getCondicionPrenda(),
+            DomainExceptionCodes.CODICION_FISICA_PRENDA.getMessageException());
     }
 
 }
