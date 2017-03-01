@@ -465,7 +465,7 @@ public class ValuadorDiamantesEndpointSystemTest {
         Alhaja alhaja = new Alhaja();
         alhaja.setCalidad(CALIDAD);
         alhaja.setColor(COLOR_A);
-        alhaja.setCondicion("C-Alhaja");
+        alhaja.setCondicion("EX");
         alhaja.setDesplazamiento(DESPLAZAMIENTO);
         alhaja.setForma("F-Alhaja");
         alhaja.setIncremento(INCREMENTO);

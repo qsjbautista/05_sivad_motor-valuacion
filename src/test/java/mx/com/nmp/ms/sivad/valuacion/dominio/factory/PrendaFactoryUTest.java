@@ -112,7 +112,7 @@ public class PrendaFactoryUTest {
         piezas.add(diamanteDTO);
         piezas.add(complementarioDTO);
 
-        PrendaDTO prendaDTO = new PrendaDTO(piezas, "");
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "EX");
         Prenda prenda = prendaFactory.create(prendaDTO);
 
         assertNotNull(prenda);
@@ -145,7 +145,7 @@ public class PrendaFactoryUTest {
         piezas.add(complementario);
 
         Prenda prenda =
-            prendaFactory.create(getBuilder(piezas));
+            prendaFactory.create(getBuilder(piezas, "RE"));
 
         assertNotNull(prenda);
         assertNotNull(prenda.getPiezas());
@@ -168,7 +168,7 @@ public class PrendaFactoryUTest {
         List<PiezaDTO> piezas = new ArrayList<>();
         piezas.add(alhajaDTO);
 
-        PrendaDTO prendaDTO = new PrendaDTO(piezas, "");
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "EX");
         Prenda prenda = prendaFactory.create(prendaDTO);
 
         assertNotNull(prenda);
@@ -192,7 +192,7 @@ public class PrendaFactoryUTest {
         List<PiezaDTO> piezas = new ArrayList<>();
         piezas.add(diamanteDTO);
 
-        PrendaDTO prendaDTO = new PrendaDTO(piezas, "");
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "BN");
         Prenda prenda = prendaFactory.create(prendaDTO);
 
         assertNotNull(prenda);
@@ -216,7 +216,7 @@ public class PrendaFactoryUTest {
         List<PiezaDTO> piezas = new ArrayList<>();
         piezas.add(complementarioDTO);
 
-        PrendaDTO prendaDTO = new PrendaDTO(piezas, "");
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "RE");
         Prenda prenda = prendaFactory.create(prendaDTO);
 
         assertNotNull(prenda);
@@ -236,7 +236,7 @@ public class PrendaFactoryUTest {
     public void crearPrendaTest06() {
         List<PiezaDTO> piezas = null;
 
-        PrendaDTO prendaDTO = new PrendaDTO(piezas, "");
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "EX");
         prendaFactory.create(prendaDTO);
     }
 
@@ -252,7 +252,7 @@ public class PrendaFactoryUTest {
     public void crearPrendaTest07() {
         List<PiezaDTO> piezas = new ArrayList<>();
 
-        PrendaDTO prendaDTO = new PrendaDTO(piezas, "");
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "BN");
         prendaFactory.create(prendaDTO);
     }
 
@@ -262,7 +262,7 @@ public class PrendaFactoryUTest {
      * @param piezas Lista de piezas de las que se compone la prenda.
      * @return El builder creado.
      */
-    private Prenda.Builder getBuilder(final List<Pieza> piezas) {
+    private Prenda.Builder getBuilder(final List<Pieza> piezas, final String condicionFisica) {
         return new Prenda.Builder() {
 
             @Override
@@ -272,7 +272,7 @@ public class PrendaFactoryUTest {
 
             @Override
             public CondicionPrendaVO getCondicionFisica() {
-                return null;
+                return new CondicionPrendaVO(condicionFisica);
             }
 
         };

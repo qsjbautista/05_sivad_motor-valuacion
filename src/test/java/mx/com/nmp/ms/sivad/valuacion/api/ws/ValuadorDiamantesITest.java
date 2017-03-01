@@ -1952,7 +1952,7 @@ public class ValuadorDiamantesITest {
         Alhaja alhaja = new Alhaja();
         alhaja.setCalidad(calidad);
         alhaja.setColor(color);
-        alhaja.setCondicion("C-Alhaja");
+        alhaja.setCondicion("EX");
         alhaja.setDesplazamiento(desplazamiento);
         alhaja.setForma("F-Alhaja");
         alhaja.setIncremento(incremento);

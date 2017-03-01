@@ -209,7 +209,7 @@ public class PrendaUTest {
         piezas.add(complementario);
 
         Prenda prenda =
-            prendaFactory.create(getBuilder(piezas));
+            prendaFactory.create(getBuilder(piezas, "EX"));
 
         BigDecimalConsumidor valorGramoOro = getBigDecimalConsumidor(
             AV_ALHAJA_VALOR_GRAMO_ORO);
@@ -264,7 +264,7 @@ public class PrendaUTest {
         piezas.add(alhaja);
 
         Prenda prenda =
-            prendaFactory.create(getBuilder(piezas));
+            prendaFactory.create(getBuilder(piezas, "BN"));
 
         BigDecimalConsumidor valorGramoOro = getBigDecimalConsumidor(
             AV_ALHAJA_VALOR_GRAMO_ORO);
@@ -305,7 +305,7 @@ public class PrendaUTest {
         piezas.add(diamante);
 
         Prenda prenda =
-            prendaFactory.create(getBuilder(piezas));
+            prendaFactory.create(getBuilder(piezas, "RE"));
 
         ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
             AV_DIAMANTE_VALOR_COMERCIAL_MINIMO, AV_DIAMANTE_VALOR_COMERCIAL_MEDIO, AV_DIAMANTE_VALOR_COMERCIAL_MAXIMO);
@@ -346,7 +346,7 @@ public class PrendaUTest {
         piezas.add(complementario);
 
         Prenda prenda =
-            prendaFactory.create(getBuilder(piezas));
+            prendaFactory.create(getBuilder(piezas, "EX"));
 
         PoliticasCastigo politicasCastigo = getPoliticasCastigo(
             PC_FACTOR_DIAMANTE, PC_FACTOR_ALHAJA, PC_FACTOR_COMPLEMENTARIO);
@@ -371,7 +371,7 @@ public class PrendaUTest {
     public void crearPrendaTest05() {
         List<Pieza> piezas = null;
 
-        prendaFactory.create(getBuilder(piezas));
+        prendaFactory.create(getBuilder(piezas, "BN"));
     }
 
     /**
@@ -383,7 +383,7 @@ public class PrendaUTest {
     public void crearPrendaTest06() {
         List<Pieza> piezas = new ArrayList<>();
 
-        prendaFactory.create(getBuilder(piezas));
+        prendaFactory.create(getBuilder(piezas, "RE"));
     }
 
     /**
@@ -411,7 +411,7 @@ public class PrendaUTest {
         piezas.add(complementario);
 
         Prenda prenda =
-            prendaFactory.create(getBuilder(piezas));
+            prendaFactory.create(getBuilder(piezas, "EX"));
 
         BigDecimalConsumidor valorGramoOro = getBigDecimalConsumidor(
             AV_ALHAJA_VALOR_GRAMO_ORO);
@@ -455,7 +455,7 @@ public class PrendaUTest {
      * @param piezas Lista de piezas de las que se compone la prenda.
      * @return El builder creado.
      */
-    private Prenda.Builder getBuilder(final List<Pieza> piezas) {
+    private Prenda.Builder getBuilder(final List<Pieza> piezas, final String condicionesFisicas) {
         return new Prenda.Builder() {
 
             @Override
@@ -465,7 +465,7 @@ public class PrendaUTest {
 
             @Override
             public CondicionPrendaVO getCondicionFisica() {
-                return null;
+                return new CondicionPrendaVO(condicionesFisicas);
             }
 
         };
