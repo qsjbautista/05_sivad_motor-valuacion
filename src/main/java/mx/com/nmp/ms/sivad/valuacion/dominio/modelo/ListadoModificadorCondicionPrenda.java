@@ -111,6 +111,44 @@ public class ListadoModificadorCondicionPrenda {
         return modificadoresCondicionPrenda;
     }
 
-    // TODO - ModificadorCondicionPrenda Equals, HashCode y ToString
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "ListadoModificadorCondicionPrenda{" +
+            "ultimaActualizacion=" + ultimaActualizacion +
+            ", fechaListado=" + fechaListado +
+            ", modificadoresCondicionPrenda=" + modificadoresCondicionPrenda +
+            '}';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ListadoModificadorCondicionPrenda)) return false;
+
+        ListadoModificadorCondicionPrenda that = (ListadoModificadorCondicionPrenda) o;
+
+        if (!ultimaActualizacion.equals(that.ultimaActualizacion)) return false;
+        if (!fechaListado.equals(that.fechaListado)) return false;
+        if (!modificadoresCondicionPrenda.equals(that.modificadoresCondicionPrenda)) return false;
+
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        int result = ultimaActualizacion.hashCode();
+        result = 31 * result + fechaListado.hashCode();
+        result = 31 * result + modificadoresCondicionPrenda.hashCode();
+        return result;
+    }
 
 }

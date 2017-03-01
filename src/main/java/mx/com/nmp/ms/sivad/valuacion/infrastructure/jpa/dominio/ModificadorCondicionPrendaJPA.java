@@ -20,4 +20,16 @@ import javax.persistence.Table;
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ModificadorCondicionPrendaJPA extends AbstractModificadorCondicionPrendaJPA {
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "ModificadorCondicionPrendaJPA{" +
+            "id=" + id +
+            ", condicionPrenda='" + condicionPrenda + '\'' +
+            ", factor=" + factor +
+            '}';
+    }
+
 }
