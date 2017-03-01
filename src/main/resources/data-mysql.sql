@@ -26,7 +26,7 @@ VALUES (3, 1, 'mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Complementario', 1.1
 -- INICIA - DATOS: MODIFICADOR CONDICION PRENDA
 -- ---------------------------------------------------------------------------------------------------------------------
 INSERT INTO cfg_diamante_listado_modificador_condicion_prenda (id, ultima_actualizacion, fecha_listado)
-VALUES (1, '2017-02-24 10:00:00.521-06:00', '2017-02-24');
+VALUES (1, '2017-02-24 10:00:00.521', '2017-02-24');
 
 INSERT INTO cfg_diamante_modificador_condicion_prenda (id, condicion_prenda, factor, listado)
 VALUES (1, 'EX', 1.10, 1);

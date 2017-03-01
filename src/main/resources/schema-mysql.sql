@@ -46,9 +46,9 @@ ALTER TABLE JOURNAL_EVENT_DATA ADD FOREIGN KEY (EVENT) REFERENCES JOURNAL_EVENT 
 
 
 
-------------------------------------------------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------------------------------------------
 -- INICIA - TABLAS: POLITICAS DE CASTIGO
-------------------------------------------------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE TC_POLITICA_CASTIGO_PIEZA
 (
@@ -70,21 +70,25 @@ CREATE TABLE TC_POLITICA_CASTIGO_PIEZA_FACTORES
 );
 ALTER TABLE TC_POLITICA_CASTIGO_PIEZA_FACTORES ADD FOREIGN KEY (POLITICA) REFERENCES TC_POLITICA_CASTIGO_PIEZA (ID);
 
-------------------------------------------------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------------------------------------------
 -- TERMINA - TABLAS: POLITICAS DE CASTIGO
-------------------------------------------------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------------------------------------------
 
 
 
-------------------------------------------------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------------------------------------------
 -- INICIA - TABLAS: MODIFICADOR CONDICION PRENDA
-------------------------------------------------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------------------------------------------
 
 --
 -- HISTÓRICOS
 --
 
+DROP TABLE IF EXISTS HIST_CFG_DIAMANTE_MODIFICADOR_CONDICION_PRENDA;
 DROP TABLE IF EXISTS HIST_CFG_DIAMANTE_LISTADO_MODIFICADOR_CONDICION_PRENDA;
+DROP TABLE IF EXISTS CFG_DIAMANTE_MODIFICADOR_CONDICION_PRENDA;
+DROP TABLE IF EXISTS CFG_DIAMANTE_LISTADO_MODIFICADOR_CONDICION_PRENDA;
+
 CREATE TABLE HIST_CFG_DIAMANTE_LISTADO_MODIFICADOR_CONDICION_PRENDA
 (
     ID BIGINT AUTO_INCREMENT NOT NULL,
@@ -94,10 +98,10 @@ CREATE TABLE HIST_CFG_DIAMANTE_LISTADO_MODIFICADOR_CONDICION_PRENDA
 );
 
 CREATE INDEX IDX_HIST_CFG_DIAMANTE_LISTADO_MODIFICADOR_CONDICION_PRENDA_ID
-ON HIST_CFG_DIAMANTE_LISTADO_MODIFICADOR_CONDICION_PRENDA(ID);
+    ON HIST_CFG_DIAMANTE_LISTADO_MODIFICADOR_CONDICION_PRENDA(ID);
 
 
-DROP TABLE IF EXISTS HIST_CFG_DIAMANTE_MODIFICADOR_CONDICION_PRENDA;
+
 CREATE TABLE HIST_CFG_DIAMANTE_MODIFICADOR_CONDICION_PRENDA
 (
     ID BIGINT AUTO_INCREMENT NOT NULL,
@@ -108,9 +112,9 @@ CREATE TABLE HIST_CFG_DIAMANTE_MODIFICADOR_CONDICION_PRENDA
 );
 
 CREATE INDEX IDX_HIST_CFG_DIAMANTE_MODIFICADOR_CONDICION_PRENDA_ID
-ON HIST_CFG_DIAMANTE_MODIFICADOR_CONDICION_PRENDA(ID);
+    ON HIST_CFG_DIAMANTE_MODIFICADOR_CONDICION_PRENDA(ID);
 ALTER TABLE HIST_CFG_DIAMANTE_MODIFICADOR_CONDICION_PRENDA
-ADD CONSTRAINT FK_HIST_CFG_DIAMANTE_MODIFICADOR_CONDICION_PRENDA
+    ADD CONSTRAINT FK_HIST_CFG_DIAMANTE_MODIFICADOR_CONDICION_PRENDA
 FOREIGN KEY(LISTADO) REFERENCES HIST_CFG_DIAMANTE_LISTADO_MODIFICADOR_CONDICION_PRENDA(ID);
 
 
@@ -118,7 +122,6 @@ FOREIGN KEY(LISTADO) REFERENCES HIST_CFG_DIAMANTE_LISTADO_MODIFICADOR_CONDICION_
 -- VIGENTES
 --
 
-DROP TABLE IF EXISTS CFG_DIAMANTE_LISTADO_MODIFICADOR_CONDICION_PRENDA;
 CREATE TABLE CFG_DIAMANTE_LISTADO_MODIFICADOR_CONDICION_PRENDA
 (
     ID BIGINT AUTO_INCREMENT NOT NULL,
@@ -128,10 +131,9 @@ CREATE TABLE CFG_DIAMANTE_LISTADO_MODIFICADOR_CONDICION_PRENDA
 );
 
 CREATE INDEX IDX_CFG_DIAMANTE_LISTADO_MODIFICADOR_CONDICION_PRENDA_ID
-ON CFG_DIAMANTE_LISTADO_MODIFICADOR_CONDICION_PRENDA(ID);
+    ON CFG_DIAMANTE_LISTADO_MODIFICADOR_CONDICION_PRENDA(ID);
 
 
-DROP TABLE IF EXISTS CFG_DIAMANTE_MODIFICADOR_CONDICION_PRENDA;
 CREATE TABLE CFG_DIAMANTE_MODIFICADOR_CONDICION_PRENDA
 (
     ID BIGINT AUTO_INCREMENT NOT NULL,
@@ -142,11 +144,11 @@ CREATE TABLE CFG_DIAMANTE_MODIFICADOR_CONDICION_PRENDA
 );
 
 CREATE INDEX IDX_CFG_DIAMANTE_MODIFICADOR_CONDICION_PRENDA_ID
-ON CFG_DIAMANTE_MODIFICADOR_CONDICION_PRENDA(ID);
+    ON CFG_DIAMANTE_MODIFICADOR_CONDICION_PRENDA(ID);
 ALTER TABLE CFG_DIAMANTE_MODIFICADOR_CONDICION_PRENDA
-ADD CONSTRAINT FK_CFG_DIAMANTE_MODIFICADOR_CONDICION_PRENDA
+    ADD CONSTRAINT FK_CFG_DIAMANTE_MODIFICADOR_CONDICION_PRENDA
 FOREIGN KEY(LISTADO) REFERENCES CFG_DIAMANTE_LISTADO_MODIFICADOR_CONDICION_PRENDA(ID);
 
-------------------------------------------------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------------------------------------------
 -- TERMINA - TABLAS: MODIFICADOR CONDICION PRENDA
-------------------------------------------------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------------------------------------------
