@@ -21,13 +21,11 @@ import mx.com.nmp.ms.sivad.valuacion.ws.diamantes.datatypes.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Implementación de ValuadorDiamantesService, la cual expone los servicios que permitirán realizar
@@ -35,6 +33,7 @@ import java.util.Map;
  *
  * @author osanchez, ngonzalez
  */
+@SuppressWarnings("SpringAutowiredFieldsWarningInspection")
 public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
 
     /**
@@ -89,11 +88,13 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
 
         // SE CONSTRUYE LA PRENDA QUE SE VA A VALUAR.
         Prenda prenda = parameters.getPrenda();
+        String condionPrenda = recuperarCondicionFisica(prenda);
+
         List<mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza> piezas = crearListaPiezas(prenda, relacionPiezas);
 
         mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Prenda prendaValuable;
         try {
-            prendaValuable = prendaFactory.create(piezas, recuperarCondicionFisica(prenda));
+            prendaValuable = prendaFactory.create(piezas, condionPrenda);
         } catch (IllegalArgumentException e) {
             LOGGER.error("<< valuarPrendaBasico. {}",
                 WebServiceExceptionCodes.NMPMV003.getMessageException());
@@ -407,18 +408,102 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
      * ToDo Cuando se valuen prendas sin alhajas cambiar {@link Alhaja#condicion} a la {@link Prenda}.
      */
     private static String recuperarCondicionFisica(Prenda prenda) {
-        for (Pieza p : prenda.getPieza()) {
+        LOGGER.debug(">> recuperarCondicionFisica. {}", prenda);
+        Iterator<Pieza> iterator = prenda.getPieza().iterator();
+
+        while (iterator.hasNext()) {
+            Pieza p = iterator.next();
+
             if (!ObjectUtils.isEmpty(p.getAlhaja())) {
-                return p.getAlhaja().getCondicion();
+                String condicion = p.getAlhaja().getCondicion();
+
+                // Si la alhaja solo se envio con el fin de recuperar la propiedad condicion fisica de la prenda
+                // se elimina de la lista de piezas a valuar
+                if (p.getCantidad() == 0 && isAlhajaParaCondicionPrenda(p.getAlhaja())) {
+                    iterator.remove();
+                    LOGGER.info("Se elimina la alhaja ya que no se debe valuar, " +
+                        "solo se envio para recuperar condicion fisica de la prenda");
+                }
+
+                LOGGER.debug(">> recuperarCondicionFisica. Result [{}]", condicion);
+
+                return condicion;
             }
         }
 
         LOGGER.error("No se encontro una alhaja en la lista de piezas," +
             "si se realizaran valuaciones sin alhaja, cambiar la propiedad Alhaja.condicion a la Prenda");
+        LOGGER.debug(">> recuperarCondicionFisica. Result [{}]", "XX");
 
         // Este flujo no debera existir cuando se realice el cambio de Alhaja.condicion a la Prenda
         // Se regresa XX para evitar la validacion de nulo o cadena vacia.
         return "XX";
+    }
+
+    /**
+     * Verifica si la alhaja solo se envio para recuperar el atributo condicion fisica de la prenda.
+     * Para considerar si la alhaja se envia solo para recuperar el mencionado atributo debe cumplir con:
+     * La alhaja debe contener todos los atributos vacios excepto el atributo condicion fisica de la prenda.
+     *
+     * @param alhaja La alhaja a validar.
+     *
+     * @return Verdadero si la alhaja esta vacia, falso si no.
+     */
+    private static boolean isAlhajaParaCondicionPrenda(Alhaja alhaja) {
+        return isNullStringPropertiesAlhaja(alhaja) &&
+            isNullBigdecimalPropertiesAlhaja(alhaja) && isEmpty(alhaja.getValorExperto());
+    }
+
+    /**
+     * Verifica si los atributos tipo {@link String} de la alhaja cumplen con la condicion:
+     * La alhaja debe contener todos los atributos vacios excepto el atributo condicion fisica de la prenda.
+     *
+     * @param alhaja La alhaja a validar.
+     *
+     * @return Verdadero si cumple la condicion, falso si no.
+     */
+    private static boolean isNullStringPropertiesAlhaja(Alhaja alhaja) {
+        return isEmpty(alhaja.getTipo()) && isEmpty(alhaja.getForma()) && isEmpty(alhaja.getMetal()) &&
+            isEmpty(alhaja.getColor()) && isEmpty(alhaja.getRango()) && isEmpty(alhaja.getCalidad()) &&
+            StringUtils.hasText(alhaja.getCondicion());
+    }
+
+    /**
+     * Verifica si los atributos tipo {@link BigDecimal} de la alhaja cumplen con la condicion:
+     * La alhaja debe contener todos los atributos vacios excepto el atributo condicion fisica de la prenda.
+     *
+     * @param alhaja La alhaja a validar.
+     *
+     * @return Verdadero si cumple la condicion, falso si no.
+     */
+    private static boolean isNullBigdecimalPropertiesAlhaja(Alhaja alhaja) {
+        return isEmpty(alhaja.getPeso()) && isEmpty(alhaja.getIncremento()) && isEmpty(alhaja.getDesplazamiento());
+    }
+
+    /**
+     * Verifica si un {@link BigDecimal} esta vacio.
+     *
+     * @param numero Objeto a validar.
+     *
+     * @return Verdadero si esta vacio, falso si no.
+     */
+    private static boolean isEmpty(BigDecimal numero) {
+        return numero == null || numero.doubleValue() == 0;
+    }
+
+    /**
+     * Verifica si un {@link String} esta vacio.
+     *
+     * @param cadena Objeto a validar.
+     *
+     * @return Verdadero si esta vacio, falso si no.
+     */
+    private static boolean isEmpty(String cadena) {
+        return !StringUtils.hasText(cadena);
+    }
+
+    private static boolean isEmpty(ValorExperto valorExperto) {
+        return valorExperto == null || (isEmpty(valorExperto.getTotal()) && isEmpty(valorExperto.getUnitario()));
     }
 
 }
