@@ -51,7 +51,13 @@
         <!-- variables para profiles -->
         <profile.metrics/>
 	</properties>
-
+    <repositories>
+        <repository>
+            <id>arquetipo-starter</id>
+            <url>https://github.com/MontePiedadMx/00_arquetipo</url>
+        </repository>
+     </repositories>
+    
 	<dependencyManagement>
 	<dependencies>
 			<dependency>
