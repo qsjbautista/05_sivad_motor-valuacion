@@ -7,7 +7,8 @@ applications:
   env:
     spring.profiles.active: cloud
     TZ: America/Mexico_City
-  services: sivad-motor-valuacion-bd
+  services:
+  - "sivad-motor-valuacion-bd"
   server:
     port: 80
 management:
