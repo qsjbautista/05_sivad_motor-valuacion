@@ -9,9 +9,3 @@ applications:
     TZ: America/Mexico_City
   services:
     - sivad-motor-valuacion-bd
- server:
-    port: 80
-management:
-    shell:
-        ssh:
-            port: 2000
