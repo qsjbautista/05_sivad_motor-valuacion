@@ -1,6 +1,8 @@
 ---
 applications:
 - name: sivad-motor-valuacion
+  host: test1775-sivad-motor-valuacion
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git
   memory: 1G
   timeout: 120
   path: target/sivad-motor-valuacion-0.9.0-SNAPSHOT.war
@@ -8,41 +10,4 @@ applications:
     spring.profiles.active: cloud
     TZ: America/Mexico_City
   services:
-  - "sivad-motor-valuacion-bd"
-  server:
-    port: 80
-management:
-    shell:
-        ssh:
-            port: 2000
-
-spring:
-    datasource:
-        type: com.zaxxer.hikari.HikariDataSource
-        hikari:
-            data-source-properties:
-                cachePrepStmts: true
-                prepStmtCacheSize: 250
-                prepStmtCacheSqlLimit: 2048
-                useServerPrepStmts: true
-    h2:
-        console:
-            enabled: true
-    jpa:
-        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-        database: MYSQL
-        show-sql: true
-        generate-ddl: false
-        hibernate:
-            ddl-auto: validate
-        properties:
-            hibernate.cache.use_second_level_cache: true
-            hibernate.cache.use_query_cache: false
-            hibernate.generate_statistics: true
-            hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
-            # La siguiente configuración evita el error:
-            # Unexpected error trying to gauge level of JDBC REF_CURSOR support : null
-            # Lo anterior es visible al activar logging para org.hibernate a nivel DEBUG,
-            # sin ello se manifiesta como NullPointerException en cacheAdvisor al levantar el contexto
-            hibernate.temp.use_jdbc_metadata_defaults: false
-
+  - sivad-motor-valuacion-bd
