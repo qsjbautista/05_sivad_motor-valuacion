@@ -23,12 +23,12 @@ import org.joda.time.LocalDate
  * @author ngonzalez
  */
 @SuppressWarnings("GroovyUnusedDeclaration")
-@Usage("Administraci\u00f3n del Listado de Modificadores - Condici\u00f3n Prenda")
+@Usage("Administracion del Listado de Modificadores - Condicion Prenda")
 class modificadorCondicionPrenda {
 
     private static final String CONDICION_PRENDA = "condicion prenda"
     private static final String FACTOR = "factor"
-    private static final List<String> HEADERS = ["Condici\u00f3n Prenda", "Factor"]
+    private static final List<String> HEADERS = ["Condicion Prenda", "Factor"]
     private static final List<String> NOMBRE_PROPIEDADES_MODIFICADOR_CONDICION_PRENDA = [CONDICION_PRENDA, FACTOR]
     private static final List<String> PROPIEDADES_MODIFICADOR_CONDICION_PRENDA = ["condicionPrenda", "factor"]
 
@@ -43,10 +43,10 @@ class modificadorCondicionPrenda {
      * @param contenido El nuevo contenido del listado.
      * @return El listado actualizado.
      */
-    @Usage("Permite actualizar el Listado de Modificadores - Condici\u00f3n Prenda")
+    @Usage("Permite actualizar el Listado de Modificadores - Condicion Prenda")
     @Command
     def actualizar(InvocationContext context,
-                   @Usage("Nuevo contenido del Listado de Modificadores - Condici\u00f3n Prenda")
+                   @Usage("Nuevo contenido del Listado de Modificadores - Condicion Prenda")
                    @Required @Argument String contenido) {
 
         ListadoModificadorCondicionPrenda listadoModificadorCondicionPrenda
@@ -63,10 +63,10 @@ class modificadorCondicionPrenda {
 
         try {
             getModificadorCondicionPrendaRepository(context).actualizarListado(listadoModificadorCondicionPrenda)
-            out.println("El Listado de Modificadores - Condici\u00f3n Prenda fue actualizado correctamente.")
+            out.println("El Listado de Modificadores - Condicion Prenda fue actualizado correctamente.")
         } catch (Exception e) {
             e.printStackTrace()
-            out.println("Ocurri\u00f3 un error inesperado al actualizar el Listado de Modificadores - Condici\u00f3n Prenda.")
+            out.println("Ocurrio un error inesperado al actualizar el Listado de Modificadores - Condicion Prenda.")
         }
     }
 
@@ -78,7 +78,7 @@ class modificadorCondicionPrenda {
      * @param mostrarEnLista Permite indicar el formato de salida.
      * @return El listado de modificadores - condición prenda obtenido.
      */
-    @Usage("Permite recuperar el Listado de Modificadores - Condici\u00f3n Prenda vigente o de alguna fecha de vigencia espec\u00edfica")
+    @Usage("Permite recuperar el Listado de Modificadores - Condicion Prenda vigente o de alguna fecha de vigencia especifica")
     @Command
     def consultar(InvocationContext context,
                   @Usage("Fecha de vigencia a consultar con formato yyyy-mm-dd")
@@ -165,7 +165,7 @@ class modificadorCondicionPrenda {
             msj = "vigente."
         }
 
-        "No existe un Listado de Modificadores - Condici\u00f3n Prenda $msj"
+        "No existe un Listado de Modificadores - Condicion Prenda $msj"
     }
 
     /**
