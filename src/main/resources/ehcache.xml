@@ -15,37 +15,67 @@
     <cache name = "TablasDeReferenciaAlhajas.obtenerValorGramoOro.cache"
            eternal="false"
            overflowToDisk="false"
-           timeToLiveSeconds="600"
+           timeToLiveSeconds="3600"
            timeToIdleSeconds="300"/>
 
     <cache name = "TablasDeReferenciaAlhajas.obtenerFactor.cache"
            eternal="false"
            overflowToDisk="false"
-           timeToLiveSeconds="600"
+           timeToLiveSeconds="3600"
            timeToIdleSeconds="300"/>
 
     <cache name = "TablasDeReferenciaAlhajas.obtenerValorGramoMetal.cache"
            eternal="false"
            overflowToDisk="false"
-           timeToLiveSeconds="600"
+           timeToLiveSeconds="3600"
            timeToIdleSeconds="300"/>
 
     <cache name = "TablasDeReferenciaDiamantes.obtenerModificador.cache"
            eternal="false"
            overflowToDisk="false"
-           timeToLiveSeconds="600"
+           timeToLiveSeconds="3600"
            timeToIdleSeconds="300"/>
 
     <cache name = "TablasDeReferenciaDiamantes.obtenerValorComercial.cache"
            eternal="false"
            overflowToDisk="false"
-           timeToLiveSeconds="600"
+           timeToLiveSeconds="3600"
            timeToIdleSeconds="300"/>
 
     <cache name = "PoliticasCastigoJpaRepository.findFirstByOrderByFechaListadoDesc"
            eternal="false"
            overflowToDisk="false"
-           timeToLiveSeconds="600"
+           timeToLiveSeconds="3600"
+           timeToIdleSeconds="300"/>
+
+    <cache name = "mx.com.nmp.ms.sivad.valuacion.infrastructure.jpa.dominio.HistModificadorCondicionPrendaJPA"
+           eternal="false"
+           overflowToDisk="false"
+           timeToLiveSeconds="3600"
+           timeToIdleSeconds="300"/>
+
+    <cache name = "mx.com.nmp.ms.sivad.valuacion.infrastructure.jpa.dominio.HistListadoModificadorCondicionPrendaJPA"
+           eternal="false"
+           overflowToDisk="false"
+           timeToLiveSeconds="3600"
+           timeToIdleSeconds="300"/>
+
+    <cache name = "mx.com.nmp.ms.sivad.valuacion.infrastructure.jpa.dominio.ListadoModificadorCondicionPrendaJPA"
+           eternal="false"
+           overflowToDisk="false"
+           timeToLiveSeconds="3600"
+           timeToIdleSeconds="300"/>
+
+    <cache name = "mx.com.nmp.ms.sivad.valuacion.infrastructure.jpa.dominio.ModificadorCondicionPrendaJPA"
+           eternal="false"
+           overflowToDisk="false"
+           timeToLiveSeconds="3600"
+           timeToIdleSeconds="300"/>
+
+    <cache name = "mx.com.nmp.ms.sivad.valuacion.infrastructure.jpa.dominio.PoliticasCastigoJpa"
+           eternal="false"
+           overflowToDisk="false"
+           timeToLiveSeconds="3600"
            timeToIdleSeconds="300"/>
 
 </ehcache>
