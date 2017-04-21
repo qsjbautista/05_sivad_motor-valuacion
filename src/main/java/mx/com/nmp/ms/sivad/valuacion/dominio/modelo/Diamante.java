@@ -123,13 +123,12 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
     }
 
 
-
     // METODOS
 
     /**
      * Constructor.
      *
-     * @param builder Referencia al objeto que contiene los datos necesarios para construir la entidad.
+     * @param builder  Referencia al objeto que contiene los datos necesarios para construir la entidad.
      * @param conector Referencia hacia el conector con el sistema de tablas de referencia.
      */
     private Diamante(Builder builder, TablasDeReferenciaDiamantes conector) {
@@ -159,7 +158,7 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
         BigDecimal valorComercialMedio;
         BigDecimal valorComercialMaximo;
 
-        // SE DETERMINA SI EXISTE VALOR DE EXPERTO.
+        // Si no tiene valor experto...
         if (ObjectUtils.isEmpty(valorExperto) ||
             ObjectUtils.isEmpty(valorExperto.getValor())) {
 
@@ -169,6 +168,20 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
             valorComercialMinimo = valorComercialConsumidor.getValorMinimo();
             valorComercialMedio = valorComercialConsumidor.getValorMedio();
             valorComercialMaximo = valorComercialConsumidor.getValorMaximo();
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Valor comercial tablas: ({},{},{})", valorComercialMinimo, valorComercialMedio, valorComercialMaximo);
+            }
+
+            // Se multiplica por quilataje
+            valorComercialMinimo = valorComercialMinimo.multiply(this.quilates);
+            valorComercialMedio = valorComercialMedio.multiply(this.quilates);
+            valorComercialMaximo = valorComercialMaximo.multiply(this.quilates);
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Valor aplicando quilataje: ({},{},{})", valorComercialMinimo, valorComercialMedio, valorComercialMaximo);
+            }
+
         } else {
 
             // SE ASIGNA EL VALOR DEL EXPERTO.
@@ -221,7 +234,6 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
         // SE CREA EL AVALÚO CON BASE EN LOS VALORES COMERCIALES DEFINITIVOS.
         return AvaluoFactory.crearCon(valorComercialMinimo, valorComercialMedio, valorComercialMaximo);
     }
-
 
 
     // GETTERS
