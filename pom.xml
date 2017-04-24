@@ -482,16 +482,11 @@
 
         <!-- Perfil de ensamble -->
         <profile>
-            <id>ensamble</id>
+            <id>local</id>
             <dependencies>
                 <dependency>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-undertow</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
-                    <version>5.1.39</version>
                 </dependency>
             </dependencies>
             <build>
@@ -506,15 +501,15 @@
             </build>
             <properties>
                 <!-- configuración de logger -->
-                <logback.loglevel>INFO</logback.loglevel>
+                <logback.loglevel>DEBUG</logback.loglevel>
                 <!-- perfiles Spring por defecto -->
-                <spring.profiles.active>ensamble${profile.metrics}</spring.profiles.active>
+                <spring.profiles.active>local${profile.metrics}</spring.profiles.active>
             </properties>
         </profile>
 
         <!-- Perfil de testing @ cloud -->
         <profile>
-            <id>testing</id>
+            <id>cloud</id>
             <dependencies>
                 <dependency>
                     <groupId>org.springframework.boot</groupId>

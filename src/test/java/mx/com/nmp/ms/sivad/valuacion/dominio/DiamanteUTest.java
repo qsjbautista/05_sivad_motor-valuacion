@@ -48,20 +48,16 @@ public class DiamanteUTest {
     private static final String CORTE = "Oval";
     private static final BigDecimal QUILATES =
         new BigDecimal(0.92D).setScale(2, BigDecimal.ROUND_HALF_UP);
-    private static final BigDecimal PORCENTAJE_INCREMENTO =
-        new BigDecimal(1.10D).setScale(2, BigDecimal.ROUND_HALF_UP);
-    private static final BigDecimal VALOR_MINIMO =
-        new BigDecimal(400.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
-    private static final BigDecimal VALOR_MINIMO_INCREMENTO =
-        new BigDecimal(440.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
-    private static final BigDecimal VALOR_MEDIO =
-        new BigDecimal(500.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
-    private static final BigDecimal VALOR_MEDIO_INCREMENTO =
-        new BigDecimal(550.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
-    private static final BigDecimal VALOR_MAXIMO =
-        new BigDecimal(600.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
-    private static final BigDecimal VALOR_MAXIMO_INCREMENTO =
-        new BigDecimal(660.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
+    private static final BigDecimal PORCENTAJE_INCREMENTO = new BigDecimal(1.10D).setScale(2, BigDecimal.ROUND_HALF_UP);
+    private static final BigDecimal VALOR_MINIMO_TABLAS = new BigDecimal(400.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
+    private static final BigDecimal VALOR_MINIMO = VALOR_MINIMO_TABLAS.multiply(QUILATES).setScale(2);
+    private static final BigDecimal VALOR_MINIMO_INCREMENTO = new BigDecimal(440.00D).setScale(2, BigDecimal.ROUND_HALF_UP).multiply(QUILATES).setScale(2);
+    public static final BigDecimal VALOR_MEDIO_TABLAS = new BigDecimal(500.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
+    private static final BigDecimal VALOR_MEDIO = VALOR_MEDIO_TABLAS.multiply(QUILATES).setScale(2);
+    private static final BigDecimal VALOR_MEDIO_INCREMENTO = new BigDecimal(550.00D).setScale(2, BigDecimal.ROUND_HALF_UP).multiply(QUILATES).setScale(2);
+    public static final BigDecimal VALOR_MAXIMO_TABLAS = new BigDecimal(600.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
+    private static final BigDecimal VALOR_MAXIMO = VALOR_MAXIMO_TABLAS.multiply(QUILATES).setScale(2);
+    private static final BigDecimal VALOR_MAXIMO_INCREMENTO = new BigDecimal(660.00D).setScale(2, BigDecimal.ROUND_HALF_UP).multiply(QUILATES).setScale(2);
     private static final ValorExperto VALOR_EXPERTO = new ValorExperto(
         new BigDecimal(500.00D).setScale(2, BigDecimal.ROUND_HALF_UP), ValorExperto.TipoEnum.UNITARIO);
     private static final ValorExperto VALOR_EXPERTO_VALOR_NULO = new ValorExperto(
@@ -80,7 +76,6 @@ public class DiamanteUTest {
      */
     @Inject
     private DiamanteFactory diamanteFactory;
-
 
 
     // METODOS
@@ -103,7 +98,7 @@ public class DiamanteUTest {
 
     /**
      * Utilizado para crear una entidad Diamante con las siguientes características:
-     *
+     * <p>
      * NÚMERO DE PIEZAS - 1
      * CORTE - NO NULO
      * COLOR - NO NULO
@@ -129,7 +124,7 @@ public class DiamanteUTest {
 
     /**
      * Utilizado para crear una entidad Diamante con las siguientes características:
-     *
+     * <p>
      * NÚMERO DE PIEZAS - 1
      * CORTE - NO NULO
      * COLOR - NO NULO
@@ -155,7 +150,7 @@ public class DiamanteUTest {
 
     /**
      * Utilizado para crear una entidad Diamante con las siguientes características:
-     *
+     * <p>
      * NÚMERO DE PIEZAS - 1
      * CORTE - NO NULO
      * COLOR - NO NULO
@@ -170,7 +165,7 @@ public class DiamanteUTest {
             diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, null, null));
 
         ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
-            VALOR_MINIMO, VALOR_MEDIO, VALOR_MAXIMO);
+            VALOR_MINIMO_TABLAS, VALOR_MEDIO_TABLAS, VALOR_MAXIMO_TABLAS);
         when(conector.obtenerValorComercial(any(Diamante.class))).thenReturn(valorComercial);
 
         Avaluo avaluo = diamante.valuar();
@@ -185,7 +180,7 @@ public class DiamanteUTest {
 
     /**
      * Utilizado para crear una entidad Diamante con las siguientes características:
-     *
+     * <p>
      * NÚMERO DE PIEZAS - 1
      * CORTE - NO NULO
      * COLOR - NO NULO
@@ -200,7 +195,7 @@ public class DiamanteUTest {
             diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, null, VALOR_EXPERTO_VALOR_NULO));
 
         ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
-            VALOR_MINIMO, VALOR_MEDIO, VALOR_MAXIMO);
+            VALOR_MINIMO_TABLAS, VALOR_MEDIO_TABLAS, VALOR_MAXIMO_TABLAS);
         when(conector.obtenerValorComercial(any(Diamante.class))).thenReturn(valorComercial);
 
         Avaluo avaluo = diamante.valuar();
@@ -215,7 +210,7 @@ public class DiamanteUTest {
 
     /**
      * Utilizado para crear una entidad Diamante con las siguientes características:
-     *
+     * <p>
      * NÚMERO DE PIEZAS - 1
      * CORTE - NO NULO
      * COLOR - NO NULO
@@ -230,7 +225,7 @@ public class DiamanteUTest {
             diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, "", null));
 
         ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
-            VALOR_MINIMO, VALOR_MEDIO, VALOR_MAXIMO);
+            VALOR_MINIMO_TABLAS, VALOR_MEDIO_TABLAS, VALOR_MAXIMO_TABLAS);
         when(conector.obtenerValorComercial(any(Diamante.class))).thenReturn(valorComercial);
 
         Avaluo avaluo = diamante.valuar();
@@ -245,7 +240,7 @@ public class DiamanteUTest {
 
     /**
      * Utilizado para crear una entidad Diamante con las siguientes características:
-     *
+     * <p>
      * NÚMERO DE PIEZAS - 1
      * CORTE - NO NULO
      * COLOR - NO NULO
@@ -260,7 +255,7 @@ public class DiamanteUTest {
             diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, "", VALOR_EXPERTO_VALOR_NULO));
 
         ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
-            VALOR_MINIMO, VALOR_MEDIO, VALOR_MAXIMO);
+            VALOR_MINIMO_TABLAS, VALOR_MEDIO_TABLAS, VALOR_MAXIMO_TABLAS);
         when(conector.obtenerValorComercial(any(Diamante.class))).thenReturn(valorComercial);
 
         Avaluo avaluo = diamante.valuar();
@@ -275,7 +270,7 @@ public class DiamanteUTest {
 
     /**
      * Utilizado para crear una entidad Diamante con las siguientes características:
-     *
+     * <p>
      * NÚMERO DE PIEZAS - 1
      * CORTE - NO NULO
      * COLOR - NO NULO
@@ -290,7 +285,7 @@ public class DiamanteUTest {
             diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, null));
 
         ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
-            VALOR_MINIMO, VALOR_MEDIO, VALOR_MAXIMO);
+            VALOR_MINIMO_TABLAS, VALOR_MEDIO_TABLAS, VALOR_MAXIMO_TABLAS);
         when(conector.obtenerValorComercial(any(Diamante.class))).thenReturn(valorComercial);
 
         BigDecimalConsumidor bigDecimalConsumidor = getBigDecimalConsumidor(PORCENTAJE_INCREMENTO);
@@ -308,7 +303,7 @@ public class DiamanteUTest {
 
     /**
      * Utilizado para crear una entidad Diamante con las siguientes características:
-     *
+     * <p>
      * NÚMERO DE PIEZAS - MENOR A CERO
      * CORTE - NO NULO
      * COLOR - NO NULO
@@ -324,7 +319,7 @@ public class DiamanteUTest {
 
     /**
      * Utilizado para crear una entidad Diamante con las siguientes características:
-     *
+     * <p>
      * NÚMERO DE PIEZAS - CERO
      * CORTE - NO NULO
      * COLOR - NO NULO
@@ -340,7 +335,7 @@ public class DiamanteUTest {
 
     /**
      * Utilizado para crear una entidad Diamante con las siguientes características:
-     *
+     * <p>
      * NÚMERO DE PIEZAS - 2
      * CORTE - NO NULO
      * COLOR - NO NULO
@@ -355,7 +350,7 @@ public class DiamanteUTest {
             diamanteFactory.create(getBuilder(NUM_PIEZAS_DOS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, null));
 
         ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
-            VALOR_MINIMO, VALOR_MEDIO, VALOR_MAXIMO);
+            VALOR_MINIMO_TABLAS, VALOR_MEDIO_TABLAS, VALOR_MAXIMO_TABLAS);
         when(conector.obtenerValorComercial(any(Diamante.class))).thenReturn(valorComercial);
 
         BigDecimalConsumidor bigDecimalConsumidor = getBigDecimalConsumidor(PORCENTAJE_INCREMENTO);
@@ -373,7 +368,7 @@ public class DiamanteUTest {
 
     /**
      * Utilizado para crear una entidad Diamante con las siguientes características:
-     *
+     * <p>
      * NÚMERO DE PIEZAS - 1
      * CORTE - NO NULO
      * COLOR - NO NULO
@@ -402,7 +397,7 @@ public class DiamanteUTest {
 
     /**
      * Utilizado para crear una entidad Diamante con las siguientes características:
-     *
+     * <p>
      * NÚMERO DE PIEZAS - MENOR A CERO
      * CORTE - NO NULO
      * COLOR - NO NULO
@@ -418,7 +413,7 @@ public class DiamanteUTest {
 
     /**
      * Utilizado para crear una entidad Diamante con las siguientes características:
-     *
+     * <p>
      * NÚMERO DE PIEZAS - CERO
      * CORTE - NO NULO
      * COLOR - NO NULO
@@ -434,7 +429,7 @@ public class DiamanteUTest {
 
     /**
      * Utilizado para crear una entidad Diamante con las siguientes características:
-     *
+     * <p>
      * NÚMERO DE PIEZAS - 2
      * CORTE - NO NULO
      * COLOR - NO NULO
@@ -464,12 +459,12 @@ public class DiamanteUTest {
     /**
      * Metodo auxiliar utilizado para crear el builder de Diamante a partir de sus atributos.
      *
-     * @param corte El tipo de corte del diamante.
-     * @param color El tipo de color del diamante.
-     * @param claridad El tipo de claridad del diamante.
-     * @param quilates El valor en quilates del diamante.
+     * @param corte               El tipo de corte del diamante.
+     * @param color               El tipo de color del diamante.
+     * @param claridad            El tipo de claridad del diamante.
+     * @param quilates            El valor en quilates del diamante.
      * @param certificadoDiamante El valor del certificado del diamante.
-     * @param valorExperto El valor experto para la pieza en particular.
+     * @param valorExperto        El valor experto para la pieza en particular.
      * @return El builder creado.
      */
     private Diamante.Builder getBuilder(final int numeroDePiezas, final String corte, final String color,
@@ -519,7 +514,7 @@ public class DiamanteUTest {
      * Metodo auxiliar utilizado para crear el valor comercial que devolvería el conector.
      *
      * @param valorMinimo El valor comercial mínimo.
-     * @param valorMedio El valor comercial medio.
+     * @param valorMedio  El valor comercial medio.
      * @param valorMaximo El valor comercial máximo.
      * @return El valor comercial creado.
      */
