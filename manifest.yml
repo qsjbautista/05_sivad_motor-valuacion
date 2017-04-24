@@ -1,7 +1,7 @@
 ---
 applications:
 - name: sivad-motor-valuacion
-  host: dev1775-sivad-motor-valuacion
+  host: test1775-sivad-motor-valuacion
   buildpack: https://github.com/cloudfoundry/java-buildpack.git
   memory: 1G
   timeout: 120
