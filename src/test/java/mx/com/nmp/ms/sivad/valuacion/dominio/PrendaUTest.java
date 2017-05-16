@@ -96,11 +96,11 @@ public class PrendaUTest {
     private static final BigDecimal AV_DIAMANTE_VALOR_COMERCIAL_MAXIMO =
         new BigDecimal(600.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
     private static final BigDecimal AV_DIAMANTE_VALOR_MINIMO =
-        new BigDecimal(572.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
+        new BigDecimal(572.00D).setScale(2, BigDecimal.ROUND_HALF_UP).multiply(QUILATES).setScale(2);
     private static final BigDecimal AV_DIAMANTE_VALOR_MEDIO =
-        new BigDecimal(715.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
+        new BigDecimal(715.00D).setScale(2, BigDecimal.ROUND_HALF_UP).multiply(QUILATES).setScale(2);
     private static final BigDecimal AV_DIAMANTE_VALOR_MAXIMO =
-        new BigDecimal(858.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
+        new BigDecimal(858.00D).setScale(2, BigDecimal.ROUND_HALF_UP).multiply(QUILATES).setScale(2);
 
 
     // UTILIZADAS PARA EL AVALÚO DE PIEZAS COMPLEMENTARIAS.
