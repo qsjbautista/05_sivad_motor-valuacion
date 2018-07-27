@@ -400,6 +400,16 @@ public class PrendaFactoryUTest {
                 return valorExperto;
             }
 
+            @Override
+            public BigDecimal getQuilatesDesde() {
+                return null;
+            }
+
+            @Override
+            public BigDecimal getQuilatesHasta() {
+                return null;
+            }
+
         };
     }
 

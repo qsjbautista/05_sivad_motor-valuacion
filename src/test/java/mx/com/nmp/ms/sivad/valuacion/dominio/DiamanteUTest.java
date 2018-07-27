@@ -507,6 +507,16 @@ public class DiamanteUTest {
                 return valorExperto;
             }
 
+            @Override
+            public BigDecimal getQuilatesDesde() {
+                return null;
+            }
+
+            @Override
+            public BigDecimal getQuilatesHasta() {
+                return null;
+            }
+
         };
     }
 

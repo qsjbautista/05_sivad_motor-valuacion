@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 /**
  * DTO con la información de una pieza de tipo diamante.
  *
- * @author ngonzalez
+ * @author ngonzalez, ecancino
  */
 public class DiamanteDTO extends PiezaDTO {
 
@@ -39,6 +39,16 @@ public class DiamanteDTO extends PiezaDTO {
      * El valor del certificado del diamante.
      */
     private String certificadoDiamante;
+
+    /**
+     * Rango inferior del peso del diamante.
+     */
+    private BigDecimal quilatesDesde;
+
+    /**
+     * Rango superior del peso del diamante.
+     */
+    private BigDecimal quilatesHasta;
 
 
 
@@ -70,6 +80,40 @@ public class DiamanteDTO extends PiezaDTO {
         this.quilates = quilates;
         this.certificadoDiamante = certificadoDiamante;
         this.valorExperto = valorExperto;
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param numeroDePiezas El número de piezas con características idénticas.
+     * @param corte El tipo de corte del diamante.
+     * @param color El tipo de color del diamante.
+     * @param claridad El tipo de claridad del diamante.
+     * @param quilates El valor en quilates del diamante.
+     * @param certificadoDiamante El valor del certificado del diamante.
+     * @param valorExperto El valor experto para la pieza en particular.
+     * @param quilatesDesde Rango inferior del peso del diamante.
+     * @param quilatesHasta Rango superior del peso del diamante.
+     */
+    public DiamanteDTO(int numeroDePiezas,
+                       String corte,
+                       String color,
+                       String claridad,
+                       BigDecimal quilates,
+                       String certificadoDiamante,
+                       ValorExperto valorExperto,
+                       BigDecimal quilatesDesde,
+                       BigDecimal quilatesHasta) {
+        super();
+        this.numeroDePiezas = numeroDePiezas;
+        this.corte = corte;
+        this.color = color;
+        this.claridad = claridad;
+        this.quilates = quilates;
+        this.certificadoDiamante = certificadoDiamante;
+        this.valorExperto = valorExperto;
+        this.quilatesDesde = quilatesDesde;
+        this.quilatesHasta = quilatesHasta;
     }
 
 
@@ -116,6 +160,22 @@ public class DiamanteDTO extends PiezaDTO {
         this.certificadoDiamante = certificadoDiamante;
     }
 
+    public BigDecimal getQuilatesDesde() {
+        return quilatesDesde;
+    }
+
+    public void setQuilatesDesde(BigDecimal quilatesDesde) {
+        this.quilatesDesde = quilatesDesde;
+    }
+
+    public BigDecimal getQuilatesHasta() {
+        return quilatesHasta;
+    }
+
+    public void setQuilatesHasta(BigDecimal quilatesHasta) {
+        this.quilatesHasta = quilatesHasta;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -129,6 +189,8 @@ public class DiamanteDTO extends PiezaDTO {
             ", quilates=" + ((quilates != null) ? quilates.toString() : "null") +
             ", certificadoDiamante='" + certificadoDiamante + '\'' +
             ", valorExperto='" + ((valorExperto != null) ? valorExperto.toString() : "null") +
+            ", quilatesDesde=" + ((quilatesDesde != null) ? quilatesDesde.toString() : "null") +
+            ", quilatesHasta=" + ((quilatesHasta != null) ? quilatesHasta.toString() : "null") +
             '}';
     }
 

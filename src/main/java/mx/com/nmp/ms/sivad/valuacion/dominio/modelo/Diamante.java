@@ -22,7 +22,7 @@ import java.math.BigDecimal;
  * Clase que extiende de la clase {@link Pieza}, ésta clase representa una Diamante y encapsula
  * la lógica para valuar este tipo de piezas.
  *
- * @author ngonzalez
+ * @author ngonzalez, ecancino
  */
 public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor, CertificadoDiamanteProveedor {
 
@@ -60,6 +60,16 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
      * El valor experto para la pieza en particular.
      */
     private ValorExperto valorExperto;
+
+    /**
+     * Rango inferior del peso del diamante.
+     */
+    private BigDecimal quilatesDesde;
+
+    /**
+     * Rango superior del peso del diamante.
+     */
+    private BigDecimal quilatesHasta;
 
     /**
      * Referencia hacia el conector con el sistema de tablas de referencia.
@@ -120,6 +130,20 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
          */
         public ValorExperto getValorExperto();
 
+        /**
+         * Permite obtener el rango inferior del peso en quilates del diamante.
+         *
+         * @return El rango inferior del peso en quilates del diamante.
+         */
+        public BigDecimal getQuilatesDesde();
+
+        /**
+         * Permite obtener el rango superior del peso en quilates del diamante.
+         *
+         * @return El rango superior del peso en quilates del diamante.
+         */
+        public BigDecimal getQuilatesHasta();
+
     }
 
 
@@ -141,6 +165,8 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
         this.quilates = builder.getQuilates();
         this.certificadoDiamante = builder.getCertificadoDiamante();
         this.valorExperto = builder.getValorExperto();
+        this.quilatesDesde = builder.getQuilatesDesde();
+        this.quilatesHasta = builder.getQuilatesHasta();
         this.conector = conector;
     }
 
@@ -262,4 +288,11 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
         return valorExperto;
     }
 
+    public BigDecimal getQuilatesDesde() {
+        return quilatesDesde;
+    }
+
+    public BigDecimal getQuilatesHasta() {
+        return quilatesHasta;
+    }
 }

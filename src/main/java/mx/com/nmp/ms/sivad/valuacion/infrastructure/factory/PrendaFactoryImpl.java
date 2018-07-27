@@ -168,8 +168,8 @@ public class PrendaFactoryImpl implements PrendaFactory {
         Assert.notNull(builder.getPiezas(), DomainExceptionCodes.LISTA_PIEZAS_NULA.getMessageException());
         Assert.notEmpty(builder.getPiezas(), DomainExceptionCodes.LISTA_PIEZAS_VACIA.getMessageException());
         Assert.notNull(builder.getCondicionFisica(), DomainExceptionCodes.CODICION_FISICA_PRENDA.getMessageException());
-        Assert.hasText(builder.getCondicionFisica().getCondicionPrenda(),
-            DomainExceptionCodes.CODICION_FISICA_PRENDA.getMessageException());
+        /*Assert.hasText(builder.getCondicionFisica().getCondicionPrenda(),
+            DomainExceptionCodes.CODICION_FISICA_PRENDA.getMessageException());*/
     }
 
 }

@@ -31,7 +31,7 @@ import java.util.*;
  * Implementación de ValuadorDiamantesService, la cual expone los servicios que permitirán realizar
  * la valuación de las prendas.
  *
- * @author osanchez, ngonzalez
+ * @author osanchez, ngonzalez, ecancino
  */
 @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
 public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
@@ -300,7 +300,9 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
             diamante.getClaridad(),
             diamante.getQuilataje(),
             diamante.getCertificado(),
-            crearValorExperto(diamante.getValorExperto()));
+            crearValorExperto(diamante.getValorExperto()),
+            diamante.getQuilatesDesde(),
+            diamante.getQuilatesHasta());
 
         mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Diamante diamanteValuable;
 

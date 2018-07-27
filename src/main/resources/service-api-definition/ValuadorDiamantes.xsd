@@ -90,6 +90,8 @@
             <s:element name="quilataje" type="s:decimal" default="0.0" />
             <s:element name="certificado" type="s:string" nillable="true" />
             <s:element name="valorExperto" type="ValorExperto" />
+            <s:element name="quilatesDesde" type="s:decimal" default="0.0" />
+            <s:element name="quilatesHasta" type="s:decimal" default="0.0" />
         </s:sequence>
     </s:complexType>
 
@@ -102,7 +104,7 @@
             <s:element name="rango" type="s:string" nillable="true" />
             <s:element name="calidad" type="s:string" nillable="true" />
             <s:element name="peso" type="s:decimal" default="0.0" />
-            <s:element name="condicion" type="s:string" />
+            <s:element name="condicion" type="s:string" nillable="true" />
             <s:element name="valorExperto" type="ValorExperto" />
             <s:element name="incremento" type="s:decimal" default="0.0" />
             <s:element name="desplazamiento" type="s:decimal" default="0.0" />
