@@ -32,7 +32,7 @@ import static org.mockito.Mockito.when;
 /**
  * Clase de prueba utilizada para validar el comportamiento de la clase {@link Diamante}
  *
- * @author ngonzalez
+ * @author ngonzalez, ecancino
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MotorValuacionApplication.class)
@@ -64,6 +64,10 @@ public class DiamanteUTest {
         null, ValorExperto.TipoEnum.UNITARIO);
     private static final ValorExperto VALOR_EXPERTO_INCREMENTO = new ValorExperto(
         new BigDecimal(550.00D).setScale(2, BigDecimal.ROUND_HALF_UP), ValorExperto.TipoEnum.UNITARIO);
+    private static final BigDecimal QUILATES_DESDE =
+        new BigDecimal(0.90D).setScale(2, BigDecimal.ROUND_HALF_UP);
+    private static final BigDecimal QUILATES_HASTA =
+        new BigDecimal(0.94D).setScale(2, BigDecimal.ROUND_HALF_UP);
 
     /**
      * Referencia al conector TablasDeReferenciaDiamantes.
@@ -106,11 +110,14 @@ public class DiamanteUTest {
      * QUILATES - NO NULO
      * CERTIFICADO - NULO
      * VALOR EXPERTO - NO NULO
+     * QUILATES DESDE - NO NULO
+     * QUILATES HASTA - NO NULO
      */
     @Test
     public void crearDiamanteTest01() {
         Diamante diamante =
-            diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, null, VALOR_EXPERTO));
+            diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, null, VALOR_EXPERTO,
+                QUILATES_DESDE, QUILATES_HASTA));
 
         Avaluo avaluo = diamante.valuar();
         assertNotNull(avaluo);
@@ -132,11 +139,14 @@ public class DiamanteUTest {
      * QUILATES - NO NULO
      * CERTIFICADO - VACÍO
      * VALOR EXPERTO - NO NULO
+     * QUILATES DESDE - NO NULO
+     * QUILATES HASTA - NO NULO
      */
     @Test
     public void crearDiamanteTest02() {
         Diamante diamante =
-            diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, "", VALOR_EXPERTO));
+            diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, "", VALOR_EXPERTO,
+                QUILATES_DESDE, QUILATES_HASTA));
 
         Avaluo avaluo = diamante.valuar();
         assertNotNull(avaluo);
@@ -158,11 +168,14 @@ public class DiamanteUTest {
      * QUILATES - NO NULO
      * CERTIFICADO - NULO
      * VALOR EXPERTO - NULO
+     * QUILATES DESDE - NO NULO
+     * QUILATES HASTA - NO NULO
      */
     @Test
     public void crearDiamanteTest03() {
         Diamante diamante =
-            diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, null, null));
+            diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, null, null,
+                QUILATES_DESDE, QUILATES_HASTA));
 
         ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
             VALOR_MINIMO_TABLAS, VALOR_MEDIO_TABLAS, VALOR_MAXIMO_TABLAS);
@@ -188,11 +201,14 @@ public class DiamanteUTest {
      * QUILATES - NO NULO
      * CERTIFICADO - NULO
      * VALOR EXPERTO - NO NULO (Valor nulo)
+     * QUILATES DESDE - NO NULO
+     * QUILATES HASTA - NO NULO
      */
     @Test
     public void crearDiamanteTest04() {
         Diamante diamante =
-            diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, null, VALOR_EXPERTO_VALOR_NULO));
+            diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, null, VALOR_EXPERTO_VALOR_NULO,
+                QUILATES_DESDE, QUILATES_HASTA));
 
         ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
             VALOR_MINIMO_TABLAS, VALOR_MEDIO_TABLAS, VALOR_MAXIMO_TABLAS);
@@ -218,11 +234,14 @@ public class DiamanteUTest {
      * QUILATES - NO NULO
      * CERTIFICADO - VACÍO
      * VALOR EXPERTO - NULO
+     * QUILATES DESDE - NO NULO
+     * QUILATES HASTA - NO NULO
      */
     @Test
     public void crearDiamanteTest05() {
         Diamante diamante =
-            diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, "", null));
+            diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, "", null,
+                QUILATES_DESDE, QUILATES_HASTA));
 
         ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
             VALOR_MINIMO_TABLAS, VALOR_MEDIO_TABLAS, VALOR_MAXIMO_TABLAS);
@@ -248,11 +267,14 @@ public class DiamanteUTest {
      * QUILATES - NO NULO
      * CERTIFICADO - VACÍO
      * VALOR EXPERTO - NO NULO (Valor nulo)
+     * QUILATES DESDE - NO NULO
+     * QUILATES HASTA - NO NULO
      */
     @Test
     public void crearDiamanteTest06() {
         Diamante diamante =
-            diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, "", VALOR_EXPERTO_VALOR_NULO));
+            diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, "", VALOR_EXPERTO_VALOR_NULO,
+                QUILATES_DESDE, QUILATES_HASTA));
 
         ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
             VALOR_MINIMO_TABLAS, VALOR_MEDIO_TABLAS, VALOR_MAXIMO_TABLAS);
@@ -278,11 +300,14 @@ public class DiamanteUTest {
      * QUILATES - NO NULO
      * CERTIFICADO - NO NULO
      * VALOR EXPERTO - NULO
+     * QUILATES DESDE - NO NULO
+     * QUILATES HASTA - NO NULO
      */
     @Test
     public void crearDiamanteTest07() {
         Diamante diamante =
-            diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, null));
+            diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, null,
+                QUILATES_DESDE, QUILATES_HASTA));
 
         ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
             VALOR_MINIMO_TABLAS, VALOR_MEDIO_TABLAS, VALOR_MAXIMO_TABLAS);
@@ -311,10 +336,13 @@ public class DiamanteUTest {
      * QUILATES - NO NULO
      * CERTIFICADO - NO NULO
      * VALOR EXPERTO - NULO
+     * QUILATES DESDE - NO NULO
+     * QUILATES HASTA - NO NULO
      */
     @Test(expected = IllegalArgumentException.class)
     public void crearDiamanteTest08() {
-        diamanteFactory.create(getBuilder(NUM_PIEZAS_MENOR_CERO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, null));
+        diamanteFactory.create(getBuilder(NUM_PIEZAS_MENOR_CERO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, null,
+            QUILATES_DESDE, QUILATES_HASTA));
     }
 
     /**
@@ -327,10 +355,13 @@ public class DiamanteUTest {
      * QUILATES - NO NULO
      * CERTIFICADO - NO NULO
      * VALOR EXPERTO - NULO
+     * QUILATES DESDE - NO NULO
+     * QUILATES HASTA - NO NULO
      */
     @Test(expected = IllegalArgumentException.class)
     public void crearDiamanteTest09() {
-        diamanteFactory.create(getBuilder(NUM_PIEZAS_CERO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, null));
+        diamanteFactory.create(getBuilder(NUM_PIEZAS_CERO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, null,
+            QUILATES_DESDE, QUILATES_HASTA));
     }
 
     /**
@@ -343,11 +374,14 @@ public class DiamanteUTest {
      * QUILATES - NO NULO
      * CERTIFICADO - NO NULO
      * VALOR EXPERTO - NULO
+     * QUILATES DESDE - NO NULO
+     * QUILATES HASTA - NO NULO
      */
     @Test
     public void crearDiamanteTest10() {
         Diamante diamante =
-            diamanteFactory.create(getBuilder(NUM_PIEZAS_DOS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, null));
+            diamanteFactory.create(getBuilder(NUM_PIEZAS_DOS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, null,
+                QUILATES_DESDE, QUILATES_HASTA));
 
         ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
             VALOR_MINIMO_TABLAS, VALOR_MEDIO_TABLAS, VALOR_MAXIMO_TABLAS);
@@ -376,11 +410,14 @@ public class DiamanteUTest {
      * QUILATES - NO NULO
      * CERTIFICADO - NO NULO
      * VALOR EXPERTO - NO NULO
+     * QUILATES DESDE - NO NULO
+     * QUILATES HASTA - NO NULO
      */
     @Test
     public void crearDiamanteTest11() {
         Diamante diamante =
-            diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO));
+            diamanteFactory.create(getBuilder(NUM_PIEZAS_UNO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+                QUILATES_DESDE, QUILATES_HASTA));
 
         BigDecimalConsumidor bigDecimalConsumidor = getBigDecimalConsumidor(PORCENTAJE_INCREMENTO);
         when(conector.obtenerModificador(any(Diamante.class))).thenReturn(bigDecimalConsumidor);
@@ -405,10 +442,13 @@ public class DiamanteUTest {
      * QUILATES - NO NULO
      * CERTIFICADO - NO NULO
      * VALOR EXPERTO - NO NULO
+     * QUILATES DESDE - NO NULO
+     * QUILATES HASTA - NO NULO
      */
     @Test(expected = IllegalArgumentException.class)
     public void crearDiamanteTest12() {
-        diamanteFactory.create(getBuilder(NUM_PIEZAS_MENOR_CERO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO));
+        diamanteFactory.create(getBuilder(NUM_PIEZAS_MENOR_CERO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+            QUILATES_DESDE, QUILATES_HASTA));
     }
 
     /**
@@ -421,10 +461,13 @@ public class DiamanteUTest {
      * QUILATES - NO NULO
      * CERTIFICADO - NO NULO
      * VALOR EXPERTO - NO NULO
+     * QUILATES DESDE - NO NULO
+     * QUILATES HASTA - NO NULO
      */
     @Test(expected = IllegalArgumentException.class)
     public void crearDiamanteTest13() {
-        diamanteFactory.create(getBuilder(NUM_PIEZAS_CERO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO));
+        diamanteFactory.create(getBuilder(NUM_PIEZAS_CERO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+            QUILATES_DESDE, QUILATES_HASTA));
     }
 
     /**
@@ -437,11 +480,14 @@ public class DiamanteUTest {
      * QUILATES - NO NULO
      * CERTIFICADO - NO NULO
      * VALOR EXPERTO - NO NULO
+     * QUILATES DESDE - NO NULO
+     * QUILATES HASTA - NO NULO
      */
     @Test
     public void crearDiamanteTest14() {
         Diamante diamante =
-            diamanteFactory.create(getBuilder(NUM_PIEZAS_DOS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO));
+            diamanteFactory.create(getBuilder(NUM_PIEZAS_DOS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+                QUILATES_DESDE, QUILATES_HASTA));
 
         BigDecimalConsumidor bigDecimalConsumidor = getBigDecimalConsumidor(PORCENTAJE_INCREMENTO);
         when(conector.obtenerModificador(any(Diamante.class))).thenReturn(bigDecimalConsumidor);
@@ -465,11 +511,14 @@ public class DiamanteUTest {
      * @param quilates            El valor en quilates del diamante.
      * @param certificadoDiamante El valor del certificado del diamante.
      * @param valorExperto        El valor experto para la pieza en particular.
+     * @param quilatesDesde       El valor del rango inferior en quilates del diamante.
+     * @param quilatesHasta       El valor del rango superior en quilates del diamante.
      * @return El builder creado.
      */
     private Diamante.Builder getBuilder(final int numeroDePiezas, final String corte, final String color,
                                         final String claridad, final BigDecimal quilates,
-                                        final String certificadoDiamante, final ValorExperto valorExperto) {
+                                        final String certificadoDiamante, final ValorExperto valorExperto,
+                                        final BigDecimal quilatesDesde, final BigDecimal quilatesHasta) {
         return new Diamante.Builder() {
 
             @Override
@@ -509,12 +558,12 @@ public class DiamanteUTest {
 
             @Override
             public BigDecimal getQuilatesDesde() {
-                return null;
+                return quilatesDesde;
             }
 
             @Override
             public BigDecimal getQuilatesHasta() {
-                return null;
+                return quilatesHasta;
             }
 
         };

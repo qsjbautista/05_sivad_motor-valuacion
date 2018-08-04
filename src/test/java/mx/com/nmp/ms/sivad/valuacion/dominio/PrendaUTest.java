@@ -24,6 +24,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.util.ObjectUtils;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;
@@ -39,7 +40,7 @@ import static org.mockito.Mockito.when;
 /**
 * Clase de prueba utilizada para validar el comportamiento de la clase {@link Prenda}
 *
-* @author ngonzalez
+* @author ngonzalez, ecancino
 */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MotorValuacionApplication.class)
@@ -75,6 +76,10 @@ public class PrendaUTest {
         new BigDecimal(100.00D).setScale(2, BigDecimal.ROUND_HALF_UP), ValorExperto.TipoEnum.TOTAL);
     private static final ValorExperto VALOR_EXPERTO_UNITARIO = new ValorExperto(
         new BigDecimal(100.00D).setScale(2, BigDecimal.ROUND_HALF_UP), ValorExperto.TipoEnum.UNITARIO);
+    private static final BigDecimal QUILATES_DESDE =
+        new BigDecimal(0.90D).setScale(2, BigDecimal.ROUND_HALF_UP);
+    private static final BigDecimal QUILATES_HASTA =
+        new BigDecimal(0.94D).setScale(2, BigDecimal.ROUND_HALF_UP);
 
 
     // UTILIZADAS PARA EL AVALÚO DE ALHAJAS.
@@ -198,7 +203,8 @@ public class PrendaUTest {
             alhajaFactory.create(getBuilderAlhaja(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO_TOTAL));
 
         Diamante diamante =
-            diamanteFactory.create(getBuilderDiamante(NUM_PIEZAS_1, CORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, null));
+            diamanteFactory.create(getBuilderDiamante(NUM_PIEZAS_1, CORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, null,
+                QUILATES_DESDE, QUILATES_HASTA));
 
         Complementario complementario =
             complementarioFactory.create(getBuilderComplementario(NUM_PIEZAS_1, VALOR_EXPERTO_TOTAL));
@@ -299,7 +305,8 @@ public class PrendaUTest {
     @Test
     public void crearPrendaTest03() {
         Diamante diamante =
-            diamanteFactory.create(getBuilderDiamante(NUM_PIEZAS_1, CORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, null));
+            diamanteFactory.create(getBuilderDiamante(NUM_PIEZAS_1, CORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, null,
+                QUILATES_DESDE, QUILATES_HASTA));
 
         List<Pieza> piezas = new ArrayList<>();
         piezas.add(diamante);
@@ -400,7 +407,8 @@ public class PrendaUTest {
             alhajaFactory.create(getBuilderAlhaja(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO_TOTAL));
 
         Diamante diamante =
-            diamanteFactory.create(getBuilderDiamante(NUM_PIEZAS_2, CORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, null));
+            diamanteFactory.create(getBuilderDiamante(NUM_PIEZAS_2, CORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, null,
+                QUILATES_DESDE, QUILATES_HASTA));
 
         Complementario complementario =
             complementarioFactory.create(getBuilderComplementario(NUM_PIEZAS_2, VALOR_EXPERTO_UNITARIO));
@@ -465,7 +473,11 @@ public class PrendaUTest {
 
             @Override
             public CondicionPrendaVO getCondicionFisica() {
-                return new CondicionPrendaVO(condicionesFisicas);
+                CondicionPrendaVO condicionPrendaVO = null;
+                if (!ObjectUtils.isEmpty(condicionesFisicas)) {
+                    condicionPrendaVO = new CondicionPrendaVO(condicionesFisicas);
+                }
+                return condicionPrendaVO;
             }
 
         };
@@ -547,6 +559,8 @@ public class PrendaUTest {
      * @param quilates El valor en quilates del diamante.
      * @param certificadoDiamante El valor del certificado del diamante.
      * @param valorExperto El valor experto para la pieza en particular.
+     * @param quilatesDesde El valor del rango inferior en quilates del diamante.
+     * @param quilatesHasta El valor del rango superior en quilates del diamante.
      * @return El builder creado.
      */
     private Diamante.Builder getBuilderDiamante(final int numeroDePiezas,
@@ -555,7 +569,9 @@ public class PrendaUTest {
                                                 final String claridad,
                                                 final BigDecimal quilates,
                                                 final String certificadoDiamante,
-                                                final ValorExperto valorExperto) {
+                                                final ValorExperto valorExperto,
+                                                final BigDecimal quilatesDesde,
+                                                final BigDecimal quilatesHasta) {
         return new Diamante.Builder() {
 
             @Override
@@ -595,12 +611,12 @@ public class PrendaUTest {
 
             @Override
             public BigDecimal getQuilatesDesde() {
-                return null;
+                return quilatesDesde;
             }
 
             @Override
             public BigDecimal getQuilatesHasta() {
-                return null;
+                return quilatesHasta;
             }
 
         };

@@ -36,7 +36,7 @@ import static org.junit.Assert.*;
 /**
  * Clase de prueba utilizada para validar el comportamiento del motor de valuación.
  *
- * @author ngonzalez
+ * @author ngonzalez, ecancino
  */
 @RunWith(SpringRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -84,6 +84,12 @@ public class ValuadorDiamantesITest {
         new BigDecimal(25.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
     private static final BigDecimal QUILATES =
         new BigDecimal(0.92D).setScale(2, BigDecimal.ROUND_HALF_UP);
+    private static final BigDecimal QUILATES_DESDE =
+        new BigDecimal(0.90D).setScale(2, BigDecimal.ROUND_HALF_UP);
+    private static final BigDecimal QUILATES_HASTA =
+        new BigDecimal(0.94D).setScale(2, BigDecimal.ROUND_HALF_UP);
+
+
 
     /**
      * Referencia hacia el endpoint del WS ReferenciaAlhajaService.
@@ -161,7 +167,7 @@ public class ValuadorDiamantesITest {
         Alhaja alhaja =
             crearAlhaja(CALIDAD, COLOR_A, DESPLAZAMIENTO, INCREMENTO, PESO, METAL, RANGO, null);
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
         Complemento complemento =
             crearComplemento(crearValorExperto(null, new BigDecimal(10)));
 
@@ -574,7 +580,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico11");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, null, QUILATES, null);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, null, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -611,7 +617,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico12");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, "", QUILATES, null);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, "", QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -648,7 +654,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico13");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, null, CORTE, QUILATES, null);
+            crearDiamante(CERTIFICADO, CLARIDAD, null, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -685,7 +691,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico14");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, "", CORTE, QUILATES, null);
+            crearDiamante(CERTIFICADO, CLARIDAD, "", CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -722,7 +728,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico15");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, null, COLOR_D, CORTE, QUILATES, null);
+            crearDiamante(CERTIFICADO, null, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -759,7 +765,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico16");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, "", COLOR_D, CORTE, QUILATES, null);
+            crearDiamante(CERTIFICADO, "", COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -796,7 +802,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico17");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, null, null);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, null, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -833,7 +839,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico18");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, CERO, null);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, CERO, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -870,7 +876,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico19");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, MENOR_CERO, null);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, MENOR_CERO, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -907,7 +913,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico20");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_CERO, null, diamante, null);
 
@@ -944,7 +950,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico21");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_MENOR_CERO, null, diamante, null);
 
@@ -1240,7 +1246,7 @@ public class ValuadorDiamantesITest {
         Alhaja alhaja =
             crearAlhaja(CALIDAD, COLOR_A, DESPLAZAMIENTO, INCREMENTO, PESO, METAL, RANGO, null);
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaMixta = crearPieza(PIEZA_ID, NUM_PIEZAS_1, alhaja, diamante, null);
 
@@ -1320,7 +1326,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico31");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
         Complemento complemento =
             crearComplemento(crearValorExperto(null, new BigDecimal(10)));
 
@@ -1363,7 +1369,7 @@ public class ValuadorDiamantesITest {
         Alhaja alhaja =
             crearAlhaja(CALIDAD, COLOR_A, DESPLAZAMIENTO, INCREMENTO, PESO, METAL, RANGO, null);
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
         Complemento complemento =
             crearComplemento(crearValorExperto(null, new BigDecimal(10)));
 
@@ -1432,7 +1438,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico34");
 
         Diamante diamante =
-            crearDiamante(null, CLARIDAD, COLOR_D, CORTE, QUILATES, null);
+            crearDiamante(null, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -1618,7 +1624,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico37");
 
         Diamante diamante =
-            crearDiamante(null, CLARIDAD, COLOR_D, CORTE, QUILATES, null);
+            crearDiamante(null, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Alhaja alhaja =
             crearAlhaja(CALIDAD, COLOR_A, DESPLAZAMIENTO, INCREMENTO, PESO, METAL, RANGO, null);
@@ -1687,7 +1693,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico38");
 
         Diamante diamante =
-            crearDiamante(null, CLARIDAD, COLOR_D, CORTE, QUILATES, null);
+            crearDiamante(null, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Complemento complemento =
             crearComplemento(crearValorExperto(null, new BigDecimal(10)));
@@ -1827,7 +1833,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico40");
 
         Diamante diamante =
-            crearDiamante(null, CLARIDAD, COLOR_D, CORTE, QUILATES, null);
+            crearDiamante(null, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Alhaja alhaja =
             crearAlhaja(CALIDAD, COLOR_A, DESPLAZAMIENTO, INCREMENTO, PESO, METAL, RANGO, null);
@@ -1882,6 +1888,228 @@ public class ValuadorDiamantesITest {
             }
         } catch (Exception e) {
             LOGGER.error("<< Error inesperado al ejecutar valuarPrendaBasico40. {}", e);
+            fail();
+        }
+    }
+
+    /**
+     * Utilizado para solicitar la valuación de una prenda por medio de "valuarPrendaBasico" con las
+     * siguientes características:
+     *
+     * 1 - Prenda con:
+     *     1 - Pieza con:
+     *         1 - Diamante (QuilatesDesde - Nulo)
+     */
+    @Test
+    public void valuarPrendaBasico41() {
+        LOGGER.debug(">> valuarPrendaBasico41");
+
+        Diamante diamante =
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, null, QUILATES_HASTA);
+
+        Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
+
+        List<Pieza> piezas = new ArrayList<>();
+        piezas.add(piezaDiamante);
+
+        Prenda prenda = crearPrenda(piezas);
+
+        ValuarPrendaBasicoRequest request = new ValuarPrendaBasicoRequest();
+        request.setPrenda(prenda);
+
+        try {
+            valuadorDiamantesService.valuarPrendaBasico(request);
+            fail();
+        } catch (WebServiceException e) {
+            assertNotNull(e);
+            assertEquals(WebServiceExceptionCodes.NMPMV005.getMessageException(), e.getMessage());
+        } catch (Exception e) {
+            LOGGER.error("<< Error inesperado al ejecutar valuarPrendaBasico17. {}", e);
+            fail();
+        }
+    }
+
+    /**
+     * Utilizado para solicitar la valuación de una prenda por medio de "valuarPrendaBasico" con las
+     * siguientes características:
+     *
+     * 1 - Prenda con:
+     *     1 - Pieza con:
+     *         1 - Diamante (QuilatesHasta - Nulo)
+     */
+    @Test
+    public void valuarPrendaBasico42() {
+        LOGGER.debug(">> valuarPrendaBasico42");
+
+        Diamante diamante =
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, null);
+
+        Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
+
+        List<Pieza> piezas = new ArrayList<>();
+        piezas.add(piezaDiamante);
+
+        Prenda prenda = crearPrenda(piezas);
+
+        ValuarPrendaBasicoRequest request = new ValuarPrendaBasicoRequest();
+        request.setPrenda(prenda);
+
+        try {
+            valuadorDiamantesService.valuarPrendaBasico(request);
+            fail();
+        } catch (WebServiceException e) {
+            assertNotNull(e);
+            assertEquals(WebServiceExceptionCodes.NMPMV005.getMessageException(), e.getMessage());
+        } catch (Exception e) {
+            LOGGER.error("<< Error inesperado al ejecutar valuarPrendaBasico17. {}", e);
+            fail();
+        }
+    }
+
+    /**
+     * Utilizado para solicitar la valuación de una prenda por medio de "valuarPrendaBasico" con las
+     * siguientes características:
+     *
+     * 1 - Prenda con:
+     *     1 - Pieza con:
+     *         1 - Diamante (QuilatesDesde - Cero)
+     */
+    @Test
+    public void valuarPrendaBasico43() {
+        LOGGER.debug(">> valuarPrendaBasico43");
+
+        Diamante diamante =
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, CERO, QUILATES_HASTA);
+
+        Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
+
+        List<Pieza> piezas = new ArrayList<>();
+        piezas.add(piezaDiamante);
+
+        Prenda prenda = crearPrenda(piezas);
+
+        ValuarPrendaBasicoRequest request = new ValuarPrendaBasicoRequest();
+        request.setPrenda(prenda);
+
+        try {
+            valuadorDiamantesService.valuarPrendaBasico(request);
+            fail();
+        } catch (WebServiceException e) {
+            assertNotNull(e);
+            assertEquals(WebServiceExceptionCodes.NMPMV005.getMessageException(), e.getMessage());
+        } catch (Exception e) {
+            LOGGER.error("<< Error inesperado al ejecutar valuarPrendaBasico18. {}", e);
+            fail();
+        }
+    }
+
+    /**
+     * Utilizado para solicitar la valuación de una prenda por medio de "valuarPrendaBasico" con las
+     * siguientes características:
+     *
+     * 1 - Prenda con:
+     *     1 - Pieza con:
+     *         1 - Diamante (QuilatesHasta - Cero)
+     */
+    @Test
+    public void valuarPrendaBasico44() {
+        LOGGER.debug(">> valuarPrendaBasico44");
+
+        Diamante diamante =
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, CERO);
+
+        Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
+
+        List<Pieza> piezas = new ArrayList<>();
+        piezas.add(piezaDiamante);
+
+        Prenda prenda = crearPrenda(piezas);
+
+        ValuarPrendaBasicoRequest request = new ValuarPrendaBasicoRequest();
+        request.setPrenda(prenda);
+
+        try {
+            valuadorDiamantesService.valuarPrendaBasico(request);
+            fail();
+        } catch (WebServiceException e) {
+            assertNotNull(e);
+            assertEquals(WebServiceExceptionCodes.NMPMV005.getMessageException(), e.getMessage());
+        } catch (Exception e) {
+            LOGGER.error("<< Error inesperado al ejecutar valuarPrendaBasico18. {}", e);
+            fail();
+        }
+    }
+
+    /**
+     * Utilizado para solicitar la valuación de una prenda por medio de "valuarPrendaBasico" con las
+     * siguientes características:
+     *
+     * 1 - Prenda con:
+     *     1 - Pieza con:
+     *         1 - Diamante (QuilatesDesde - Menor a Cero)
+     */
+    @Test
+    public void valuarPrendaBasico19_1() {
+        LOGGER.debug(">> valuarPrendaBasico19_1");
+
+        Diamante diamante =
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, MENOR_CERO, QUILATES_HASTA);
+
+        Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
+
+        List<Pieza> piezas = new ArrayList<>();
+        piezas.add(piezaDiamante);
+
+        Prenda prenda = crearPrenda(piezas);
+
+        ValuarPrendaBasicoRequest request = new ValuarPrendaBasicoRequest();
+        request.setPrenda(prenda);
+
+        try {
+            valuadorDiamantesService.valuarPrendaBasico(request);
+            fail();
+        } catch (WebServiceException e) {
+            assertNotNull(e);
+            assertEquals(WebServiceExceptionCodes.NMPMV005.getMessageException(), e.getMessage());
+        } catch (Exception e) {
+            LOGGER.error("<< Error inesperado al ejecutar valuarPrendaBasico19. {}", e);
+            fail();
+        }
+    }
+
+    /**
+     * Utilizado para solicitar la valuación de una prenda por medio de "valuarPrendaBasico" con las
+     * siguientes características:
+     *
+     * 1 - Prenda con:
+     *     1 - Pieza con:
+     *         1 - Diamante (QuilatesHasta - Menor a Cero)
+     */
+    @Test
+    public void valuarPrendaBasico46() {
+        LOGGER.debug(">> valuarPrendaBasico46");
+
+        Diamante diamante =
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, MENOR_CERO);
+
+        Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
+
+        List<Pieza> piezas = new ArrayList<>();
+        piezas.add(piezaDiamante);
+
+        Prenda prenda = crearPrenda(piezas);
+
+        ValuarPrendaBasicoRequest request = new ValuarPrendaBasicoRequest();
+        request.setPrenda(prenda);
+
+        try {
+            valuadorDiamantesService.valuarPrendaBasico(request);
+            fail();
+        } catch (WebServiceException e) {
+            assertNotNull(e);
+            assertEquals(WebServiceExceptionCodes.NMPMV005.getMessageException(), e.getMessage());
+        } catch (Exception e) {
+            LOGGER.error("<< Error inesperado al ejecutar valuarPrendaBasico19. {}", e);
             fail();
         }
     }
@@ -1981,7 +2209,9 @@ public class ValuadorDiamantesITest {
                                    String color,
                                    String corte,
                                    BigDecimal quilates,
-                                   ValorExperto valorExperto) {
+                                   ValorExperto valorExperto,
+                                   BigDecimal quilatesDesde,
+                                   BigDecimal quilatesHasta) {
         Diamante diamante = new Diamante();
         diamante.setCertificado(certificado);
         diamante.setClaridad(claridad);
@@ -1990,6 +2220,8 @@ public class ValuadorDiamantesITest {
         diamante.setForma("F-Diamante");
         diamante.setQuilataje(quilates);
         diamante.setValorExperto(valorExperto);
+        diamante.setQuilatesDesde(quilatesDesde);
+        diamante.setQuilatesHasta(quilatesHasta);
 
         return diamante;
     }

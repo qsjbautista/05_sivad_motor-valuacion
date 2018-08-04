@@ -73,6 +73,7 @@
             <s:element name="id" type="s:string" />
             <s:element name="cantidad" type="s:int" nillable="false" default="1" />
             <s:element name="avaluo" type="Avaluo" />
+            <s:element name="avaluoPoliticas" type="Avaluo" />
             <s:choice>
                 <s:element name="diamante" type="Diamante" />
                 <s:element name="alhaja" type="Alhaja" />

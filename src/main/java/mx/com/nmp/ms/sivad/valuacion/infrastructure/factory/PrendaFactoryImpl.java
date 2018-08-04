@@ -152,7 +152,11 @@ public class PrendaFactoryImpl implements PrendaFactory {
 
             @Override
             public CondicionPrendaVO getCondicionFisica() {
-                return new CondicionPrendaVO(condicionFisica);
+                CondicionPrendaVO condicionPrendaVO = null;
+                if (!ObjectUtils.isEmpty(condicionFisica)) {
+                    condicionPrendaVO = new CondicionPrendaVO(condicionFisica);
+                }
+                return condicionPrendaVO;
             }
 
         };
@@ -167,8 +171,8 @@ public class PrendaFactoryImpl implements PrendaFactory {
         Assert.notNull(builder, DomainExceptionCodes.BUILDER_NULO.getMessageException());
         Assert.notNull(builder.getPiezas(), DomainExceptionCodes.LISTA_PIEZAS_NULA.getMessageException());
         Assert.notEmpty(builder.getPiezas(), DomainExceptionCodes.LISTA_PIEZAS_VACIA.getMessageException());
-        Assert.notNull(builder.getCondicionFisica(), DomainExceptionCodes.CODICION_FISICA_PRENDA.getMessageException());
-        /*Assert.hasText(builder.getCondicionFisica().getCondicionPrenda(),
+        /*Assert.notNull(builder.getCondicionFisica(), DomainExceptionCodes.CODICION_FISICA_PRENDA.getMessageException());
+        Assert.hasText(builder.getCondicionFisica().getCondicionPrenda(),
             DomainExceptionCodes.CODICION_FISICA_PRENDA.getMessageException());*/
     }
 

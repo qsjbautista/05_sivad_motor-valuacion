@@ -398,6 +398,15 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
             avaluo.setValorPromedio(piezaValuada.getAvaluo().valorPromedio());
             avaluo.setValorMaximo(piezaValuada.getAvaluo().valorMaximo());
             pieza.setAvaluo(avaluo);
+
+            //AVALUO CON LAS POLITICAS DE CASTIGO O FACTOR DE PARTICIPACION DE LA PIEZA APLICADO
+            if (!ObjectUtils.isEmpty(piezaValuada.getAvaluoPoliticas())) {
+                Avaluo avaluoPoliticas = new Avaluo();
+                avaluoPoliticas.setValorMinimo(piezaValuada.getAvaluoPoliticas().valorMinimo());
+                avaluoPoliticas.setValorPromedio(piezaValuada.getAvaluoPoliticas().valorPromedio());
+                avaluoPoliticas.setValorMaximo(piezaValuada.getAvaluoPoliticas().valorMaximo());
+                pieza.setAvaluoPoliticas(avaluoPoliticas);
+            }
         }
 
         return prenda;
@@ -439,7 +448,8 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
 
         // Este flujo no debera existir cuando se realice el cambio de Alhaja.condicion a la Prenda
         // Se regresa XX para evitar la validacion de nulo o cadena vacia.
-        return "XX";
+        //return "XX";
+        return null;
     }
 
     /**
