@@ -120,6 +120,16 @@ public class TablasDeReferenciaDiamantesUTest {
             public BigDecimal getQuilates() {
                 return BigDecimal.valueOf(0.8);
             }
+
+            @Override
+            public BigDecimal getQuilatesDesde() {
+                return BigDecimal.valueOf(0.5);
+            }
+
+            @Override
+            public BigDecimal getQuilatesHasta() {
+                return BigDecimal.valueOf(0.9);
+            }
         });
 
         assertNotNull(result);

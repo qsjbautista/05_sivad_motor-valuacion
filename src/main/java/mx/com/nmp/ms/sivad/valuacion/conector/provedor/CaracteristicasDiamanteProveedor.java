@@ -42,4 +42,18 @@ public interface CaracteristicasDiamanteProveedor {
      * @return Quilates del diamante.
      */
     BigDecimal getQuilates();
+
+    /**
+     * Recupera los Quilates inferior del diamante.
+     *
+     * @return Quilates inferior del diamante.
+     */
+    BigDecimal getQuilatesDesde();
+
+    /**
+     * Recupera los Quilates superior del diamante.
+     *
+     * @return Quilates superior del diamante.
+     */
+    BigDecimal getQuilatesHasta();
 }

@@ -174,6 +174,16 @@ public class TablasDeReferenciaDiamantesITest {
             public BigDecimal getQuilates() {
                 return BigDecimal.ONE;
             }
+
+            @Override
+            public BigDecimal getQuilatesDesde() {
+                return BigDecimal.ONE;
+            }
+
+            @Override
+            public BigDecimal getQuilatesHasta() {
+                return BigDecimal.TEN;
+            }
         };
     }
 

@@ -50,6 +50,8 @@ public class ReferenciaDiamanteFactory {
         valorComercial.setColor(proveedor.getColor());
         valorComercial.setClaridad(proveedor.getClaridad());
         valorComercial.setQuilatesCt(proveedor.getQuilates());
+        valorComercial.setQuilatesDesde(proveedor.getQuilatesDesde());
+        valorComercial.setQuilatesHasta(proveedor.getQuilatesHasta());
 
         return valorComercial;
     }

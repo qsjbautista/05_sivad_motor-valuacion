@@ -34,6 +34,8 @@ public interface TablasDeReferenciaDiamantes {
      *	<li>Color</li>
      *	<li>Claridad</li>
      *	<li>Quilates (Ct.)</li>
+     *	<li>Quilates Desde</li>
+     *  <li>Quilates Hasta</li>
      * </lu>
      *
      * @param proveedor Objeto que contiene los criterios de consulta.

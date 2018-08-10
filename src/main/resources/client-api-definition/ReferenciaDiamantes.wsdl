@@ -35,6 +35,8 @@ Tablas de Referencia Diamantes
                         <xs:element name="color" type="xs:string"/>
                         <xs:element name="claridad" type="xs:string"/>
                         <xs:element name="quilates_ct" type="xs:decimal"/>
+                        <xs:element name="quilates_desde" type="xs:decimal"/>
+                        <xs:element name="quilates_hasta" type="xs:decimal"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
