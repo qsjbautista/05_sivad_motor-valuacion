@@ -444,7 +444,7 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
 
         LOGGER.error("No se encontro una alhaja en la lista de piezas," +
             "si se realizaran valuaciones sin alhaja, cambiar la propiedad Alhaja.condicion a la Prenda");
-        LOGGER.debug(">> recuperarCondicionFisica. Result [{}]", "XX");
+        LOGGER.debug(">> recuperarCondicionFisica. Result [{}]", "null");
 
         // Este flujo no debera existir cuando se realice el cambio de Alhaja.condicion a la Prenda
         // Se regresa XX para evitar la validacion de nulo o cadena vacia.
