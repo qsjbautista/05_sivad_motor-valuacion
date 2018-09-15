@@ -85,6 +85,7 @@
     <s:complexType name="Diamante">
         <s:sequence>
             <s:element name="corte" type="s:string" nillable="false" />
+            <s:element name="subcorte" type="s:string" nillable="false" />
             <s:element name="forma" type="s:string" nillable="false" />
             <s:element name="color" type="s:string" nillable="false" />
             <s:element name="claridad" type="s:string" nillable="false" />

@@ -35,6 +35,7 @@ public class DiamanteFactoryUTest {
     private static final String CLARIDAD = "VS1";
     private static final String COLOR = "D";
     private static final String CORTE = "Oval";
+    private static final String SUBCORTE = "Brillante";
 
     private static final BigDecimal QUILATES =
         new BigDecimal(0.92D).setScale(2, BigDecimal.ROUND_HALF_UP);
@@ -96,7 +97,7 @@ public class DiamanteFactoryUTest {
     @Test
     public void crearDiamanteTest01() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
                 QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR);
 
         Diamante diamante = diamanteFactory.create(diamanteDTO);
@@ -125,7 +126,7 @@ public class DiamanteFactoryUTest {
     @Test
     public void crearDiamanteTest02() {
         Diamante diamante =
-            diamanteFactory.create(getBuilder(NUM_PIEZAS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+            diamanteFactory.create(getBuilder(NUM_PIEZAS, CORTE, SUBCORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
                 QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR));
 
         assertNotNull(diamante);
@@ -153,7 +154,7 @@ public class DiamanteFactoryUTest {
     @Test(expected = IllegalArgumentException.class)
     public void crearDiamanteTest03() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, null, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+            new DiamanteDTO(NUM_PIEZAS, null, SUBCORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
                 QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR);
 
         diamanteFactory.create(diamanteDTO);
@@ -175,7 +176,7 @@ public class DiamanteFactoryUTest {
     @Test(expected = IllegalArgumentException.class)
     public void crearDiamanteTest04() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, null, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, null, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
                 QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR);
 
         diamanteFactory.create(diamanteDTO);
@@ -197,7 +198,7 @@ public class DiamanteFactoryUTest {
     @Test(expected = IllegalArgumentException.class)
     public void crearDiamanteTest05() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR, null, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR, null, QUILATES, CERTIFICADO, VALOR_EXPERTO,
                 QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR);
 
         diamanteFactory.create(diamanteDTO);
@@ -219,7 +220,7 @@ public class DiamanteFactoryUTest {
     @Test(expected = IllegalArgumentException.class)
     public void crearDiamanteTest06() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR, CLARIDAD, null, CERTIFICADO, VALOR_EXPERTO,
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR, CLARIDAD, null, CERTIFICADO, VALOR_EXPERTO,
                 QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR);
 
         diamanteFactory.create(diamanteDTO);
@@ -241,7 +242,7 @@ public class DiamanteFactoryUTest {
     @Test(expected = IllegalArgumentException.class)
     public void crearDiamanteTest07() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS_CERO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+            new DiamanteDTO(NUM_PIEZAS_CERO, CORTE, SUBCORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
                 QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR);
 
         diamanteFactory.create(diamanteDTO);
@@ -263,7 +264,7 @@ public class DiamanteFactoryUTest {
     @Test(expected = IllegalArgumentException.class)
     public void crearDiamanteTest08() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS_MENOR_CERO, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+            new DiamanteDTO(NUM_PIEZAS_MENOR_CERO, CORTE, SUBCORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
                 QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR);
 
         diamanteFactory.create(diamanteDTO);
@@ -285,7 +286,7 @@ public class DiamanteFactoryUTest {
     @Test(expected = IllegalArgumentException.class)
     public void crearDiamanteTest09() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR, CLARIDAD, QUILATES_CERO, CERTIFICADO, VALOR_EXPERTO,
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR, CLARIDAD, QUILATES_CERO, CERTIFICADO, VALOR_EXPERTO,
                 QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR);
 
         diamanteFactory.create(diamanteDTO);
@@ -307,7 +308,7 @@ public class DiamanteFactoryUTest {
     @Test(expected = IllegalArgumentException.class)
     public void crearDiamanteTest10() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR, CLARIDAD, QUILATES_MENOR_CERO, CERTIFICADO, VALOR_EXPERTO,
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR, CLARIDAD, QUILATES_MENOR_CERO, CERTIFICADO, VALOR_EXPERTO,
                 QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR);
 
         diamanteFactory.create(diamanteDTO);
@@ -329,7 +330,7 @@ public class DiamanteFactoryUTest {
     @Test
     public void crearDiamanteTest11() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR, CLARIDAD, QUILATES, null, VALOR_EXPERTO,
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR, CLARIDAD, QUILATES, null, VALOR_EXPERTO,
                 QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR);
 
         Diamante diamante = diamanteFactory.create(diamanteDTO);
@@ -358,7 +359,7 @@ public class DiamanteFactoryUTest {
     @Test
     public void crearDiamanteTest12() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, null,
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, null,
                 QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR);
 
         Diamante diamante = diamanteFactory.create(diamanteDTO);
@@ -387,7 +388,7 @@ public class DiamanteFactoryUTest {
     @Test
     public void crearDiamanteTest13() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO_SIN_VALOR,
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO_SIN_VALOR,
                 QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR);
 
         Diamante diamante = diamanteFactory.create(diamanteDTO);
@@ -416,7 +417,7 @@ public class DiamanteFactoryUTest {
     @Test(expected = IllegalArgumentException.class)
     public void crearDiamanteTest14() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO_VALOR_CERO,
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO_VALOR_CERO,
                 QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR);
 
         diamanteFactory.create(diamanteDTO);
@@ -438,7 +439,7 @@ public class DiamanteFactoryUTest {
     @Test(expected = IllegalArgumentException.class)
     public void crearDiamanteTest15() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO_VALOR_MENOR_CERO,
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO_VALOR_MENOR_CERO,
                 QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR);
 
         diamanteFactory.create(diamanteDTO);
@@ -460,7 +461,7 @@ public class DiamanteFactoryUTest {
     @Test(expected = IllegalArgumentException.class)
     public void crearDiamanteTest16() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
                 null, QUILATES_RANGO_SUPERIOR);
 
         diamanteFactory.create(diamanteDTO);
@@ -482,7 +483,7 @@ public class DiamanteFactoryUTest {
     @Test(expected = IllegalArgumentException.class)
     public void crearDiamanteTest17() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
                 QUILATES_RANGO_INFERIOR, null);
 
         diamanteFactory.create(diamanteDTO);
@@ -504,7 +505,7 @@ public class DiamanteFactoryUTest {
     @Test(expected = IllegalArgumentException.class)
     public void crearDiamanteTest18() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
                 QUILATES_RANGO_INFERIOR_CERO, QUILATES_RANGO_SUPERIOR);
 
         diamanteFactory.create(diamanteDTO);
@@ -526,7 +527,7 @@ public class DiamanteFactoryUTest {
     @Test(expected = IllegalArgumentException.class)
     public void crearDiamanteTest19() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
                 QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR_CERO);
 
         diamanteFactory.create(diamanteDTO);
@@ -548,7 +549,7 @@ public class DiamanteFactoryUTest {
     @Test(expected = IllegalArgumentException.class)
     public void crearDiamanteTest20() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
                 QUILATES_RANGO_INFERIOR_MENOR_CERO, QUILATES_RANGO_SUPERIOR);
 
         diamanteFactory.create(diamanteDTO);
@@ -570,7 +571,7 @@ public class DiamanteFactoryUTest {
     @Test(expected = IllegalArgumentException.class)
     public void crearDiamanteTest21() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
                 QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR_MENOR_CERO);
 
         diamanteFactory.create(diamanteDTO);
@@ -581,6 +582,7 @@ public class DiamanteFactoryUTest {
      *
      * @param numeroDePiezas El número de piezas con características idénticas.
      * @param corte El tipo de corte del diamante.
+     * @param subcorte El tipo de corte hijo del diamante.
      * @param color El tipo de color del diamante.
      * @param claridad El tipo de claridad del diamante.
      * @param quilates El valor en quilates del diamante.
@@ -592,6 +594,7 @@ public class DiamanteFactoryUTest {
      */
     private Diamante.Builder getBuilder(final int numeroDePiezas,
                                         final String corte,
+                                        final String subcorte,
                                         final String color,
                                         final String claridad,
                                         final BigDecimal quilates,
@@ -609,6 +612,11 @@ public class DiamanteFactoryUTest {
             @Override
             public String getCorte() {
                 return corte;
+            }
+
+            @Override
+            public String getSubcorte() {
+                return subcorte;
             }
 
             @Override

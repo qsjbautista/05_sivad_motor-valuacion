@@ -296,6 +296,7 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
         DiamanteDTO diamanteDTO = new DiamanteDTO(
             numeroDePiezas,
             diamante.getCorte(),
+            diamante.getSubcorte(),
             diamante.getColor(),
             diamante.getClaridad(),
             diamante.getQuilataje(),

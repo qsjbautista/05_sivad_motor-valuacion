@@ -89,6 +89,7 @@
       <xs:complexType name="Diamante">
         <xs:sequence>
           <xs:element name="corte" type="xs:string"/>
+          <xs:element name="subcorte" type="xs:string"/>
           <xs:element name="forma" type="xs:string"/>
           <xs:element name="color" type="xs:string"/>
           <xs:element name="claridad" type="xs:string"/>
@@ -182,6 +183,7 @@
                <!--Optional:-->
                <dat:diamante>
                   <dat:corte>?</dat:corte>
+                  <dat:subcorte>?</dat:subcorte>
                   <dat:forma>?</dat:forma>
                   <dat:color>?</dat:color>
                   <dat:claridad>?</dat:claridad>
@@ -261,6 +263,7 @@
                <!--Optional:-->
                <dat:diamante>
                   <dat:corte>?</dat:corte>
+                  <dat:subcorte>?</dat:subcorte>
                   <dat:forma>?</dat:forma>
                   <dat:color>?</dat:color>
                   <dat:claridad>?</dat:claridad>
@@ -340,6 +343,7 @@
                <!--Optional:-->
                <dat:diamante>
                   <dat:corte>Round</dat:corte>
+                  <dat:subcorte>Brillante</dat:subcorte>
                   <dat:forma>Pear</dat:forma>
                   <dat:color>D</dat:color>
                   <dat:claridad>IF</dat:claridad>
@@ -445,6 +449,7 @@
                <!--Optional:-->
                <dat:diamante>
                   <dat:corte>Round</dat:corte>
+                  <dat:subcorte>Brillante</dat:subcorte>
                   <dat:forma>Pear</dat:forma>
                   <dat:color>D</dat:color>
                   <dat:claridad>IF</dat:claridad>
@@ -550,6 +555,7 @@
                <!--Optional:-->\r
                <dat:diamante>\r
                   <dat:corte>?</dat:corte>\r
+                  <dat:subcorte>?</dat:subcorte>
                   <dat:forma>?</dat:forma>\r
                   <dat:color>?</dat:color>\r
                   <dat:claridad>?</dat:claridad>\r

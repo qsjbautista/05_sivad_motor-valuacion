@@ -40,6 +40,7 @@ public class PrendaFactoryUTest {
     private static final String COLOR_A = "Amarillo";
     private static final String COLOR_D = "D";
     private static final String CORTE = "Oval";
+    private static final String SUBCORTE = "Brillante";
     private static final String METAL = "AU";
     private static final String RANGO = "F1";
 
@@ -107,7 +108,7 @@ public class PrendaFactoryUTest {
             new AlhajaDTO(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO);
 
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
                 QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR);
 
         ComplementarioDTO complementarioDTO =
@@ -140,7 +141,7 @@ public class PrendaFactoryUTest {
             alhajaFactory.create(getBuilderAlhaja(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO));
 
         Diamante diamante =
-            diamanteFactory.create(getBuilderDiamante(NUM_PIEZAS, CORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+            diamanteFactory.create(getBuilderDiamante(NUM_PIEZAS, CORTE, SUBCORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
                 QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR));
 
         Complementario complementario =
@@ -194,7 +195,7 @@ public class PrendaFactoryUTest {
     @Test
     public void crearPrendaTest04() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
                 QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR);
 
         List<PiezaDTO> piezas = new ArrayList<>();
@@ -361,6 +362,7 @@ public class PrendaFactoryUTest {
      *
      * @param numeroDePiezas El número de piezas con características idénticas.
      * @param corte El tipo de corte del diamante.
+     * @param subcorte El tipo de corte hijo del diamante.
      * @param color El tipo de color del diamante.
      * @param claridad El tipo de claridad del diamante.
      * @param quilates El valor en quilates del diamante.
@@ -372,6 +374,7 @@ public class PrendaFactoryUTest {
      */
     private Diamante.Builder getBuilderDiamante(final int numeroDePiezas,
                                         final String corte,
+                                        final String subcorte,
                                         final String color,
                                         final String claridad,
                                         final BigDecimal quilates,
@@ -389,6 +392,11 @@ public class PrendaFactoryUTest {
             @Override
             public String getCorte() {
                 return corte;
+            }
+
+            @Override
+            public String getSubcorte() {
+                return subcorte;
             }
 
             @Override

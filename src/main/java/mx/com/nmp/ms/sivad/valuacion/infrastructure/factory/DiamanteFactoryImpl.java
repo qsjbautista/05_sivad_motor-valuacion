@@ -93,6 +93,11 @@ public class DiamanteFactoryImpl implements DiamanteFactory {
             }
 
             @Override
+            public String getSubcorte() {
+                return diamanteDTO.getSubcorte();
+            }
+
+            @Override
             public String getColor() {
                 return diamanteDTO.getColor();
             }
@@ -146,6 +151,11 @@ public class DiamanteFactoryImpl implements DiamanteFactory {
             DomainExceptionCodes.DIAMANTE_CORTE_NULO.getMessageException());
         Assert.hasText(builder.getCorte(),
             DomainExceptionCodes.DIAMANTE_CORTE_VACIO.getMessageException());
+
+        Assert.notNull(builder.getSubcorte(),
+            DomainExceptionCodes.DIAMANTE_SUBCORTE_NULO.getMessageException());
+        Assert.hasText(builder.getSubcorte(),
+            DomainExceptionCodes.DIAMANTE_SUBCORTE_VACIO.getMessageException());
 
         Assert.notNull(builder.getColor(),
             DomainExceptionCodes.DIAMANTE_COLOR_NULO.getMessageException());

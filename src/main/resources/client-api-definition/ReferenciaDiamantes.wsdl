@@ -32,6 +32,7 @@ Tablas de Referencia Diamantes
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="corte" type="xs:string"/>
+                        <xs:element name="subcorte" type="xs:string"/>
                         <xs:element name="color" type="xs:string"/>
                         <xs:element name="claridad" type="xs:string"/>
                         <xs:element name="quilates_ct" type="xs:decimal"/>

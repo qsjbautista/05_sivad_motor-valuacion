@@ -37,6 +37,11 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
     private String corte;
 
     /**
+     * El tipo de corte hijo del diamante con base en el catálogo de cortes.
+     */
+    private String subcorte;
+
+    /**
      * El tipo de color del diamante con base en la clasificación GIA.
      */
     private String color;
@@ -94,6 +99,13 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
          * @return El tipo de corte del diamante.
          */
         public String getCorte();
+
+        /**
+         * Permite obtener el tipo de corte hijo del diamante.
+         *
+         * @return El tipo de corte hijo del diamante.
+         */
+        public String getSubcorte();
 
         /**
          * Permite obtener el tipo de color del diamante.
@@ -160,6 +172,7 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
 
         this.numeroDePiezas = builder.getNumeroDePiezas();
         this.corte = builder.getCorte();
+        this.subcorte = builder.getSubcorte();
         this.color = builder.getColor();
         this.claridad = builder.getClaridad();
         this.quilates = builder.getQuilates();
@@ -266,6 +279,10 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
 
     public String getCorte() {
         return corte;
+    }
+
+    public String getSubcorte() {
+        return subcorte;
     }
 
     public String getColor() {

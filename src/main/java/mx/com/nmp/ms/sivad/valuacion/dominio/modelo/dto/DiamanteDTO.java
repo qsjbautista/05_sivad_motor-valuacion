@@ -21,6 +21,11 @@ public class DiamanteDTO extends PiezaDTO {
     private String corte;
 
     /**
+     * El tipo de corte hijo del diamante con base en el catálogo de cortes.
+     */
+    private String subcorte;
+
+    /**
      * El tipo de color del diamante con base en la clasificación GIA.
      */
     private String color;
@@ -87,6 +92,7 @@ public class DiamanteDTO extends PiezaDTO {
      *
      * @param numeroDePiezas El número de piezas con características idénticas.
      * @param corte El tipo de corte del diamante.
+     * @param subcorte El tipo de corte hijo del diamante.
      * @param color El tipo de color del diamante.
      * @param claridad El tipo de claridad del diamante.
      * @param quilates El valor en quilates del diamante.
@@ -97,6 +103,7 @@ public class DiamanteDTO extends PiezaDTO {
      */
     public DiamanteDTO(int numeroDePiezas,
                        String corte,
+                       String subcorte,
                        String color,
                        String claridad,
                        BigDecimal quilates,
@@ -107,6 +114,7 @@ public class DiamanteDTO extends PiezaDTO {
         super();
         this.numeroDePiezas = numeroDePiezas;
         this.corte = corte;
+        this.subcorte = subcorte;
         this.color = color;
         this.claridad = claridad;
         this.quilates = quilates;
@@ -126,6 +134,14 @@ public class DiamanteDTO extends PiezaDTO {
 
     public void setCorte(String corte) {
         this.corte = corte;
+    }
+
+    public String getSubcorte() {
+        return subcorte;
+    }
+
+    public void setSubcorte(String subcorte) {
+        this.subcorte = subcorte;
     }
 
     public String getColor() {
@@ -184,6 +200,7 @@ public class DiamanteDTO extends PiezaDTO {
         return "DiamanteDTO{" +
             "numeroDePiezas='" + numeroDePiezas +
             ", corte='" + corte + '\'' +
+            ", subcorte='" + subcorte + '\'' +
             ", color='" + color + '\'' +
             ", claridad='" + claridad + '\'' +
             ", quilates=" + ((quilates != null) ? quilates.toString() : "null") +
@@ -209,7 +226,10 @@ public class DiamanteDTO extends PiezaDTO {
         if (!claridad.equals(that.claridad)) return false;
         if (!color.equals(that.color)) return false;
         if (!corte.equals(that.corte)) return false;
+        if (!subcorte.equals(that.subcorte)) return false;
         if (!quilates.equals(that.quilates)) return false;
+        if (!quilatesDesde.equals(that.quilatesDesde)) return false;
+        if (!quilatesHasta.equals(that.quilatesHasta)) return false;
         if (!valorExperto.equals(that.valorExperto)) return false;
 
         return true;
@@ -221,10 +241,13 @@ public class DiamanteDTO extends PiezaDTO {
     @Override
     public int hashCode() {
         int result = corte.hashCode();
+        result = 31 * result + subcorte.hashCode();
         result = 31 * result + color.hashCode();
         result = 31 * result + claridad.hashCode();
         result = 31 * result + quilates.hashCode();
         result = 31 * result + certificadoDiamante.hashCode();
+        result = 31 * result + quilatesDesde.hashCode();
+        result = 31 * result + quilatesHasta.hashCode();
         result = 31 * result + valorExperto.hashCode();
         return result;
     }

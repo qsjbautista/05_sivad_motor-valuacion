@@ -60,6 +60,7 @@ public class ValuadorDiamantesITest {
     private static final String COLOR_A = "Amarillo";
     private static final String COLOR_D = "D";
     private static final String CORTE = "Oval";
+    private static final String SUBCORTE = "Brillante";
     private static final String METAL = "AU";
     private static final String PIEZA_ALHAJA_ID = "1234567891";
     private static final String PIEZA_COMPLEMENTO_ID = "1234567892";
@@ -167,7 +168,7 @@ public class ValuadorDiamantesITest {
         Alhaja alhaja =
             crearAlhaja(CALIDAD, COLOR_A, DESPLAZAMIENTO, INCREMENTO, PESO, METAL, RANGO, null);
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, SUBCORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
         Complemento complemento =
             crearComplemento(crearValorExperto(null, new BigDecimal(10)));
 
@@ -580,7 +581,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico11");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, null, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, null, SUBCORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -617,7 +618,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico12");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, "", QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, "", SUBCORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -654,7 +655,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico13");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, null, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
+            crearDiamante(CERTIFICADO, CLARIDAD, null, CORTE, SUBCORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -691,7 +692,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico14");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, "", CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
+            crearDiamante(CERTIFICADO, CLARIDAD, "", CORTE, SUBCORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -728,7 +729,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico15");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, null, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
+            crearDiamante(CERTIFICADO, null, COLOR_D, CORTE, SUBCORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -765,7 +766,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico16");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, "", COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
+            crearDiamante(CERTIFICADO, "", COLOR_D, CORTE, SUBCORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -802,7 +803,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico17");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, null, null, QUILATES_DESDE, QUILATES_HASTA);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, SUBCORTE, null, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -839,7 +840,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico18");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, CERO, null, QUILATES_DESDE, QUILATES_HASTA);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, SUBCORTE, CERO, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -876,7 +877,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico19");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, MENOR_CERO, null, QUILATES_DESDE, QUILATES_HASTA);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, SUBCORTE, MENOR_CERO, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -913,7 +914,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico20");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, SUBCORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_CERO, null, diamante, null);
 
@@ -950,7 +951,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico21");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, SUBCORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_MENOR_CERO, null, diamante, null);
 
@@ -1246,7 +1247,7 @@ public class ValuadorDiamantesITest {
         Alhaja alhaja =
             crearAlhaja(CALIDAD, COLOR_A, DESPLAZAMIENTO, INCREMENTO, PESO, METAL, RANGO, null);
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, SUBCORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaMixta = crearPieza(PIEZA_ID, NUM_PIEZAS_1, alhaja, diamante, null);
 
@@ -1326,7 +1327,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico31");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, SUBCORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
         Complemento complemento =
             crearComplemento(crearValorExperto(null, new BigDecimal(10)));
 
@@ -1369,7 +1370,7 @@ public class ValuadorDiamantesITest {
         Alhaja alhaja =
             crearAlhaja(CALIDAD, COLOR_A, DESPLAZAMIENTO, INCREMENTO, PESO, METAL, RANGO, null);
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, SUBCORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
         Complemento complemento =
             crearComplemento(crearValorExperto(null, new BigDecimal(10)));
 
@@ -1438,7 +1439,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico34");
 
         Diamante diamante =
-            crearDiamante(null, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
+            crearDiamante(null, CLARIDAD, COLOR_D, CORTE, SUBCORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -1624,7 +1625,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico37");
 
         Diamante diamante =
-            crearDiamante(null, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
+            crearDiamante(null, CLARIDAD, COLOR_D, CORTE, SUBCORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Alhaja alhaja =
             crearAlhaja(CALIDAD, COLOR_A, DESPLAZAMIENTO, INCREMENTO, PESO, METAL, RANGO, null);
@@ -1693,7 +1694,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico38");
 
         Diamante diamante =
-            crearDiamante(null, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
+            crearDiamante(null, CLARIDAD, COLOR_D, CORTE, SUBCORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Complemento complemento =
             crearComplemento(crearValorExperto(null, new BigDecimal(10)));
@@ -1833,7 +1834,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico40");
 
         Diamante diamante =
-            crearDiamante(null, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
+            crearDiamante(null, CLARIDAD, COLOR_D, CORTE, SUBCORTE, QUILATES, null, QUILATES_DESDE, QUILATES_HASTA);
 
         Alhaja alhaja =
             crearAlhaja(CALIDAD, COLOR_A, DESPLAZAMIENTO, INCREMENTO, PESO, METAL, RANGO, null);
@@ -1905,7 +1906,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico41");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, null, QUILATES_HASTA);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, SUBCORTE, QUILATES, null, null, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -1942,7 +1943,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico42");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, null);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, SUBCORTE, QUILATES, null, QUILATES_DESDE, null);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -1979,7 +1980,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico43");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, CERO, QUILATES_HASTA);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, SUBCORTE, QUILATES, null, CERO, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -2016,7 +2017,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico44");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, CERO);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, SUBCORTE, QUILATES, null, QUILATES_DESDE, CERO);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -2053,7 +2054,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico19_1");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, MENOR_CERO, QUILATES_HASTA);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, SUBCORTE, QUILATES, null, MENOR_CERO, QUILATES_HASTA);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -2090,7 +2091,7 @@ public class ValuadorDiamantesITest {
         LOGGER.debug(">> valuarPrendaBasico46");
 
         Diamante diamante =
-            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, QUILATES, null, QUILATES_DESDE, MENOR_CERO);
+            crearDiamante(CERTIFICADO, CLARIDAD, COLOR_D, CORTE, SUBCORTE, QUILATES, null, QUILATES_DESDE, MENOR_CERO);
 
         Pieza piezaDiamante = crearPieza(PIEZA_DIAMANTE_ID, NUM_PIEZAS_1, null, diamante, null);
 
@@ -2200,6 +2201,7 @@ public class ValuadorDiamantesITest {
      * @param claridad La claridad del diamante.
      * @param color El color del diamante.
      * @param corte El tipo de corte del diamante.
+     * @param subcorte El tipo de corte hijo del diamante.
      * @param quilates La calidad en quilates del diamante.
      * @param valorExperto El valor experto.
      * @return La entidad {@link Diamante} creada.
@@ -2208,6 +2210,7 @@ public class ValuadorDiamantesITest {
                                    String claridad,
                                    String color,
                                    String corte,
+                                   String subcorte,
                                    BigDecimal quilates,
                                    ValorExperto valorExperto,
                                    BigDecimal quilatesDesde,
@@ -2217,6 +2220,7 @@ public class ValuadorDiamantesITest {
         diamante.setClaridad(claridad);
         diamante.setColor(color);
         diamante.setCorte(corte);
+        diamante.setSubcorte(subcorte);
         diamante.setForma("F-Diamante");
         diamante.setQuilataje(quilates);
         diamante.setValorExperto(valorExperto);

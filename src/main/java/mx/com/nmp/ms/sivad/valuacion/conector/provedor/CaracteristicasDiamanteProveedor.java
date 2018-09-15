@@ -23,6 +23,13 @@ public interface CaracteristicasDiamanteProveedor {
     String getCorte();
 
     /**
+     * Recupera el suborte del diamante.
+     *
+     * @return Subcorte del diamante.
+     */
+    String getSubcorte();
+
+    /**
      * Recupera el Color del diamante.
      *
      * @return Color del diamante.

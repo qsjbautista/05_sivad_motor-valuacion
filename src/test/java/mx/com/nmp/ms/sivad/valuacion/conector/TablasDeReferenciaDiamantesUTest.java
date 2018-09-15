@@ -107,6 +107,11 @@ public class TablasDeReferenciaDiamantesUTest {
             }
 
             @Override
+            public String getSubcorte() {
+                return "xXx";
+            }
+
+            @Override
             public String getColor() {
                 return null;
             }
