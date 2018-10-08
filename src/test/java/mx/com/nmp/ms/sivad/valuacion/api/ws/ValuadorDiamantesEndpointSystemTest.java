@@ -36,7 +36,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Clase de prueba utilizada para validar el comportamiento de la clase {@link ValuadorDiamantesService}.
  *
- * @author osanchez, ngonzalez
+ * @author osanchez, ngonzalez, ecancino
  */
 @RunWith(SpringRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -58,6 +58,7 @@ public class ValuadorDiamantesEndpointSystemTest {
     private static final String COLOR_A = "Amarillo";
     private static final String COLOR_D = "D";
     private static final String CORTE = "Oval";
+    private static final String SUBCORTE = "Brillante";
     private static final String METAL = "AU";
     private static final String PIEZA_ALHAJA_ID = "1234567891";
     private static final String PIEZA_COMPLEMENTO_ID = "1234567892";
@@ -76,6 +77,10 @@ public class ValuadorDiamantesEndpointSystemTest {
         new BigDecimal(1.10D).setScale(2, BigDecimal.ROUND_HALF_UP);
     private static final BigDecimal PESO =
         new BigDecimal(25.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
+    private static final BigDecimal QUILATES_DESDE =
+        new BigDecimal(0.90D).setScale(2, BigDecimal.ROUND_HALF_UP);
+    private static final BigDecimal QUILATES_HASTA =
+        new BigDecimal(0.94D).setScale(2, BigDecimal.ROUND_HALF_UP);
 
     /**
      * Referencia hacia el endpoint del WS ReferenciaAlhajaService.
@@ -489,9 +494,12 @@ public class ValuadorDiamantesEndpointSystemTest {
         diamante.setClaridad(CLARIDAD);
         diamante.setColor(COLOR_D);
         diamante.setCorte(CORTE);
+        diamante.setSubcorte(SUBCORTE);
         diamante.setForma("F-Diamante");
         diamante.setQuilataje(QUILATES);
         diamante.setValorExperto(null);
+        diamante.setQuilatesDesde(QUILATES_DESDE);
+        diamante.setQuilatesHasta(QUILATES_HASTA);
 
         return diamante;
     }

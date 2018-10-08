@@ -80,7 +80,8 @@ public class TablasDeReferenciaDiamantesProxy implements TablasDeReferenciaDiama
     @Timed
     @Override
     @Cacheable(value = "TablasDeReferenciaDiamantes.obtenerValorComercial.cache", condition = "#proveedor != null ",
-        key = "T(java.util.Objects).hash(#proveedor.corte, #proveedor.color, #proveedor.claridad, #proveedor.quilates)")
+        key = "T(java.util.Objects).hash(#proveedor.corte, #proveedor.color, #proveedor.claridad, #proveedor.quilates," +
+            "#proveedor.quilatesDesde, #proveedor.quilatesHasta)")
     public ValorComercialConsumidor obtenerValorComercial(@NotNull final CaracteristicasDiamanteProveedor proveedor) {
         LOGGER.info(">> obtenerValorComercial({})", proveedor);
 

@@ -161,6 +161,11 @@ public class TablasDeReferenciaDiamantesITest {
             }
 
             @Override
+            public String getSubcorte() {
+                return "xXx";
+            }
+
+            @Override
             public String getColor() {
                 return "xXx";
             }
@@ -173,6 +178,16 @@ public class TablasDeReferenciaDiamantesITest {
             @Override
             public BigDecimal getQuilates() {
                 return BigDecimal.ONE;
+            }
+
+            @Override
+            public BigDecimal getQuilatesDesde() {
+                return BigDecimal.ONE;
+            }
+
+            @Override
+            public BigDecimal getQuilatesHasta() {
+                return BigDecimal.TEN;
             }
         };
     }

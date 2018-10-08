@@ -7,7 +7,7 @@ package mx.com.nmp.ms.sivad.valuacion.dominio.exception;
 /**
  * Enum que define los códigos de excepción que serán manejadas en el dominio.
  *
- * @author ngonzalez
+ * @author ngonzalez, ecancino
  */
 public enum DomainExceptionCodes {
 
@@ -55,6 +55,10 @@ public enum DomainExceptionCodes {
         "El corte del diamante no debe ser nulo."),
     DIAMANTE_CORTE_VACIO("DIAMANTE_CORTE_VACIO",
         "El corte del diamante no debe estar vacio."),
+    DIAMANTE_SUBCORTE_NULO("DIAMANTE_SUBCORTE_NULO",
+        "El subcorte del diamante no debe ser nulo."),
+    DIAMANTE_SUBCORTE_VACIO("DIAMANTE_SUBCORTE_VACIO",
+        "El subcorte del diamante no debe estar vacio."),
     DIAMANTE_QUILATES_MENOR_IGUAL_CERO("DIAMANTE_QUILATES_MENOR_IGUAL_CERO",
         "El valor en quilates del diamante no debe ser menor, ni igual a cero."),
     DIAMANTE_QUILATES_NULO("DIAMANTE_QUILATES_NULO",
@@ -75,7 +79,15 @@ public enum DomainExceptionCodes {
         "La lista de modificadores - condición prenda no debe estar vacia."),
     MODIFICADOR_CONDICION_PRENDA_ULTIMA_ACTUALIZACION_NULA("MODIFICADOR_CONDICION_PRENDA_ULTIMA_ACTUALIZACION_NULA",
         "La fecha de ultima actualizacion no debe ser nula."),
-    CODICION_FISICA_PRENDA("CODICION_FISICA_PRENDA", "La condicion fisica de la prenda no debe ser nula o vacia.");
+    CODICION_FISICA_PRENDA("CODICION_FISICA_PRENDA", "La condicion fisica de la prenda no debe ser nula o vacia."),
+    DIAMANTE_QUILATES_DESDE_MENOR_IGUAL_CERO("DIAMANTE_QUILATES_DESDE_MENOR_IGUAL_CERO",
+        "El valor en quilates inferior del diamante no debe ser menor, ni igual a cero."),
+    DIAMANTE_QUILATES_DESDE_NULO("DIAMANTE_QUILATES_DESDE_NULO",
+        "El valor en quilates inferior del diamante no debe ser nulo."),
+    DIAMANTE_QUILATES_HASTA_MENOR_IGUAL_CERO("DIAMANTE_QUILATES_DESDE_MENOR_IGUAL_CERO",
+        "El valor en quilates superior del diamante no debe ser menor, ni igual a cero."),
+    DIAMANTE_QUILATES_HASTA_NULO("DIAMANTE_QUILATES_DESDE_NULO",
+        "El valor en quilates superior del diamante no debe ser nulo.");
 
     /**
      * Código de la excepción.

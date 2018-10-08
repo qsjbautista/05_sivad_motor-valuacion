@@ -147,7 +147,17 @@ public class Prenda implements PiezaValuable {
             avaluoTotal = sumarAvaluos(avaluoTotal, entry.getValue());
         }
 
-        return aplicarPorcentajeCondidicionesFisicas(avaluoTotal);
+        for (Pieza pieza : piezas) {
+            if (!ObjectUtils.isEmpty(politicasCastigo) && !ObjectUtils.isEmpty(politicasCastigo.getFactores())) {
+                pieza.setAvaluoPoliticas(aplicarPoliticaCastigo(pieza.getAvaluo(), politicasCastigo.getFactores().get(pieza.getClass())));
+            }
+        }
+
+        if (!ObjectUtils.isEmpty(condicionFisica)) {
+            return aplicarPorcentajeCondidicionesFisicas(avaluoTotal);
+        } else {
+            return avaluoTotal;
+        }
     }
 
     /**
