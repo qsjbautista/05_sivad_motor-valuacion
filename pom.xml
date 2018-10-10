@@ -71,12 +71,41 @@
 	</dependencyManagement>
 
 	<dependencies>
-        <!-- Arquetipo Microservicios NMP -->
+        <!-- Arquetipo Microservicios NMP
         <dependency>
             <groupId>mx.com.nmp.ms</groupId>
             <artifactId>arquetipo-starter</artifactId>
             <version>${nmp.arquetipo.version}</version>
+        </dependency>-->
+		
+		
+		<dependency>
+			<groupId>mx.com.nmp.ms</groupId>
+			<artifactId>arquetipo-core</artifactId>
+			<version>${nmp.arquetipo.version}</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/lib/arquetipo-core-${nmp.arquetipo.version}.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>mx.com.nmp.ms</groupId>
+			<artifactId>arquetipo-starter</artifactId>
+			<version>${nmp.arquetipo.version}</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/lib/arquetipo-starter-${nmp.arquetipo.version}.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>mx.com.nmp.ms</groupId>
+			<artifactId>arquetipo-mail-starter</artifactId>
+			<version>${nmp.arquetipo.version}</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/lib/arquetipo-mail-starter-${nmp.arquetipo.version}.jar</systemPath>
+		</dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
         </dependency>
+
+		
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
