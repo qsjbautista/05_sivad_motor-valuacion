@@ -56,6 +56,13 @@
             <id>arquetipo-starter</id>
             <url>https://github.com/MontePiedadMx/00_arquetipo</url>
         </repository>
+
+	    <!--other repositories if any-->
+	    <repository>
+	        <id>project.local</id>
+	        <name>project</name>
+	        <url>file:${project.basedir}/repo</url>
+	    </repository>
      </repositories>
     
 	<dependencyManagement>

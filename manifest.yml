@@ -1,12 +1,10 @@
 ---
 applications:
-- name: sivad-motor-valuacion
+- name: dev1775-motor-valuacion-sivad
   buildpack: https://github.com/cloudfoundry/java-buildpack.git
-  memory: 1G
-  timeout: 120
   path: target/sivad-motor-valuacion-0.9.0-SNAPSHOT.war
   env:
     spring.profiles.active: cloud
     TZ: America/Mexico_City
   services:
-  - sivad-motor-valuacion-bd
+  - dev1775-motor-valuacion-sivaddb
