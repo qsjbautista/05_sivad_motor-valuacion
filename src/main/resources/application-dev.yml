@@ -42,3 +42,12 @@ spring:
 # ===================================================================
 # Propiedades especificas de la aplicacion (microservicio)
 # ===================================================================
+application:
+    # por defecto cors esta desactivado, descomentar las siguientes lineas para activarlo
+    cors:
+      allowed-origins: "*"
+      allowed-methods: GET, PUT, POST, DELETE, OPTIONS
+      allowed-headers: "*"
+      exposed-headers:
+      allow-credentials: true
+      max-age: 1800
