@@ -19,6 +19,9 @@ import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * WS Utils
@@ -26,7 +29,9 @@ import javax.xml.ws.handler.soap.SOAPMessageContext;
  *
  */
 public class WSSecurityUtils {
-	
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(WSSecurityUtils.class);
+
 	/*static{
         System.setProperty("com.sun.xml.ws.transport.http.client.HttpTransportPipe.dump", "true");
         System.setProperty("com.sun.xml.ws.transport.http.HttpAdapter.dump", "true");
@@ -47,6 +52,7 @@ public class WSSecurityUtils {
 	    List<Handler> handlerChain = binding.getHandlerChain();
 	    handlerChain.add(new SOAPHeaderHandler(apikeyHeader, apiKeyValue, ns));
 	    binding.setHandlerChain(handlerChain);
+	    LOGGER.info("Added addHttpAPIKeyHeader");
 	}
 
 
@@ -77,7 +83,6 @@ public class WSSecurityUtils {
 	        Boolean outboundProperty = (Boolean)smc.get (MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 	        if (outboundProperty.booleanValue()) {
 	        	try {
-	                
 	        		SOAPMessage message = smc.getMessage();
 	        		SOAPEnvelope envelope = message.getSOAPPart().getEnvelope();
 					SOAPHeader header = message.getSOAPHeader();
@@ -87,17 +92,19 @@ public class WSSecurityUtils {
 					SOAPElement apiKeyElement = header.addChildElement(envelope.createName(apikeyHeader, "", ns));
 					apiKeyElement.setValue(apiKeyValue);
 
-	        		Map<String, List<String>> headers = (Map<String, List<String>>) smc.get(MessageContext.HTTP_RESPONSE_HEADERS);
+	        		Map<String, List<String>> headers = (Map<String, List<String>>) smc.get(MessageContext.HTTP_REQUEST_HEADERS);
 	                if (null == headers) {
 	                    headers = new HashMap<String, List<String>>();
-	                    smc.put(MessageContext.HTTP_RESPONSE_HEADERS, headers);
 	                }
 	                headers.put(apikeyHeader, Collections.singletonList(apiKeyValue));
+	                smc.put(MessageContext.HTTP_REQUEST_HEADERS, headers);
+	                LOGGER.info("Added " + apiKeyValue + " to headers");
 
 	        	} catch (Exception e) {
 					e.printStackTrace();
 				}
 	        }
+	        
 	        return true;
 	    }
 
