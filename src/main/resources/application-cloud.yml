@@ -27,6 +27,7 @@ spring:
                 prepStmtCacheSize: 250
                 prepStmtCacheSqlLimit: 2048
                 useServerPrepStmts: true
+        max-active: 153
     h2:
         console:
             enabled: true

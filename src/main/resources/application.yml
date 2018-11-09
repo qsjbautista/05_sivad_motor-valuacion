@@ -29,6 +29,10 @@ valuacion:
         wsdlLocation: http://localhost:8084/soap-api/ReferenciaAlhajaService?wsdl
     diamante:
         wsdlLocation: http://localhost:8084/soap-api/ReferenciaDiamanteService?wsdl
+    header:
+        api:
+          name: X-IBM-Client-Id
+          key: 9e6910db-41c6-492c-bd20-f5b5e78042cd 
   avaluo:
     redondeo: DOS_DECIMALES_ROUND_HALF_UP
 

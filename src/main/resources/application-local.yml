@@ -26,6 +26,7 @@ spring:
         name: sivad-motor-valuacion
         username: root
         password: password
+        max-active: 153
         hikari:
             data-source-properties:
                 cachePrepStmts: true

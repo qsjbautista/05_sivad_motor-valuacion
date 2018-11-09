@@ -9,6 +9,8 @@ package mx.com.nmp.ms.sivad.valuacion.conector.referencia.alhaja;
 
 import mx.com.nmp.ms.sivad.referencia.api.ws.ReferenciaAlhajaService;
 import mx.com.nmp.ms.sivad.referencia.api.ws.ReferenciaAlhajaServiceEndpointService;
+import mx.com.nmp.ms.sivad.valuacion.security.WSSecurityUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +34,18 @@ public class ReferenciaAlhajasConector {
      */
     @Value("${valuacion.referencia.alhaja.wsdlLocation}")
     private String wsdlLocation;
+
+    /**
+     * Header name
+     */
+    @Value("${valuacion.referencia.header.api.name}")
+    private String apiName;
+
+    /**
+     * Token value
+     */
+    @Value("${valuacion.referencia.header.api.key}")
+    private String apiKey;
 
     /**
      * Referencia hacia el Servicio Web Referencia de Alhajas.
@@ -75,6 +89,8 @@ public class ReferenciaAlhajasConector {
         }
 
         wsReferenciaAlhaja = ep.getReferenciaAlhajaServiceEndpointPort();
+        
+        WSSecurityUtils.addHttpAPIKeyHeader(wsReferenciaAlhaja, apiName, apiKey, "http://ws.api.referencia.sivad.ms.nmp.com.mx/");
     }
 
     /**
