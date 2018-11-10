@@ -9,6 +9,8 @@ package mx.com.nmp.ms.sivad.valuacion.conector.referencia.alhaja;
 
 import mx.com.nmp.ms.sivad.referencia.api.ws.ReferenciaAlhajaService;
 import mx.com.nmp.ms.sivad.referencia.api.ws.ReferenciaAlhajaServiceEndpointService;
+import mx.com.nmp.ms.sivad.referencia.api.ws.ReferenciaDiamanteService;
+import mx.com.nmp.ms.sivad.valuacion.conector.referencia.diamante.ReferenciaDiamantesConector;
 import mx.com.nmp.ms.sivad.valuacion.security.WSSecurityUtils;
 
 import org.slf4j.Logger;
@@ -78,7 +80,7 @@ public class ReferenciaAlhajasConector {
      */
     private void crearReferenciaAlhajaService() {
         ReferenciaAlhajaServiceEndpointService ep;
-        URL url = getURL();
+        URL url = getLocalURL();
 
         if (ObjectUtils.isEmpty(url)) {
             LOGGER.info("Creando referencia al WS Referencia Alhajas. con valores por defecto");
@@ -88,9 +90,13 @@ public class ReferenciaAlhajasConector {
             ep = new ReferenciaAlhajaServiceEndpointService(url);
         }
 
-        wsReferenciaAlhaja = ep.getReferenciaAlhajaServiceEndpointPort();
-        
-        WSSecurityUtils.addHttpAPIKeyHeader(wsReferenciaAlhaja, apiName, apiKey, "http://ws.api.referencia.sivad.ms.nmp.com.mx/");
+        wsReferenciaAlhaja = (ReferenciaAlhajaService) WSSecurityUtils.createService(
+        	ep.getReferenciaAlhajaServiceEndpointPort(),
+    		getURL(),
+    		apiName,
+    		apiKey,
+    		"http://ws.api.referencia.sivad.ms.nmp.com.mx/"
+		);
     }
 
     /**
@@ -112,4 +118,18 @@ public class ReferenciaAlhajasConector {
 
         return url;
     }
+    private URL getLocalURL() {
+        String wsdlLocalLocation = "client-api-definition/ReferenciaAlhajas.wsdl";
+
+        URL url = null;
+        try {
+        	url = ReferenciaAlhajasConector.class.getResource(wsdlLocalLocation);
+            LOGGER.info("Creando URL con {}", wsdlLocalLocation);
+        } catch (Exception e) {
+            LOGGER.warn("La URL no es valida. {}", wsdlLocalLocation, e);
+        }
+
+        return url;
+    }
+
 }

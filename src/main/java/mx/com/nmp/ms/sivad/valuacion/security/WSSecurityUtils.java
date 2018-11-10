@@ -1,9 +1,12 @@
 package mx.com.nmp.ms.sivad.valuacion.security;
 
+import java.net.URI;
+import java.net.URL;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -39,6 +42,26 @@ public class WSSecurityUtils {
         System.setProperty("com.sun.xml.internal.ws.transport.http.HttpAdapter.dump", "true");
     }*/
 
+    /**
+     * Setea la direccion del endpoint
+     * @param port
+     * @param endpoint
+     * @return
+     */
+    public static <T> T createService(T port, URL wsdlRemote, String apikeyHeader, String apiKeyValue, String ns) {
+    	
+    	BindingProvider bindingProvider = (BindingProvider) port;
+    	
+    	// Replace URL
+    	String localUrl = (String) bindingProvider.getRequestContext().get(BindingProvider.ENDPOINT_ADDRESS_PROPERTY);
+    	String remoteUrl = wsdlRemote.toString().replaceAll("\\?wsdl", "");
+    	LOGGER.info("Replacing endpoint: " + localUrl + "->" + remoteUrl);
+    	bindingProvider.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, remoteUrl);
+
+    	return addHttpAPIKeyHeader(port, apikeyHeader, apiKeyValue, ns);
+    }
+    
+    
 	/**
 	 * Agrega un http header con el API de autorizacion
 	 * @param port
@@ -46,13 +69,17 @@ public class WSSecurityUtils {
 	 * @param apiKeyValue
 	 */
 	@SuppressWarnings("rawtypes")
-	public static <T> void addHttpAPIKeyHeader(T port, String apikeyHeader, String apiKeyValue, String ns) {
+	private static <T> T addHttpAPIKeyHeader(T port, String apikeyHeader, String apiKeyValue, String ns) {
+		LOGGER.info("Adding header and api key: " + apikeyHeader);
+
 		BindingProvider bindingProvider = (BindingProvider)port;
 		Binding binding = bindingProvider.getBinding();
 	    List<Handler> handlerChain = binding.getHandlerChain();
 	    handlerChain.add(new SOAPHeaderHandler(apikeyHeader, apiKeyValue, ns));
 	    binding.setHandlerChain(handlerChain);
 	    LOGGER.info("Added addHttpAPIKeyHeader");
+
+	    return port;
 	}
 
 
@@ -97,8 +124,12 @@ public class WSSecurityUtils {
 	                    headers = new HashMap<String, List<String>>();
 	                }
 	                headers.put(apikeyHeader, Collections.singletonList(apiKeyValue));
-	                smc.put(MessageContext.HTTP_REQUEST_HEADERS, headers);
 	                LOGGER.info("Added " + apiKeyValue + " to headers");
+
+	                // Remove action
+	                headers.put("SOAPAction", Collections.singletonList(""));
+
+	                smc.put(MessageContext.HTTP_REQUEST_HEADERS, headers);
 
 	        	} catch (Exception e) {
 					e.printStackTrace();
@@ -116,6 +147,25 @@ public class WSSecurityUtils {
 	    public void close(MessageContext messageContext) {
 	    }
 
+	}
+
+	public static String replaceHostInUrl(String originalURL, String newAuthority) {
+		String host = null;
+		try {
+			URI uri = new URI(originalURL);
+			uri = new URI(
+				uri.getScheme().toLowerCase(Locale.US),
+				newAuthority,
+				uri.getPath(),
+				uri.getQuery(),
+				uri.getFragment()
+			);
+			host = uri.toString();
+		}
+		catch (Exception ex) {
+			LOGGER.warn("Error al reemplazar WSDL address. {}", ex);
+		}
+		return host;
 	}
 
 }

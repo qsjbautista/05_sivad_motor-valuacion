@@ -78,7 +78,7 @@ public class ReferenciaDiamantesConector {
      */
     private void crearReferenciaDiamanteService() {
         ReferenciaDiamantesServiceEndpointService ep;
-        URL url = getURL();
+        URL url = getLocalURL();
 
         if (ObjectUtils.isEmpty(url)) {
             LOGGER.info("Creando referencia al WS Referencia Diamantes. con valores por defecto");
@@ -88,9 +88,13 @@ public class ReferenciaDiamantesConector {
             ep = new ReferenciaDiamantesServiceEndpointService(url);
         }
 
-        wsReferenciaDiamante = ep.getReferenciaDiamantesServiceEndpointPort();
-
-        WSSecurityUtils.addHttpAPIKeyHeader(wsReferenciaDiamante, apiName, apiKey, "http://ws.api.referencia.sivad.ms.nmp.com.mx/");
+        wsReferenciaDiamante = (ReferenciaDiamanteService) WSSecurityUtils.createService(
+        	ep.getReferenciaDiamantesServiceEndpointPort(),
+    		getURL(),
+    		apiName,
+    		apiKey,
+    		"http://ws.api.referencia.sivad.ms.nmp.com.mx/"
+		);
     }
 
     /**
@@ -111,5 +115,20 @@ public class ReferenciaDiamantesConector {
         }
 
         return url;
+    }	
+
+    private URL getLocalURL() {
+        String wsdlLocalLocation = "client-api-definition/ReferenciaDiamantes.wsdl";
+
+        URL url = null;
+        try {
+        	url = ReferenciaDiamantesConector.class.getResource(wsdlLocalLocation);
+            LOGGER.info("Creando URL con {}", wsdlLocalLocation);
+        } catch (Exception e) {
+            LOGGER.warn("La URL no es valida. {}", wsdlLocalLocation, e);
+        }
+
+        return url;
     }
+
 }
