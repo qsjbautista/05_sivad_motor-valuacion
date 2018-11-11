@@ -83,8 +83,9 @@ public class ReferenciaAlhajasConector {
         URL url = getLocalURL();
 
         if (ObjectUtils.isEmpty(url)) {
+        	url =null;
             LOGGER.info("Creando referencia al WS Referencia Alhajas. con valores por defecto");
-            ep = new ReferenciaAlhajaServiceEndpointService();
+            ep = new ReferenciaAlhajaServiceEndpointService(url);
         } else {
             LOGGER.info("Creando referencia al WS Referencia Alhajas. con URL {}", url);
             ep = new ReferenciaAlhajaServiceEndpointService(url);

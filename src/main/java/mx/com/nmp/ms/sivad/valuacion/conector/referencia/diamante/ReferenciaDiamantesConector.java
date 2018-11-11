@@ -82,7 +82,8 @@ public class ReferenciaDiamantesConector {
 
         if (ObjectUtils.isEmpty(url)) {
             LOGGER.info("Creando referencia al WS Referencia Diamantes. con valores por defecto");
-            ep = new ReferenciaDiamantesServiceEndpointService();
+            url = null;
+            ep = new ReferenciaDiamantesServiceEndpointService(url);
         } else {
             LOGGER.info("Creando referencia al WS Referencia Diamantes. con URL {}", url);
             ep = new ReferenciaDiamantesServiceEndpointService(url);
