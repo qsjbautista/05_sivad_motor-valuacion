@@ -118,12 +118,12 @@ public class ReferenciaDiamantesConector {
     }	
 
     private URL getLocalURL() {
-        String wsdlLocalLocation = "client-api-definition/ReferenciaDiamantes.wsdl";
+        String wsdlLocalLocation = "/app/WEB-INF/classes/client-api-definition/ReferenciaDiamantes.wsdl";
 
         URL url = null;
         try {
         	url = ReferenciaDiamantesConector.class.getResource(wsdlLocalLocation);
-            LOGGER.info("Creando URL con {}", wsdlLocalLocation);
+            LOGGER.info("Creando URL con {}, url={}", wsdlLocalLocation, url);
         } catch (Exception e) {
             LOGGER.warn("La URL no es valida. {}", wsdlLocalLocation, e);
         }
