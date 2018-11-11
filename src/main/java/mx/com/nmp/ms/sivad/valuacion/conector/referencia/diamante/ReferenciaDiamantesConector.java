@@ -119,7 +119,7 @@ public class ReferenciaDiamantesConector {
     }	
 
     private URL getLocalURL() {
-        String wsdlLocalLocation = "/app/WEB-INF/classes/client-api-definition/ReferenciaDiamantes.wsdl";
+        String wsdlLocalLocation = "/client-api-definition/ReferenciaDiamantes.wsdl";
 
         URL url = null;
         try {

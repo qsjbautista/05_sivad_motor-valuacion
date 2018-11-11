@@ -120,7 +120,7 @@ public class ReferenciaAlhajasConector {
         return url;
     }
     private URL getLocalURL() {
-        String wsdlLocalLocation = "/app/WEB-INF/classes/client-api-definition/ReferenciaAlhajas.wsdl";
+        String wsdlLocalLocation = "/client-api-definition/ReferenciaAlhajas.wsdl";
 
         URL url = null;
         try {
