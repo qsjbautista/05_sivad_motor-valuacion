@@ -153,6 +153,12 @@
             <artifactId>spring-cloud-starter</artifactId>
         </dependency>
 
+        <!-- Cloud -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cloud-connectors</artifactId>
+        </dependency>
+
         <!-- metricas de rendimiento -->
 		<dependency>
             <groupId>io.dropwizard.metrics</groupId>
