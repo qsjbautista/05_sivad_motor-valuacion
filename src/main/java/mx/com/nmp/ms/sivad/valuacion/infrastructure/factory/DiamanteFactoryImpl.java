@@ -25,7 +25,7 @@ import static mx.com.nmp.ms.sivad.valuacion.infrastructure.factory.ConstructorUt
 /**
  * Fábrica para crear entidades tipo {@link Diamante}.
  *
- * @author ngonzalez
+ * @author ngonzalez, ecancino
  */
 @Component
 public class DiamanteFactoryImpl implements DiamanteFactory {
@@ -93,6 +93,11 @@ public class DiamanteFactoryImpl implements DiamanteFactory {
             }
 
             @Override
+            public String getSubcorte() {
+                return diamanteDTO.getSubcorte();
+            }
+
+            @Override
             public String getColor() {
                 return diamanteDTO.getColor();
             }
@@ -117,6 +122,16 @@ public class DiamanteFactoryImpl implements DiamanteFactory {
                 return diamanteDTO.getValorExperto();
             }
 
+            @Override
+            public BigDecimal getQuilatesDesde() {
+                return diamanteDTO.getQuilatesDesde();
+            }
+
+            @Override
+            public BigDecimal getQuilatesHasta() {
+                return diamanteDTO.getQuilatesHasta();
+            }
+
         };
     }
 
@@ -136,6 +151,11 @@ public class DiamanteFactoryImpl implements DiamanteFactory {
             DomainExceptionCodes.DIAMANTE_CORTE_NULO.getMessageException());
         Assert.hasText(builder.getCorte(),
             DomainExceptionCodes.DIAMANTE_CORTE_VACIO.getMessageException());
+
+        Assert.notNull(builder.getSubcorte(),
+            DomainExceptionCodes.DIAMANTE_SUBCORTE_NULO.getMessageException());
+        Assert.hasText(builder.getSubcorte(),
+            DomainExceptionCodes.DIAMANTE_SUBCORTE_VACIO.getMessageException());
 
         Assert.notNull(builder.getColor(),
             DomainExceptionCodes.DIAMANTE_COLOR_NULO.getMessageException());
@@ -157,6 +177,16 @@ public class DiamanteFactoryImpl implements DiamanteFactory {
             ValidadorNumero.validarPositivo(builder.getValorExperto().getValor(),
                 DomainExceptionCodes.DIAMANTE_VALOR_EXPERTO_MENOR_IGUAL_CERO.getMessageException());
         }
+
+        Assert.notNull(builder.getQuilatesDesde(),
+            DomainExceptionCodes.DIAMANTE_QUILATES_DESDE_NULO.getMessageException());
+        ValidadorNumero.validarPositivo(builder.getQuilatesDesde(),
+            DomainExceptionCodes.DIAMANTE_QUILATES_DESDE_MENOR_IGUAL_CERO.getMessageException());
+
+        Assert.notNull(builder.getQuilatesHasta(),
+            DomainExceptionCodes.DIAMANTE_QUILATES_HASTA_NULO.getMessageException());
+        ValidadorNumero.validarPositivo(builder.getQuilatesHasta(),
+            DomainExceptionCodes.DIAMANTE_QUILATES_HASTA_MENOR_IGUAL_CERO.getMessageException());
     }
 
 }

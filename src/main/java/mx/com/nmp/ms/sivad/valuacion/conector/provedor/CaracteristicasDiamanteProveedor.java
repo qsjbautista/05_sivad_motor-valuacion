@@ -23,6 +23,13 @@ public interface CaracteristicasDiamanteProveedor {
     String getCorte();
 
     /**
+     * Recupera el suborte del diamante.
+     *
+     * @return Subcorte del diamante.
+     */
+    String getSubcorte();
+
+    /**
      * Recupera el Color del diamante.
      *
      * @return Color del diamante.
@@ -42,4 +49,18 @@ public interface CaracteristicasDiamanteProveedor {
      * @return Quilates del diamante.
      */
     BigDecimal getQuilates();
+
+    /**
+     * Recupera los Quilates inferior del diamante.
+     *
+     * @return Quilates inferior del diamante.
+     */
+    BigDecimal getQuilatesDesde();
+
+    /**
+     * Recupera los Quilates superior del diamante.
+     *
+     * @return Quilates superior del diamante.
+     */
+    BigDecimal getQuilatesHasta();
 }

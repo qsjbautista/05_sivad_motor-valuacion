@@ -22,7 +22,7 @@ import java.math.BigDecimal;
  * Clase que extiende de la clase {@link Pieza}, ésta clase representa una Diamante y encapsula
  * la lógica para valuar este tipo de piezas.
  *
- * @author ngonzalez
+ * @author ngonzalez, ecancino
  */
 public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor, CertificadoDiamanteProveedor {
 
@@ -35,6 +35,11 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
      * El tipo de corte del diamante con base en el catálogo de cortes.
      */
     private String corte;
+
+    /**
+     * El tipo de corte hijo del diamante con base en el catálogo de cortes.
+     */
+    private String subcorte;
 
     /**
      * El tipo de color del diamante con base en la clasificación GIA.
@@ -62,6 +67,16 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
     private ValorExperto valorExperto;
 
     /**
+     * Rango inferior del peso del diamante.
+     */
+    private BigDecimal quilatesDesde;
+
+    /**
+     * Rango superior del peso del diamante.
+     */
+    private BigDecimal quilatesHasta;
+
+    /**
      * Referencia hacia el conector con el sistema de tablas de referencia.
      */
     private TablasDeReferenciaDiamantes conector;
@@ -84,6 +99,13 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
          * @return El tipo de corte del diamante.
          */
         public String getCorte();
+
+        /**
+         * Permite obtener el tipo de corte hijo del diamante.
+         *
+         * @return El tipo de corte hijo del diamante.
+         */
+        public String getSubcorte();
 
         /**
          * Permite obtener el tipo de color del diamante.
@@ -120,6 +142,20 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
          */
         public ValorExperto getValorExperto();
 
+        /**
+         * Permite obtener el rango inferior del peso en quilates del diamante.
+         *
+         * @return El rango inferior del peso en quilates del diamante.
+         */
+        public BigDecimal getQuilatesDesde();
+
+        /**
+         * Permite obtener el rango superior del peso en quilates del diamante.
+         *
+         * @return El rango superior del peso en quilates del diamante.
+         */
+        public BigDecimal getQuilatesHasta();
+
     }
 
 
@@ -136,11 +172,14 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
 
         this.numeroDePiezas = builder.getNumeroDePiezas();
         this.corte = builder.getCorte();
+        this.subcorte = builder.getSubcorte();
         this.color = builder.getColor();
         this.claridad = builder.getClaridad();
         this.quilates = builder.getQuilates();
         this.certificadoDiamante = builder.getCertificadoDiamante();
         this.valorExperto = builder.getValorExperto();
+        this.quilatesDesde = builder.getQuilatesDesde();
+        this.quilatesHasta = builder.getQuilatesHasta();
         this.conector = conector;
     }
 
@@ -242,6 +281,10 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
         return corte;
     }
 
+    public String getSubcorte() {
+        return subcorte;
+    }
+
     public String getColor() {
         return color;
     }
@@ -262,4 +305,11 @@ public class Diamante extends Pieza implements CaracteristicasDiamanteProveedor,
         return valorExperto;
     }
 
+    public BigDecimal getQuilatesDesde() {
+        return quilatesDesde;
+    }
+
+    public BigDecimal getQuilatesHasta() {
+        return quilatesHasta;
+    }
 }

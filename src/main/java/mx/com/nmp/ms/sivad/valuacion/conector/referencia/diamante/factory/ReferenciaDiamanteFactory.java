@@ -47,9 +47,12 @@ public class ReferenciaDiamanteFactory {
         ObtenerValorComercialRequest valorComercial =  objectFactory.createObtenerValorComercialRequest();
 
         valorComercial.setCorte(proveedor.getCorte());
+        valorComercial.setSubcorte(proveedor.getSubcorte());
         valorComercial.setColor(proveedor.getColor());
         valorComercial.setClaridad(proveedor.getClaridad());
         valorComercial.setQuilatesCt(proveedor.getQuilates());
+        valorComercial.setQuilatesDesde(proveedor.getQuilatesDesde());
+        valorComercial.setQuilatesHasta(proveedor.getQuilatesHasta());
 
         return valorComercial;
     }

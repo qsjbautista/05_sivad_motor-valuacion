@@ -9,6 +9,10 @@ package mx.com.nmp.ms.sivad.valuacion.conector.referencia.alhaja;
 
 import mx.com.nmp.ms.sivad.referencia.api.ws.ReferenciaAlhajaService;
 import mx.com.nmp.ms.sivad.referencia.api.ws.ReferenciaAlhajaServiceEndpointService;
+import mx.com.nmp.ms.sivad.referencia.api.ws.ReferenciaDiamanteService;
+import mx.com.nmp.ms.sivad.valuacion.conector.referencia.diamante.ReferenciaDiamantesConector;
+import mx.com.nmp.ms.sivad.valuacion.security.WSSecurityUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +36,18 @@ public class ReferenciaAlhajasConector {
      */
     @Value("${valuacion.referencia.alhaja.wsdlLocation}")
     private String wsdlLocation;
+
+    /**
+     * Header name
+     */
+    @Value("${valuacion.referencia.header.api.name}")
+    private String apiName;
+
+    /**
+     * Token value
+     */
+    @Value("${valuacion.referencia.header.api.key}")
+    private String apiKey;
 
     /**
      * Referencia hacia el Servicio Web Referencia de Alhajas.
@@ -64,17 +80,24 @@ public class ReferenciaAlhajasConector {
      */
     private void crearReferenciaAlhajaService() {
         ReferenciaAlhajaServiceEndpointService ep;
-        URL url = getURL();
+        URL url = getLocalURL();
 
         if (ObjectUtils.isEmpty(url)) {
+        	url =null;
             LOGGER.info("Creando referencia al WS Referencia Alhajas. con valores por defecto");
-            ep = new ReferenciaAlhajaServiceEndpointService();
+            ep = new ReferenciaAlhajaServiceEndpointService(url);
         } else {
             LOGGER.info("Creando referencia al WS Referencia Alhajas. con URL {}", url);
             ep = new ReferenciaAlhajaServiceEndpointService(url);
         }
 
-        wsReferenciaAlhaja = ep.getReferenciaAlhajaServiceEndpointPort();
+        wsReferenciaAlhaja = (ReferenciaAlhajaService) WSSecurityUtils.createService(
+        	ep.getReferenciaAlhajaServiceEndpointPort(),
+    		getURL(),
+    		apiName,
+    		apiKey,
+    		"http://ws.api.referencia.sivad.ms.nmp.com.mx/"
+		);
     }
 
     /**
@@ -96,4 +119,18 @@ public class ReferenciaAlhajasConector {
 
         return url;
     }
+    private URL getLocalURL() {
+        String wsdlLocalLocation = "/client-api-definition/ReferenciaAlhajas.wsdl";
+
+        URL url = null;
+        try {
+        	url = ReferenciaAlhajasConector.class.getResource(wsdlLocalLocation);
+            LOGGER.info("Creando URL con {}", wsdlLocalLocation);
+        } catch (Exception e) {
+            LOGGER.warn("La URL no es valida. {}", wsdlLocalLocation, e);
+        }
+
+        return url;
+    }
+
 }

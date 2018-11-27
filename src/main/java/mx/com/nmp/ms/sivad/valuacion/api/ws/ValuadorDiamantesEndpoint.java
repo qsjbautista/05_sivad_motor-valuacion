@@ -31,7 +31,7 @@ import java.util.*;
  * Implementación de ValuadorDiamantesService, la cual expone los servicios que permitirán realizar
  * la valuación de las prendas.
  *
- * @author osanchez, ngonzalez
+ * @author osanchez, ngonzalez, ecancino
  */
 @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
 public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
@@ -296,11 +296,14 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
         DiamanteDTO diamanteDTO = new DiamanteDTO(
             numeroDePiezas,
             diamante.getCorte(),
+            diamante.getSubcorte(),
             diamante.getColor(),
             diamante.getClaridad(),
             diamante.getQuilataje(),
             diamante.getCertificado(),
-            crearValorExperto(diamante.getValorExperto()));
+            crearValorExperto(diamante.getValorExperto()),
+            diamante.getQuilatesDesde(),
+            diamante.getQuilatesHasta());
 
         mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Diamante diamanteValuable;
 
@@ -396,6 +399,15 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
             avaluo.setValorPromedio(piezaValuada.getAvaluo().valorPromedio());
             avaluo.setValorMaximo(piezaValuada.getAvaluo().valorMaximo());
             pieza.setAvaluo(avaluo);
+
+            //AVALUO CON LAS POLITICAS DE CASTIGO O FACTOR DE PARTICIPACION DE LA PIEZA APLICADO
+            if (!ObjectUtils.isEmpty(piezaValuada.getAvaluoPoliticas())) {
+                Avaluo avaluoPoliticas = new Avaluo();
+                avaluoPoliticas.setValorMinimo(piezaValuada.getAvaluoPoliticas().valorMinimo());
+                avaluoPoliticas.setValorPromedio(piezaValuada.getAvaluoPoliticas().valorPromedio());
+                avaluoPoliticas.setValorMaximo(piezaValuada.getAvaluoPoliticas().valorMaximo());
+                pieza.setAvaluoPoliticas(avaluoPoliticas);
+            }
         }
 
         return prenda;
@@ -433,11 +445,12 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
 
         LOGGER.error("No se encontro una alhaja en la lista de piezas," +
             "si se realizaran valuaciones sin alhaja, cambiar la propiedad Alhaja.condicion a la Prenda");
-        LOGGER.debug(">> recuperarCondicionFisica. Result [{}]", "XX");
+        LOGGER.debug(">> recuperarCondicionFisica. Result [{}]", "null");
 
         // Este flujo no debera existir cuando se realice el cambio de Alhaja.condicion a la Prenda
         // Se regresa XX para evitar la validacion de nulo o cadena vacia.
-        return "XX";
+        //return "XX";
+        return null;
     }
 
     /**

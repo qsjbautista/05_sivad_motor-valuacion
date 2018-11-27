@@ -24,6 +24,11 @@ public abstract class Pieza implements PiezaValuable {
      */
     protected Avaluo avaluo;
 
+    /**
+     * Avalúo de la pieza con las politicas de castigo o factor de participacion aplicado.
+     */
+    protected Avaluo avaluoPoliticas;
+
 
 
     // GETTERS
@@ -40,4 +45,11 @@ public abstract class Pieza implements PiezaValuable {
         return avaluo;
     }
 
+    public void setAvaluoPoliticas(Avaluo avaluoPoliticas) {
+        this.avaluoPoliticas = avaluoPoliticas;
+    }
+
+    public Avaluo getAvaluoPoliticas() {
+        return avaluoPoliticas;
+    }
 }

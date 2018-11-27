@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.ObjectUtils;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;
@@ -25,7 +26,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Clase de prueba utilizada para validar el comportamiento de la clase {@link PrendaFactory}.
  *
- * @author ngonzalez
+ * @author ngonzalez, ecancino
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MotorValuacionApplication.class)
@@ -39,6 +40,7 @@ public class PrendaFactoryUTest {
     private static final String COLOR_A = "Amarillo";
     private static final String COLOR_D = "D";
     private static final String CORTE = "Oval";
+    private static final String SUBCORTE = "Brillante";
     private static final String METAL = "AU";
     private static final String RANGO = "F1";
 
@@ -52,6 +54,10 @@ public class PrendaFactoryUTest {
         new BigDecimal(25.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
     private static final ValorExperto VALOR_EXPERTO = new ValorExperto(
         new BigDecimal(500.00D).setScale(2, BigDecimal.ROUND_HALF_UP), ValorExperto.TipoEnum.TOTAL);
+    private static final BigDecimal QUILATES_RANGO_INFERIOR =
+        new BigDecimal(0.90D).setScale(2, BigDecimal.ROUND_HALF_UP);
+    private static final BigDecimal QUILATES_RANGO_SUPERIOR =
+        new BigDecimal(0.95D).setScale(2, BigDecimal.ROUND_HALF_UP);
 
     /**
      * Referencia hacia la fábrica de entidades tipo {@link Alhaja}.
@@ -102,7 +108,8 @@ public class PrendaFactoryUTest {
             new AlhajaDTO(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO);
 
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO);
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+                QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR);
 
         ComplementarioDTO complementarioDTO =
             new ComplementarioDTO(NUM_PIEZAS, VALOR_EXPERTO);
@@ -134,7 +141,8 @@ public class PrendaFactoryUTest {
             alhajaFactory.create(getBuilderAlhaja(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO));
 
         Diamante diamante =
-            diamanteFactory.create(getBuilderDiamante(NUM_PIEZAS, CORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO));
+            diamanteFactory.create(getBuilderDiamante(NUM_PIEZAS, CORTE, SUBCORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+                QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR));
 
         Complementario complementario =
             complementarioFactory.create(getBuilderComplementario(NUM_PIEZAS, VALOR_EXPERTO));
@@ -187,7 +195,8 @@ public class PrendaFactoryUTest {
     @Test
     public void crearPrendaTest04() {
         DiamanteDTO diamanteDTO =
-            new DiamanteDTO(NUM_PIEZAS, CORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO);
+            new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
+                QUILATES_RANGO_INFERIOR, QUILATES_RANGO_SUPERIOR);
 
         List<PiezaDTO> piezas = new ArrayList<>();
         piezas.add(diamanteDTO);
@@ -272,7 +281,11 @@ public class PrendaFactoryUTest {
 
             @Override
             public CondicionPrendaVO getCondicionFisica() {
-                return new CondicionPrendaVO(condicionFisica);
+                CondicionPrendaVO condicionPrendaVO = null;
+                if (!ObjectUtils.isEmpty(condicionFisica)) {
+                    condicionPrendaVO = new CondicionPrendaVO(condicionFisica);
+                }
+                return condicionPrendaVO;
             }
 
         };
@@ -349,20 +362,26 @@ public class PrendaFactoryUTest {
      *
      * @param numeroDePiezas El número de piezas con características idénticas.
      * @param corte El tipo de corte del diamante.
+     * @param subcorte El tipo de corte hijo del diamante.
      * @param color El tipo de color del diamante.
      * @param claridad El tipo de claridad del diamante.
      * @param quilates El valor en quilates del diamante.
      * @param certificadoDiamante El valor del certificado del diamante.
      * @param valorExperto El valor experto para la pieza en particular.
+     * @param quilatesDesde El valor del rango inferior en quilates del diamante.
+     * @param quilatesHasta El valor del rango superior en quilates del diamante.
      * @return El builder creado.
      */
     private Diamante.Builder getBuilderDiamante(final int numeroDePiezas,
                                         final String corte,
+                                        final String subcorte,
                                         final String color,
                                         final String claridad,
                                         final BigDecimal quilates,
                                         final String certificadoDiamante,
-                                        final ValorExperto valorExperto) {
+                                        final ValorExperto valorExperto,
+                                        final BigDecimal quilatesDesde,
+                                        final BigDecimal quilatesHasta) {
         return new Diamante.Builder() {
 
             @Override
@@ -373,6 +392,11 @@ public class PrendaFactoryUTest {
             @Override
             public String getCorte() {
                 return corte;
+            }
+
+            @Override
+            public String getSubcorte() {
+                return subcorte;
             }
 
             @Override
@@ -398,6 +422,16 @@ public class PrendaFactoryUTest {
             @Override
             public ValorExperto getValorExperto() {
                 return valorExperto;
+            }
+
+            @Override
+            public BigDecimal getQuilatesDesde() {
+                return quilatesDesde;
+            }
+
+            @Override
+            public BigDecimal getQuilatesHasta() {
+                return quilatesHasta;
             }
 
         };

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>mx.com.nmp.ms</groupId>
+        <artifactId>arquetipo-parent</artifactId>
+        <version>0.8.12-SNAPSHOT</version>
+    </parent>
+
+    <groupId>mx.com.nmp.ms</groupId>
+    <artifactId>arquetipo-mail-starter</artifactId>
+    <version>${project.parent.version}</version>
+    <packaging>jar</packaging>
+
+    <name>arquetipo-mail-starter</name>
+
+    <organization>
+        <name>Nacional Monte de Piedad</name>
+        <url>https://www.montepiedad.com.mx/</url>
+    </organization>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- Java 1.7 porque Arquitectura definió Java EE 7 como plataforma y al momento
+            se desconoce servidor de aplicaciones y versión, por lo que no se sabe si
+            Java 1.8 estará soportado -->
+        <java.version>1.7</java.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>mx.com.nmp.ms</groupId>
+            <artifactId>arquetipo-core</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+    </dependencies>
+</project>
