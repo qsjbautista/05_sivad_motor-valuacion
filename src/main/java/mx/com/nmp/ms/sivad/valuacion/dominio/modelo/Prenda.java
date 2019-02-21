@@ -5,6 +5,9 @@
 package mx.com.nmp.ms.sivad.valuacion.dominio.modelo;
 
 import com.codahale.metrics.annotation.Timed;
+import mx.com.nmp.ms.sivad.valuacion.conector.parametros.ParametrosConector;
+import mx.com.nmp.ms.sivad.valuacion.conector.parametros.FiltroParametro;
+import mx.com.nmp.ms.sivad.valuacion.conector.parametros.TipoParametro;
 import mx.com.nmp.ms.sivad.valuacion.dominio.exception.ModificadorCondicionPrendaNoEncontradoException;
 import mx.com.nmp.ms.sivad.valuacion.dominio.exception.PoliticaCastigoNoEncontradaException;
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.AvaluoFactory;
@@ -60,6 +63,21 @@ public class Prenda implements PiezaValuable {
     private ModificadorCondicionPrendaRepository condicionPrendaRepository;
 
     /**
+     * Referencia hacia el repositorio de parametros.
+     */
+    private ParametrosConector parametrosConector;
+
+    /**
+     * Abreviatura del subramo
+     */
+    private String subramo;
+
+    /**
+     * Identificador de la sucursal
+     */
+    private Long sucursal;
+
+    /**
      * Interface que define el contrato para crear entidades de tipo {@link Prenda}.
      */
     public interface Builder {
@@ -77,6 +95,20 @@ public class Prenda implements PiezaValuable {
          * @return Valor de {@code condicionFisica}
          */
         CondicionPrendaVO getCondicionFisica();
+
+        /**
+         * Recupera el valor de {@code subramo}
+         *
+         * @return Valor de {@code subramo}
+         */
+        String getSubramo();
+
+        /**
+         * Recupera el valor de {@code sucursal}
+         *
+         * @return Valor de {@code sucursal}
+         */
+        Long getSucursal();
     }
 
 
@@ -90,13 +122,16 @@ public class Prenda implements PiezaValuable {
      * @param politicasCastigoRepository Referencia hacia el repositorio de políticas de castigo.
      */
     private Prenda(Builder builder, PoliticasCastigoRepository politicasCastigoRepository,
-                   ModificadorCondicionPrendaRepository condicionPrendaRepository) {
+                   ModificadorCondicionPrendaRepository condicionPrendaRepository, ParametrosConector parametrosConector) {
         super();
 
         this.piezas = builder.getPiezas();
         this.condicionFisica = builder.getCondicionFisica();
         this.politicasCastigoRepository = politicasCastigoRepository;
         this.condicionPrendaRepository = condicionPrendaRepository;
+        this.parametrosConector = parametrosConector;
+        this.subramo = builder.getSubramo();
+        this.sucursal = builder.getSucursal();
     }
 
     /**
@@ -120,16 +155,24 @@ public class Prenda implements PiezaValuable {
         }
 
 
-        // SE CONSULTAN LAS POLÍTICAS DE CASTIGO.
+        // SE VERIFICA PARAMETRO POR SUBRAMO QUE DETERMINA SI APLICA POLITICA
+        Float aplicarPoliticasCastigo = parametrosConector.recuperarValorParametro(TipoParametro.SUCURSAL_SUBRAMO,
+            "AP", new FiltroParametro("subramo", subramo), new FiltroParametro("sucursal", sucursal.toString()));
+
         PoliticasCastigo politicasCastigo = null;
 
-        try {
-            politicasCastigo = politicasCastigoRepository.consultar();
-        } catch (PoliticaCastigoNoEncontradaException e) {
-            LOGGER.warn("No existen políticas de castigo configuradas.");
-        } catch (Exception e) {
-            LOGGER.error("Ocurrió un error al consultar las políticas de castigo.");
-            throw e;
+        if (aplicarPoliticasCastigo != null && aplicarPoliticasCastigo == 1F) {
+
+            // SE CONSULTAN LAS POLÍTICAS DE CASTIGO.
+
+            try {
+                politicasCastigo = politicasCastigoRepository.consultar(subramo);
+            } catch (PoliticaCastigoNoEncontradaException e) {
+                LOGGER.warn("No existen políticas de castigo configuradas.");
+            } catch (Exception e) {
+                LOGGER.error("Ocurrió un error al consultar las políticas de castigo.");
+                throw e;
+            }
         }
 
 

@@ -77,9 +77,9 @@ public class TablasDeReferenciaAlhajasITest {
      * (non-Javadoc)
      * @see TablasDeReferenciaAlhajas#obtenerValorGramoOro(CaracteristicasGramoOroProveedor)
      * @see ConectorExcepcionAspect
-     * @see ValuacionException
+     * @see NullPointerException
      */
-    @Test(expected = ValuacionException.class)
+    @Test(expected = NullPointerException.class)
     public void obtenerValorGramoOroTest() {
         ReflectionTestUtils.setField(conector, "wsdlLocation", null);
         ReflectionTestUtils.setField(conector, "wsReferenciaAlhaja", null);
@@ -90,9 +90,9 @@ public class TablasDeReferenciaAlhajasITest {
      * (non-Javadoc)
      * @see TablasDeReferenciaAlhajas#obtenerValorGramoOro(CaracteristicasGramoOroProveedor)
      * @see ConectorExcepcionAspect
-     * @see ValuacionException
+     * @see NullPointerException
      */
-    @Test(expected = ValuacionException.class)
+    @Test(expected = NullPointerException.class)
     public void obtenerValorGramoOroTest2() {
         ReflectionTestUtils.setField(conector, "wsdlLocation", "/ReferenciaDiamanteService");
         ReflectionTestUtils.setField(conector, "wsReferenciaAlhaja", null);

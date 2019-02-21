@@ -11,6 +11,8 @@ import mx.com.nmp.ms.sivad.valuacion.infrastructure.jpa.dominio.PoliticasCastigo
 import org.joda.time.DateTime;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -27,6 +29,21 @@ public interface PoliticasCastigoJpaRepository extends JpaRepository<PoliticasCa
      */
     @Cacheable("PoliticasCastigoJpaRepository.findFirstByOrderByFechaListadoDesc")
     PoliticasCastigoJpa findFirstByOrderByFechaListadoDesc();
+
+    /**
+     * Recupera la lista de politicas de castigo vigentes al momento del subramo especificado.
+     *
+     * @param subramo Abreviatura del subramo de la prenda
+     * @return Politicas de castigo.
+     */
+    @Query(value = "SELECT " +
+        "MAX(pcs.politicasCastigo) " +
+        "FROM PoliticasCastigoSubramoJPA pcs " +
+        "WHERE pcs.subramo = :subramo " +
+        "GROUP BY pcs.politicasCastigo.fechaListado " +
+        "ORDER BY pcs.politicasCastigo.fechaListado DESC")
+	@Cacheable("PoliticasCastigoJpaRepository.findFirstBySubramoByOrderByFechaListadoDesc")
+    PoliticasCastigoJpa findFirstBySubramoByOrderByFechaListadoDesc(@Param("subramo") String subramo);
 
     /**
      * Recupera la lista de políticas de castigo con base en una fecha de vigencia.

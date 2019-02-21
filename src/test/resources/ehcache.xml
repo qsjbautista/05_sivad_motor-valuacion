@@ -48,4 +48,16 @@
            timeToLiveSeconds="600"
            timeToIdleSeconds="300"/>
 
+    <cache name = "PoliticasCastigoJpaRepository.findFirstBySubramoByOrderByFechaListadoDesc"
+           eternal="false"
+           overflowToDisk="false"
+           timeToLiveSeconds="600"
+           timeToIdleSeconds="300"/>
+
+    <cache name = "ParametrosConector.recuperarValorParametro"
+           eternal="false"
+           overflowToDisk="false"
+           timeToLiveSeconds="600"
+           timeToIdleSeconds="300"/>
+
 </ehcache>

@@ -31,6 +31,17 @@ public interface PoliticasCastigoRepository {
     PoliticasCastigo consultar();
 
     /**
+     * Consulta las Políticas de castigo vigentes al momento de la consulta en base al subramo.
+     *
+     * @param subramo Abreviatura del subramo de la prenda.
+     *
+     * @return Políticas de castigo vigentes en base al subramo.
+     *
+     * @throws PoliticaCastigoNoEncontradaException Si no existen Políticas de castigo vigentes.
+     */
+    PoliticasCastigo consultar(String subramo);
+
+    /**
      * Permite actualizar el listado de Políticas de castigo.
      *
      * @param entidad Políticas de castigo con la cual se desea reemplazar las vigentes.

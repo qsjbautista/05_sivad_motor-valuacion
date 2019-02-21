@@ -30,9 +30,11 @@ public interface PrendaFactory {
      *
      * @param piezas Lista de piezas que conforman la prenda.
      * @param  condicionFisica Identificador de la condición fisica de la prenda.
+     * @param subramo Abreviatura del subramo de la prenda.
+     * @param sucursal Identificador de la sucursal
      * @return La entidad creada.
      */
-    public Prenda create(List<Pieza> piezas, String condicionFisica);
+    public Prenda create(List<Pieza> piezas, String condicionFisica, String subramo, Long sucursal);
 
     /**
      * Permite crear una entidad de tipo {@link Prenda} con base en el builder recibido.

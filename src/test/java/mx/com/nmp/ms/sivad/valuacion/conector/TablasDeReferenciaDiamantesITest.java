@@ -120,9 +120,9 @@ public class TablasDeReferenciaDiamantesITest {
      * (non-Javadoc)
      * @see TablasDeReferenciaDiamantes#obtenerValorComercial(CaracteristicasDiamanteProveedor)
      * @see ConectorExcepcionAspect
-     * @see ValuacionException
+     * @see NullPointerException
      */
-    @Test(expected = ValuacionException.class)
+    @Test(expected = NullPointerException.class)
     public void obtenerValorComercialTest4() {
         ReflectionTestUtils.setField(conector, "wsdlLocation", null);
         ReflectionTestUtils.setField(conector, "wsReferenciaDiamante", null);
@@ -133,9 +133,9 @@ public class TablasDeReferenciaDiamantesITest {
      * (non-Javadoc)
      * @see TablasDeReferenciaDiamantes#obtenerValorComercial(CaracteristicasDiamanteProveedor)
      * @see ConectorExcepcionAspect
-     * @see ValuacionException
+     * @see NullPointerException
      */
-    @Test(expected = ValuacionException.class)
+    @Test(expected = NullPointerException.class)
     public void obtenerValorComercialTest5() {
         ReflectionTestUtils.setField(conector, "wsdlLocation", "/ReferenciaDiamanteService");
         ReflectionTestUtils.setField(conector, "wsReferenciaDiamante", null);

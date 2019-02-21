@@ -87,7 +87,13 @@ public enum DomainExceptionCodes {
     DIAMANTE_QUILATES_HASTA_MENOR_IGUAL_CERO("DIAMANTE_QUILATES_DESDE_MENOR_IGUAL_CERO",
         "El valor en quilates superior del diamante no debe ser menor, ni igual a cero."),
     DIAMANTE_QUILATES_HASTA_NULO("DIAMANTE_QUILATES_DESDE_NULO",
-        "El valor en quilates superior del diamante no debe ser nulo.");
+        "El valor en quilates superior del diamante no debe ser nulo."),
+    SUBRAMO_NULO("SUBRAMO_NULO",
+        "El subramo no debe ser nulo."),
+    SUBRAMO_VACIO("SUBRAMO_VACIO",
+        "El subramo no debe estar vacio."),
+    SUCURSAL_NULA("SUCURSAL_NULA",
+        "La sucursal no debe ser nula.");
 
     /**
      * Código de la excepción.

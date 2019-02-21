@@ -71,6 +71,7 @@ public class ValuadorDiamantesITest {
     private static final String PRENDA_SUBRAMO = "Diamantes";
     private static final String PRENDA_TIPO = "A";
     private static final String RANGO = "F1";
+    private static final Long SUCURSAL_ID = 1L;
 
     private static final BigDecimal CERO =
         new BigDecimal(0.00D).setScale(2, BigDecimal.ROUND_HALF_UP);
@@ -2128,6 +2129,7 @@ public class ValuadorDiamantesITest {
         prenda.setSubramo(PRENDA_SUBRAMO);
         prenda.setTipo(PRENDA_TIPO);
         prenda.getPieza().addAll(piezas);
+        prenda.setSucursal(SUCURSAL_ID);
 
         return prenda;
     }

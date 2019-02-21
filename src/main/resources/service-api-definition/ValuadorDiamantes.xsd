@@ -65,6 +65,7 @@
             <s:element name="tipo" type="s:string" nillable="false" />
             <s:element name="avaluo" type="Avaluo" nillable="true" />
             <s:element name="pieza" type="Pieza" minOccurs="1" maxOccurs="unbounded" />
+            <s:element name="sucursal" type="s:long" nillable="false" />
         </s:sequence>
     </s:complexType>
 

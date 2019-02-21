@@ -239,6 +239,7 @@ public class PoliticasCastigoRepositoryITest {
      */
     @Test
     @Transactional
+    @Sql("/bd/test-data-politicas-castigo2-h2.sql")
     public void actualizarTest() {
         Map<Class<? extends Pieza>, BigDecimal> vo =
             fabricaVo.crearCon(BigDecimal.valueOf(0.3), BigDecimal.valueOf(0.4), BigDecimal.valueOf(0.4));
@@ -259,10 +260,16 @@ public class PoliticasCastigoRepositoryITest {
 
     /**
      * (non-Javadoc)
-     * @see PoliticasCastigoRepository#consultar(DateTime)
+     * @see PoliticasCastigoRepository#actualizar(PoliticasCastigo)
      */
-    @Test(expected = IllegalArgumentException.class)
-    public void consultarPorFechaNullTest() {
-        test.consultar(null);
+    @Test(expected = PoliticaCastigoNoEncontradaException.class)
+    @Transactional
+    public void actualizarSinDatosTest() {
+        Map<Class<? extends Pieza>, BigDecimal> vo =
+            fabricaVo.crearCon(BigDecimal.valueOf(0.3), BigDecimal.valueOf(0.4), BigDecimal.valueOf(0.4));
+        DateTime fecha = DateTime.now();
+        PoliticasCastigo pc = fabrica.crearCon(vo, fecha);
+
+        test.actualizar(pc);
     }
 }

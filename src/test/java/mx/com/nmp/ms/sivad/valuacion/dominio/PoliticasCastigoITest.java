@@ -8,18 +8,20 @@
 package mx.com.nmp.ms.sivad.valuacion.dominio;
 
 import mx.com.nmp.ms.sivad.valuacion.MotorValuacionApplication;
+import mx.com.nmp.ms.sivad.valuacion.dominio.exception.PoliticaCastigoNoEncontradaException;
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.FactorPoliticasCastigoFactory;
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.PoliticasCastigoFactory;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.PoliticasCastigo;
 import mx.com.nmp.ms.sivad.valuacion.dominio.repository.PoliticasCastigoRepository;
 import mx.com.nmp.ms.sivad.valuacion.infrastructure.jpa.dominio.PoliticasCastigoJpa;
+import mx.com.nmp.ms.sivad.valuacion.infrastructure.jpa.dominio.PoliticasCastigoSubramoJPA;
 import mx.com.nmp.ms.sivad.valuacion.infrastructure.jpa.repository.PoliticasCastigoJpaRepository;
+import mx.com.nmp.ms.sivad.valuacion.infrastructure.jpa.repository.PoliticasCastigoSubramoJPARepository;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -57,6 +59,9 @@ public class PoliticasCastigoITest {
     @MockBean
     private PoliticasCastigoJpaRepository mock;
 
+    @MockBean
+    private PoliticasCastigoSubramoJPARepository politicasCastigoSubramoJPARepository;
+
     public PoliticasCastigoITest() {
         super();
     }
@@ -64,6 +69,7 @@ public class PoliticasCastigoITest {
     @Before
     public void inicializar() {
         ReflectionTestUtils.setField(repositorio, "repositorio", mock);
+        ReflectionTestUtils.setField(repositorio, "politicasCastigoSubramoJPARepository", politicasCastigoSubramoJPARepository);
         ReflectionTestUtils.setField(fabrica, "repositorio", repositorio);
     }
 
@@ -106,11 +112,38 @@ public class PoliticasCastigoITest {
 
         assertNotNull(test);
 
+        when(politicasCastigoSubramoJPARepository.findFirstByOrderByIdDesc()).thenReturn(new PoliticasCastigoSubramoJPA());
+
         when(mock.saveAndFlush(any(PoliticasCastigoJpa.class))).thenReturn(new PoliticasCastigoJpa());
+
+        when(politicasCastigoSubramoJPARepository.saveAndFlush(any(PoliticasCastigoSubramoJPA.class))).thenReturn(new PoliticasCastigoSubramoJPA());
+
         test.actualizar();
 
         assertEquals(vo, test.getFactores());
         assertEquals(fecha, test.getFechaListado());
+    }
+
+    /**
+     * (non-Javadoc)
+     * @see PoliticasCastigo#actualizar()
+     */
+    @Test(expected = PoliticaCastigoNoEncontradaException.class)
+    @Transactional
+    public void actualizarTestSinPoliticas() {
+        Map<Class<? extends Pieza>, BigDecimal> vo = fabricaVo
+            .crearCon(BigDecimal.valueOf(0.30), BigDecimal.valueOf(0.40), BigDecimal.valueOf(0.40));
+        assertNotNull(vo);
+
+        DateTime fecha = DateTime.now();
+
+        PoliticasCastigo test = fabrica.crearPersistibleCon(vo, fecha);
+
+        assertNotNull(test);
+
+        when(politicasCastigoSubramoJPARepository.findFirstByOrderByIdDesc()).thenReturn(null);
+
+        test.actualizar();
     }
 
     /**

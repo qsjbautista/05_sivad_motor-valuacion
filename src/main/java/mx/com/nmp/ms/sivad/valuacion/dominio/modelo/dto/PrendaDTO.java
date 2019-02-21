@@ -23,6 +23,16 @@ public class PrendaDTO {
      */
     private String condicionFisica;
 
+    /**
+     * Abreviatura del subramo
+     */
+    private String subramo;
+
+    /**
+     * Identificador de la sucursal
+     */
+    private Long sucursal;
+
     // METODOS
 
     /**
@@ -30,11 +40,16 @@ public class PrendaDTO {
      *
      * @param piezas La lista de piezas de las que se compone la prenda.
      * @param  condicionFisica Identificador de la condición fisica de la prenda.
+     * @param subramo Abreviatura del subramo
+     * @param sucursal Identificador de la sucursal
      */
-    public PrendaDTO(List<PiezaDTO> piezas, String condicionFisica) {
+    public PrendaDTO(List<PiezaDTO> piezas, String condicionFisica, String subramo,
+                     Long sucursal) {
         super();
         this.piezas = piezas;
         this.condicionFisica = condicionFisica;
+        this.subramo = subramo;
+        this.sucursal = sucursal;
     }
 
 
@@ -65,6 +80,22 @@ public class PrendaDTO {
      */
     public void setCondicionFisica(String condicionFisica) {
         this.condicionFisica = condicionFisica;
+    }
+
+    public String getSubramo() {
+        return subramo;
+    }
+
+    public void setSubramo(String subramo) {
+        this.subramo = subramo;
+    }
+
+    public Long getSucursal() {
+        return sucursal;
+    }
+
+    public void setSucursal(Long sucursal) {
+        this.sucursal = sucursal;
     }
 
     /**

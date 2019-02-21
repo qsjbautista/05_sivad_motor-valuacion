@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS journal_entity_event;
 DROP TABLE IF EXISTS journal_custom_event;
 DROP TABLE IF EXISTS journal_event;
 
+DROP TABLE IF EXISTS tc_politicas_castigo_subramo;
 DROP TABLE IF EXISTS tc_politica_castigo_pieza_factores;
 DROP TABLE IF EXISTS tc_politica_castigo_pieza;
 
@@ -151,4 +152,29 @@ FOREIGN KEY(listado) REFERENCES cfg_diamante_listado_modificador_condicion_prend
 
 -- ----------------------------------------------------------------------------------------------------------------------
 -- TERMINA - TABLAS: MODIFICADOR CONDICION PRENDA
+-- ----------------------------------------------------------------------------------------------------------------------
+
+
+
+-- ----------------------------------------------------------------------------------------------------------------------
+-- INICIO - TABLAS SISTEMA DE OPERACION PRENDARIA EMERGENTE
+-- ----------------------------------------------------------------------------------------------------------------------
+CREATE TABLE tc_politicas_castigo_subramo
+(
+    id BIGINT AUTO_INCREMENT NOT NULL,
+    politica BIGINT NOT NULL,
+    subramo VARCHAR(20) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE INDEX idx_tc_politicas_castigo_subramo ON tc_politicas_castigo_subramo(subramo);
+
+ALTER TABLE tc_politicas_castigo_subramo ADD CONSTRAINT fk_tc_politicas_castigo_subramo_politica
+FOREIGN KEY (politica) REFERENCES tc_politica_castigo_pieza(id);
+
+ALTER TABLE tc_politicas_castigo_subramo ADD CONSTRAINT uk_tc_politicas_castigo_subramo
+UNIQUE (politica, subramo);
+
+-- ----------------------------------------------------------------------------------------------------------------------
+-- FIN - TABLAS SISTEMA DE OPERACION PRENDARIA EMERGENTE
 -- ----------------------------------------------------------------------------------------------------------------------

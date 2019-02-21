@@ -9,6 +9,9 @@ import mx.com.nmp.ms.sivad.valuacion.conector.TablasDeReferenciaAlhajas;
 import mx.com.nmp.ms.sivad.valuacion.conector.TablasDeReferenciaDiamantes;
 import mx.com.nmp.ms.sivad.valuacion.conector.consumidor.BigDecimalConsumidor;
 import mx.com.nmp.ms.sivad.valuacion.conector.consumidor.ValorComercialConsumidor;
+import mx.com.nmp.ms.sivad.valuacion.conector.parametros.FiltroParametro;
+import mx.com.nmp.ms.sivad.valuacion.conector.parametros.ParametrosConector;
+import mx.com.nmp.ms.sivad.valuacion.conector.parametros.TipoParametro;
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.*;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.*;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.Avaluo;
@@ -58,6 +61,8 @@ public class PrendaUTest {
     private static final String SUBCORTE = "Brillante";
     private static final String METAL = "AU";
     private static final String RANGO = "F1";
+    private static final String SUBRAMO = "DI";
+    private static final Long SUCURSAL = 1L;
 
     private static final BigDecimal QUILATES =
         new BigDecimal(0.92D).setScale(2, BigDecimal.ROUND_HALF_UP);
@@ -132,6 +137,9 @@ public class PrendaUTest {
     @Mock
     private TablasDeReferenciaDiamantes tablasDeReferenciaDiamantes;
 
+    @Mock
+    private ParametrosConector parametrosConector;
+
     /**
      * Referencia hacia la fábrica de entidades tipo {@link Alhaja}.
      */
@@ -188,6 +196,7 @@ public class PrendaUTest {
         ReflectionTestUtils.setField(alhajaFactory, "tablasDeReferenciaAlhajas", tablasDeReferenciaAlhajas);
         ReflectionTestUtils.setField(diamanteFactory, "tablasDeReferenciaDiamantes", tablasDeReferenciaDiamantes);
         ReflectionTestUtils.setField(prendaFactory, "politicasCastigoRepository", politicasCastigoRepository);
+        ReflectionTestUtils.setField(prendaFactory, "parametrosConector", parametrosConector);
     }
 
     /**
@@ -216,7 +225,8 @@ public class PrendaUTest {
         piezas.add(complementario);
 
         Prenda prenda =
-            prendaFactory.create(getBuilder(piezas, "EX"));
+            prendaFactory.create(getBuilder(piezas, "EX",
+                SUBRAMO, SUCURSAL));
 
         BigDecimalConsumidor valorGramoOro = getBigDecimalConsumidor(
             AV_ALHAJA_VALOR_GRAMO_ORO);
@@ -234,9 +244,12 @@ public class PrendaUTest {
             AV_DIAMANTE_PORCENTAJE_INCREMENTO);
         when(tablasDeReferenciaDiamantes.obtenerModificador(any(Diamante.class))).thenReturn(porcentajeIncremento);
 
+        when(parametrosConector.recuperarValorParametro(any(TipoParametro.class),
+            any(String.class), any(FiltroParametro.class), any(FiltroParametro.class))).thenReturn(new Float(1));
+
         PoliticasCastigo politicasCastigo = getPoliticasCastigo(
             PC_FACTOR_DIAMANTE, PC_FACTOR_ALHAJA, PC_FACTOR_COMPLEMENTARIO);
-        when(politicasCastigoRepository.consultar()).thenReturn(politicasCastigo);
+        when(politicasCastigoRepository.consultar(any(String.class))).thenReturn(politicasCastigo);
 
         Avaluo avaluo = prenda.valuar();
         assertNotNull(avaluo);
@@ -271,7 +284,7 @@ public class PrendaUTest {
         piezas.add(alhaja);
 
         Prenda prenda =
-            prendaFactory.create(getBuilder(piezas, "BN"));
+            prendaFactory.create(getBuilder(piezas, "BN", SUBRAMO, SUCURSAL));
 
         BigDecimalConsumidor valorGramoOro = getBigDecimalConsumidor(
             AV_ALHAJA_VALOR_GRAMO_ORO);
@@ -281,9 +294,12 @@ public class PrendaUTest {
             AV_ALHAJA_FACTOR);
         when(tablasDeReferenciaAlhajas.obtenerFactor(any(Alhaja.class))).thenReturn(factor);
 
+        when(parametrosConector.recuperarValorParametro(any(TipoParametro.class),
+            any(String.class), any(FiltroParametro.class), any(FiltroParametro.class))).thenReturn(new Float(1));
+
         PoliticasCastigo politicasCastigo = getPoliticasCastigo(
             PC_FACTOR_DIAMANTE, PC_FACTOR_ALHAJA, PC_FACTOR_COMPLEMENTARIO);
-        when(politicasCastigoRepository.consultar()).thenReturn(politicasCastigo);
+        when(politicasCastigoRepository.consultar(any(String.class))).thenReturn(politicasCastigo);
 
         Avaluo avaluo = prenda.valuar();
         assertNotNull(avaluo);
@@ -313,7 +329,7 @@ public class PrendaUTest {
         piezas.add(diamante);
 
         Prenda prenda =
-            prendaFactory.create(getBuilder(piezas, "RE"));
+            prendaFactory.create(getBuilder(piezas, "RE", SUBRAMO, SUCURSAL));
 
         ValorComercialConsumidor valorComercial = getValorComercialConsumidor(
             AV_DIAMANTE_VALOR_COMERCIAL_MINIMO, AV_DIAMANTE_VALOR_COMERCIAL_MEDIO, AV_DIAMANTE_VALOR_COMERCIAL_MAXIMO);
@@ -323,9 +339,12 @@ public class PrendaUTest {
             AV_DIAMANTE_PORCENTAJE_INCREMENTO);
         when(tablasDeReferenciaDiamantes.obtenerModificador(any(Diamante.class))).thenReturn(porcentajeIncremento);
 
+        when(parametrosConector.recuperarValorParametro(any(TipoParametro.class),
+            any(String.class), any(FiltroParametro.class), any(FiltroParametro.class))).thenReturn(new Float(1));
+
         PoliticasCastigo politicasCastigo = getPoliticasCastigo(
             PC_FACTOR_DIAMANTE, PC_FACTOR_ALHAJA, PC_FACTOR_COMPLEMENTARIO);
-        when(politicasCastigoRepository.consultar()).thenReturn(politicasCastigo);
+        when(politicasCastigoRepository.consultar(any(String.class))).thenReturn(politicasCastigo);
 
         Avaluo avaluo = prenda.valuar();
         assertNotNull(avaluo);
@@ -354,11 +373,14 @@ public class PrendaUTest {
         piezas.add(complementario);
 
         Prenda prenda =
-            prendaFactory.create(getBuilder(piezas, "EX"));
+            prendaFactory.create(getBuilder(piezas, "EX", SUBRAMO, SUCURSAL));
+
+        when(parametrosConector.recuperarValorParametro(any(TipoParametro.class),
+            any(String.class), any(FiltroParametro.class), any(FiltroParametro.class))).thenReturn(new Float(1));
 
         PoliticasCastigo politicasCastigo = getPoliticasCastigo(
             PC_FACTOR_DIAMANTE, PC_FACTOR_ALHAJA, PC_FACTOR_COMPLEMENTARIO);
-        when(politicasCastigoRepository.consultar()).thenReturn(politicasCastigo);
+        when(politicasCastigoRepository.consultar(any(String.class))).thenReturn(politicasCastigo);
 
         Avaluo avaluo = prenda.valuar();
         assertNotNull(avaluo);
@@ -379,7 +401,7 @@ public class PrendaUTest {
     public void crearPrendaTest05() {
         List<Pieza> piezas = null;
 
-        prendaFactory.create(getBuilder(piezas, "BN"));
+        prendaFactory.create(getBuilder(piezas, "BN", SUBRAMO, SUCURSAL));
     }
 
     /**
@@ -391,7 +413,7 @@ public class PrendaUTest {
     public void crearPrendaTest06() {
         List<Pieza> piezas = new ArrayList<>();
 
-        prendaFactory.create(getBuilder(piezas, "RE"));
+        prendaFactory.create(getBuilder(piezas, "RE", SUBRAMO, SUCURSAL));
     }
 
     /**
@@ -420,7 +442,7 @@ public class PrendaUTest {
         piezas.add(complementario);
 
         Prenda prenda =
-            prendaFactory.create(getBuilder(piezas, "EX"));
+            prendaFactory.create(getBuilder(piezas, "EX", SUBRAMO, SUCURSAL));
 
         BigDecimalConsumidor valorGramoOro = getBigDecimalConsumidor(
             AV_ALHAJA_VALOR_GRAMO_ORO);
@@ -438,9 +460,12 @@ public class PrendaUTest {
             AV_DIAMANTE_PORCENTAJE_INCREMENTO);
         when(tablasDeReferenciaDiamantes.obtenerModificador(any(Diamante.class))).thenReturn(porcentajeIncremento);
 
+        when(parametrosConector.recuperarValorParametro(any(TipoParametro.class),
+            any(String.class), any(FiltroParametro.class), any(FiltroParametro.class))).thenReturn(new Float(1));
+
         PoliticasCastigo politicasCastigo = getPoliticasCastigo(
             PC_FACTOR_DIAMANTE, PC_FACTOR_ALHAJA, PC_FACTOR_COMPLEMENTARIO);
-        when(politicasCastigoRepository.consultar()).thenReturn(politicasCastigo);
+        when(politicasCastigoRepository.consultar(any(String.class))).thenReturn(politicasCastigo);
 
         Avaluo avaluo = prenda.valuar();
         assertNotNull(avaluo);
@@ -459,12 +484,61 @@ public class PrendaUTest {
     }
 
     /**
+     * Utilizado para crear una entidad Prenda con las siguientes características:
+     *
+     * SUBRAMO - NULO
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void crearPrendaTest08() {
+        Alhaja alhaja =
+            alhajaFactory.create(getBuilderAlhaja(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO_TOTAL));
+
+        List<Pieza> piezas = new ArrayList<>();
+        piezas.add(alhaja);
+
+        prendaFactory.create(getBuilder(piezas, "BN", null, SUCURSAL));
+    }
+
+    /**
+     * Utilizado para crear una entidad Prenda con las siguientes características:
+     *
+     * SUBRAMO - VACIO
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void crearPrendaTest09() {
+        Alhaja alhaja =
+            alhajaFactory.create(getBuilderAlhaja(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO_TOTAL));
+
+        List<Pieza> piezas = new ArrayList<>();
+        piezas.add(alhaja);
+
+        prendaFactory.create(getBuilder(piezas, "BN", "", SUCURSAL));
+    }
+
+    /**
+     * Utilizado para crear una entidad Prenda con las siguientes características:
+     *
+     * SUCURSAL - NULO
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void crearPrendaTest10() {
+        Alhaja alhaja =
+            alhajaFactory.create(getBuilderAlhaja(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO_TOTAL));
+
+        List<Pieza> piezas = new ArrayList<>();
+        piezas.add(alhaja);
+
+        prendaFactory.create(getBuilder(piezas, "BN", SUBRAMO, null));
+    }
+
+    /**
      * Metodo auxiliar utilizado para crear el builder de Prenda a partir de sus atributos.
      *
      * @param piezas Lista de piezas de las que se compone la prenda.
      * @return El builder creado.
      */
-    private Prenda.Builder getBuilder(final List<Pieza> piezas, final String condicionesFisicas) {
+    private Prenda.Builder getBuilder(final List<Pieza> piezas, final String condicionesFisicas,
+                                      final String subramo, final Long sucursal) {
         return new Prenda.Builder() {
 
             @Override
@@ -479,6 +553,16 @@ public class PrendaUTest {
                     condicionPrendaVO = new CondicionPrendaVO(condicionesFisicas);
                 }
                 return condicionPrendaVO;
+            }
+
+            @Override
+            public String getSubramo() {
+                return subramo;
+            }
+
+            @Override
+            public Long getSucursal() {
+                return sucursal;
             }
 
         };

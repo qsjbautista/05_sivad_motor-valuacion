@@ -60,8 +60,22 @@ valuacion:
         wsdlLocation: http://localhost:10344/soap-api/ReferenciaAlhajaService?wsdl
     diamante:
         wsdlLocation: http://localhost:10344/soap-api/ReferenciaDiamanteService?wsdl
+    header:
+        api:
+          name: X-IBM-Client-Id
+          key: 214943ce-5f1f-4329-976b-b711995bc89b
   avaluo:
     redondeo: DOS_DECIMALES_ROUND_HALF_UP
+
+servicio:
+  parametros:
+    valor:
+      filtros:
+        baseUrl: http://localhost:10344/parametro/valor/filtros/{tipo}/{abreviatura}
+    header:
+      api:
+        key: xXx
+        name: X-IBM-Client-Id
 
 # mostrar o no mensajes soap entrantes y salientes
 soap:

@@ -94,7 +94,7 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
 
         mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Prenda prendaValuable;
         try {
-            prendaValuable = prendaFactory.create(piezas, condionPrenda);
+            prendaValuable = prendaFactory.create(piezas, condionPrenda, prenda.getSubramo(), prenda.getSucursal());
         } catch (IllegalArgumentException e) {
             LOGGER.error("<< valuarPrendaBasico. {}",
                 WebServiceExceptionCodes.NMPMV003.getMessageException());

@@ -36,6 +36,16 @@ valuacion:
   avaluo:
     redondeo: DOS_DECIMALES_ROUND_HALF_UP
 
+servicio:
+  parametros:
+    valor:
+      filtros:
+        baseUrl: http://localhost:8080/parametro/valor/filtros/{tipo}/{abreviatura}
+    header:
+      api:
+        name: X-IBM-Client-Id
+        key: xXx
+
 # mostrar o no mensajes soap entrantes y salientes
 soap:
   mensaje:

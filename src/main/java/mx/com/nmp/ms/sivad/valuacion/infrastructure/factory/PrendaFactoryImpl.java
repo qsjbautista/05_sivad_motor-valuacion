@@ -4,6 +4,7 @@
  */
 package mx.com.nmp.ms.sivad.valuacion.infrastructure.factory;
 
+import mx.com.nmp.ms.sivad.valuacion.conector.parametros.ParametrosConector;
 import mx.com.nmp.ms.sivad.valuacion.dominio.exception.DomainExceptionCodes;
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.*;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.*;
@@ -75,6 +76,11 @@ public class PrendaFactoryImpl implements PrendaFactory {
     @Inject
     private ModificadorCondicionPrendaRepository condicionPrendaRepository;
 
+    /**
+     * Referencia hacia el repositorio de parametros
+     */
+    @Inject
+    private ParametrosConector parametrosConector;
 
 
     // METODOS
@@ -86,7 +92,7 @@ public class PrendaFactoryImpl implements PrendaFactory {
         super();
 
         constructor = getConstructor(Prenda.class, Prenda.Builder.class,
-            PoliticasCastigoRepository.class, ModificadorCondicionPrendaRepository.class);
+            PoliticasCastigoRepository.class, ModificadorCondicionPrendaRepository.class, ParametrosConector.class);
 
         mapaEstrategiaFactory = new HashMap<>();
     }
@@ -114,7 +120,7 @@ public class PrendaFactoryImpl implements PrendaFactory {
             }
         }
 
-        final Prenda.Builder builder = getBuilder(piezas, prendaDTO.getCondicionFisica());
+        final Prenda.Builder builder = getBuilder(piezas, prendaDTO.getCondicionFisica(), prendaDTO.getSubramo(), prendaDTO.getSucursal());
         return create(builder);
     }
 
@@ -122,8 +128,8 @@ public class PrendaFactoryImpl implements PrendaFactory {
      * {@inheritDoc}
      */
     @Override
-    public Prenda create(List<Pieza> piezas, String condicionFisica) {
-        final Prenda.Builder builder = getBuilder(piezas, condicionFisica);
+    public Prenda create(List<Pieza> piezas, String condicionFisica, String subramo, Long sucursal) {
+        final Prenda.Builder builder = getBuilder(piezas, condicionFisica, subramo, sucursal);
         return create(builder);
     }
 
@@ -133,16 +139,19 @@ public class PrendaFactoryImpl implements PrendaFactory {
     @Override
     public Prenda create(Prenda.Builder builder) {
         validarBuilder(builder);
-        return getInstancia(constructor, builder, politicasCastigoRepository, condicionPrendaRepository);
+        return getInstancia(constructor, builder, politicasCastigoRepository, condicionPrendaRepository, parametrosConector);
     }
 
     /**
      * Crea un objeto constructor a partir del valor de los argumentos.
      *
      * @param piezas Lista de piezas de las que se compone la prenda.
+     * @param subramo Abreviatura del subramo
+     * @param sucursal Identificador de la sucursal
      * @return El objeto constructor creado.
      */
-    private static Prenda.Builder getBuilder(final List<Pieza> piezas, final String condicionFisica) {
+    private static Prenda.Builder getBuilder(final List<Pieza> piezas, final String condicionFisica,
+                                             final String subramo, final Long sucursal) {
         return new Prenda.Builder() {
 
             @Override
@@ -157,6 +166,16 @@ public class PrendaFactoryImpl implements PrendaFactory {
                     condicionPrendaVO = new CondicionPrendaVO(condicionFisica);
                 }
                 return condicionPrendaVO;
+            }
+
+            @Override
+            public String getSubramo() {
+                return subramo;
+            }
+
+            @Override
+            public Long getSucursal() {
+                return sucursal;
             }
 
         };
@@ -174,6 +193,12 @@ public class PrendaFactoryImpl implements PrendaFactory {
         /*Assert.notNull(builder.getCondicionFisica(), DomainExceptionCodes.CODICION_FISICA_PRENDA.getMessageException());
         Assert.hasText(builder.getCondicionFisica().getCondicionPrenda(),
             DomainExceptionCodes.CODICION_FISICA_PRENDA.getMessageException());*/
+        Assert.notNull(builder.getSubramo(),
+            DomainExceptionCodes.SUBRAMO_NULO.getMessageException());
+        Assert.hasText(builder.getSubramo(),
+            DomainExceptionCodes.SUBRAMO_VACIO.getMessageException());
+        Assert.notNull(builder.getSucursal(),
+            DomainExceptionCodes.SUCURSAL_NULA.getMessageException());
     }
 
 }

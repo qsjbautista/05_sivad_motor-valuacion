@@ -43,6 +43,8 @@ public class PrendaFactoryUTest {
     private static final String SUBCORTE = "Brillante";
     private static final String METAL = "AU";
     private static final String RANGO = "F1";
+    private static final String SUBRAMO = "DI";
+    private static final Long SUCURSAL = 1L;
 
     private static final BigDecimal QUILATES =
         new BigDecimal(0.92D).setScale(2, BigDecimal.ROUND_HALF_UP);
@@ -119,7 +121,7 @@ public class PrendaFactoryUTest {
         piezas.add(diamanteDTO);
         piezas.add(complementarioDTO);
 
-        PrendaDTO prendaDTO = new PrendaDTO(piezas, "EX");
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "EX", SUBRAMO, SUCURSAL);
         Prenda prenda = prendaFactory.create(prendaDTO);
 
         assertNotNull(prenda);
@@ -153,7 +155,7 @@ public class PrendaFactoryUTest {
         piezas.add(complementario);
 
         Prenda prenda =
-            prendaFactory.create(getBuilder(piezas, "RE"));
+            prendaFactory.create(getBuilder(piezas, "RE", SUBRAMO, SUCURSAL));
 
         assertNotNull(prenda);
         assertNotNull(prenda.getPiezas());
@@ -176,7 +178,7 @@ public class PrendaFactoryUTest {
         List<PiezaDTO> piezas = new ArrayList<>();
         piezas.add(alhajaDTO);
 
-        PrendaDTO prendaDTO = new PrendaDTO(piezas, "EX");
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "EX", SUBRAMO, SUCURSAL);
         Prenda prenda = prendaFactory.create(prendaDTO);
 
         assertNotNull(prenda);
@@ -201,7 +203,7 @@ public class PrendaFactoryUTest {
         List<PiezaDTO> piezas = new ArrayList<>();
         piezas.add(diamanteDTO);
 
-        PrendaDTO prendaDTO = new PrendaDTO(piezas, "BN");
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "BN", SUBRAMO, SUCURSAL);
         Prenda prenda = prendaFactory.create(prendaDTO);
 
         assertNotNull(prenda);
@@ -225,7 +227,7 @@ public class PrendaFactoryUTest {
         List<PiezaDTO> piezas = new ArrayList<>();
         piezas.add(complementarioDTO);
 
-        PrendaDTO prendaDTO = new PrendaDTO(piezas, "RE");
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "RE", SUBRAMO, SUCURSAL);
         Prenda prenda = prendaFactory.create(prendaDTO);
 
         assertNotNull(prenda);
@@ -245,7 +247,7 @@ public class PrendaFactoryUTest {
     public void crearPrendaTest06() {
         List<PiezaDTO> piezas = null;
 
-        PrendaDTO prendaDTO = new PrendaDTO(piezas, "EX");
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "EX", SUBRAMO, SUCURSAL);
         prendaFactory.create(prendaDTO);
     }
 
@@ -261,7 +263,58 @@ public class PrendaFactoryUTest {
     public void crearPrendaTest07() {
         List<PiezaDTO> piezas = new ArrayList<>();
 
-        PrendaDTO prendaDTO = new PrendaDTO(piezas, "BN");
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "BN", SUBRAMO, SUCURSAL);
+        prendaFactory.create(prendaDTO);
+    }
+
+    /**
+     * Utilizado para crear una entidad Prenda por medio de un DTO con las siguientes características:
+     *
+     * SUBRAMO - NULO
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void crearPrendaTest08() {
+        AlhajaDTO alhajaDTO =
+            new AlhajaDTO(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO);
+
+        List<PiezaDTO> piezas = new ArrayList<>();
+        piezas.add(alhajaDTO);
+
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "BN", null, SUCURSAL);
+        prendaFactory.create(prendaDTO);
+    }
+
+    /**
+     * Utilizado para crear una entidad Prenda por medio de un DTO con las siguientes características:
+     *
+     * SUBRAMO - VACIO
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void crearPrendaTest09() {
+        AlhajaDTO alhajaDTO =
+            new AlhajaDTO(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO);
+
+        List<PiezaDTO> piezas = new ArrayList<>();
+        piezas.add(alhajaDTO);
+
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "BN", "", SUCURSAL);
+        prendaFactory.create(prendaDTO);
+    }
+
+    /**
+     * Utilizado para crear una entidad Prenda por medio de un DTO con las siguientes características:
+     *
+     * SUCURSAL - NULO
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void crearPrendaTest10() {
+        AlhajaDTO alhajaDTO =
+            new AlhajaDTO(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO);
+
+        List<PiezaDTO> piezas = new ArrayList<>();
+        piezas.add(alhajaDTO);
+
+        PrendaDTO prendaDTO = new PrendaDTO(piezas, "BN", SUBRAMO, null);
         prendaFactory.create(prendaDTO);
     }
 
@@ -271,7 +324,8 @@ public class PrendaFactoryUTest {
      * @param piezas Lista de piezas de las que se compone la prenda.
      * @return El builder creado.
      */
-    private Prenda.Builder getBuilder(final List<Pieza> piezas, final String condicionFisica) {
+    private Prenda.Builder getBuilder(final List<Pieza> piezas, final String condicionFisica,
+                                      final String subramo, final Long sucursal) {
         return new Prenda.Builder() {
 
             @Override
@@ -286,6 +340,16 @@ public class PrendaFactoryUTest {
                     condicionPrendaVO = new CondicionPrendaVO(condicionFisica);
                 }
                 return condicionPrendaVO;
+            }
+
+            @Override
+            public String getSubramo() {
+                return subramo;
+            }
+
+            @Override
+            public Long getSucursal() {
+                return sucursal;
             }
 
         };

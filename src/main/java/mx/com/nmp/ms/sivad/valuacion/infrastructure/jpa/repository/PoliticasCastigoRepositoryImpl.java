@@ -14,6 +14,7 @@ import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Pieza;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.PoliticasCastigo;
 import mx.com.nmp.ms.sivad.valuacion.dominio.repository.PoliticasCastigoRepository;
 import mx.com.nmp.ms.sivad.valuacion.infrastructure.jpa.dominio.PoliticasCastigoJpa;
+import mx.com.nmp.ms.sivad.valuacion.infrastructure.jpa.dominio.PoliticasCastigoSubramoJPA;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +52,12 @@ public class PoliticasCastigoRepositoryImpl implements PoliticasCastigoRepositor
     private PoliticasCastigoFactory fabrica;
 
     /**
+     * Referencia al repositorio PoliticasCastigoSubramoJPARepository.
+     */
+    @Inject
+    private PoliticasCastigoSubramoJPARepository politicasCastigoSubramoJPARepository;
+
+    /**
      * Constructor.
      */
     public PoliticasCastigoRepositoryImpl() {
@@ -79,9 +86,33 @@ public class PoliticasCastigoRepositoryImpl implements PoliticasCastigoRepositor
      * {@inheritDoc}
      */
     @Override
+    public PoliticasCastigo consultar(String subramo) {
+        LOGGER.info(">> consultar({})", subramo);
+
+        PoliticasCastigoJpa politica = repositorio.findFirstBySubramoByOrderByFechaListadoDesc(subramo);
+
+        if (ObjectUtils.isEmpty(politica)) {
+            throw new PoliticaCastigoNoEncontradaException("No existen politicas de castigo vigentes");
+        }
+
+        LOGGER.debug("creando entidad {} desde {}", PoliticasCastigo.class.getSimpleName(), politica);
+
+        return fabrica.crearDesde(politica);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @CacheEvict(cacheNames = "PoliticasCastigoJpaRepository.findFirstByOrderByFechaListadoDesc", allEntries = true)
     public void actualizar(@NotNull PoliticasCastigo entidad) {
         LOGGER.info(">> actualizar({})", entidad);
+
+        PoliticasCastigoSubramoJPA politicasCastigoSubramo = politicasCastigoSubramoJPARepository.findFirstByOrderByIdDesc();
+
+        if (ObjectUtils.isEmpty(politicasCastigoSubramo)) {
+            throw new PoliticaCastigoNoEncontradaException("No existen politicas de castigo configuradas");
+        }
 
         Map<Class<? extends Pieza>, BigDecimal> vo = entidad.getFactores();
         PoliticasCastigoJpa politica = new PoliticasCastigoJpa();
@@ -90,6 +121,12 @@ public class PoliticasCastigoRepositoryImpl implements PoliticasCastigoRepositor
         politica.setFechaListado(entidad.getFechaListado());
 
         repositorio.saveAndFlush(politica);
+
+        PoliticasCastigoSubramoJPA nuevasPoliticasCastigoSubramo = new PoliticasCastigoSubramoJPA();
+        nuevasPoliticasCastigoSubramo.setPoliticasCastigo(politica);
+        nuevasPoliticasCastigoSubramo.setSubramo(politicasCastigoSubramo.getSubramo());
+
+        politicasCastigoSubramoJPARepository.saveAndFlush(nuevasPoliticasCastigoSubramo);
     }
 
     /**

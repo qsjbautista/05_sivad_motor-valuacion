@@ -22,7 +22,9 @@ public enum WebServiceExceptionCodes {
     NMPMV008("NMP-MV-008", "Error en datos de entrada. La información de la pieza está incorrecta. " +
         "Debe contener la información de solamente una pieza valuable (alhaja, diamante o complemento)."),
     NMPMV009("NMP-MV-009", "Ocurrió un error al realizar la valuación de la prenda."),
-    NMPMV010("NMP-MV-010", "Ocurrió un error inesperado al momento de realizar la valuación de la prenda."),;
+    NMPMV010("NMP-MV-010", "Ocurrió un error inesperado al momento de realizar la valuación de la prenda."),
+    NMPMV011("NMP-MV-011", "No se pudo establecer la conexión con el Microservicio de parámetros"),
+    NMPMV012("NMP-MV-012", "Error al consultar el valor de un parámetro");
 
     /**
      * Código de error de la excepción.
