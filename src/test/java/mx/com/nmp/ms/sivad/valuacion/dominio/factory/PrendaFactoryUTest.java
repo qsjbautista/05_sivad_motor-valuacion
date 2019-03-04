@@ -107,7 +107,7 @@ public class PrendaFactoryUTest {
     @Test
     public void crearPrendaTest01() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO);
+            new AlhajaDTO(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO, null, null);
 
         DiamanteDTO diamanteDTO =
             new DiamanteDTO(NUM_PIEZAS, CORTE, SUBCORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
@@ -140,7 +140,7 @@ public class PrendaFactoryUTest {
     @Test
     public void crearPrendaTest02() {
         Alhaja alhaja =
-            alhajaFactory.create(getBuilderAlhaja(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO));
+            alhajaFactory.create(getBuilderAlhaja(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO, null, null));
 
         Diamante diamante =
             diamanteFactory.create(getBuilderDiamante(NUM_PIEZAS, CORTE, SUBCORTE, COLOR_D, CLARIDAD, QUILATES, CERTIFICADO, VALOR_EXPERTO,
@@ -173,7 +173,7 @@ public class PrendaFactoryUTest {
     @Test
     public void crearPrendaTest03() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO);
+            new AlhajaDTO(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO, null, null);
 
         List<PiezaDTO> piezas = new ArrayList<>();
         piezas.add(alhajaDTO);
@@ -275,7 +275,7 @@ public class PrendaFactoryUTest {
     @Test(expected = IllegalArgumentException.class)
     public void crearPrendaTest08() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO);
+            new AlhajaDTO(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO, null, null);
 
         List<PiezaDTO> piezas = new ArrayList<>();
         piezas.add(alhajaDTO);
@@ -292,7 +292,7 @@ public class PrendaFactoryUTest {
     @Test(expected = IllegalArgumentException.class)
     public void crearPrendaTest09() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO);
+            new AlhajaDTO(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO, null, null);
 
         List<PiezaDTO> piezas = new ArrayList<>();
         piezas.add(alhajaDTO);
@@ -309,7 +309,7 @@ public class PrendaFactoryUTest {
     @Test(expected = IllegalArgumentException.class)
     public void crearPrendaTest10() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO);
+            new AlhajaDTO(METAL, COLOR_A, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO, null, null);
 
         List<PiezaDTO> piezas = new ArrayList<>();
         piezas.add(alhajaDTO);
@@ -366,6 +366,8 @@ public class PrendaFactoryUTest {
      * @param incremento El incremento por condiciones físicas de la prenda.
      * @param desplazamiento El desplazamiento comercial.
      * @param valorExperto El valor experto para la pieza en particular.
+     * @param avaluoComplementario Monto de avalúo complementario
+     * @param subramo Abreviatura del subramo
      * @return El builder creado.
      */
     private Alhaja.Builder getBuilderAlhaja(final String metal,
@@ -375,7 +377,9 @@ public class PrendaFactoryUTest {
                                       final BigDecimal peso,
                                       final BigDecimal incremento,
                                       final BigDecimal desplazamiento, final
-                                      ValorExperto valorExperto) {
+                                      ValorExperto valorExperto,
+                                      final BigDecimal avaluoComplementario,
+                                            final String subramo) {
         return new Alhaja.Builder() {
 
             @Override
@@ -418,6 +422,15 @@ public class PrendaFactoryUTest {
                 return valorExperto;
             }
 
+            @Override
+            public BigDecimal getAvaluoComplementario() {
+                return avaluoComplementario;
+            }
+
+            @Override
+            public String getSubramo() {
+                return subramo;
+            }
         };
     }
 

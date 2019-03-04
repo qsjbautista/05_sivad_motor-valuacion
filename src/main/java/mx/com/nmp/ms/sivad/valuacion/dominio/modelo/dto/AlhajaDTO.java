@@ -50,7 +50,15 @@ public class AlhajaDTO extends PiezaDTO {
      */
     private BigDecimal desplazamiento;
 
+    /**
+     * Monto del avalúo complementario
+     */
+    private BigDecimal avaluoComplementario;
 
+    /**
+     * Abreviatura del subramo
+     */
+    private String subramo;
 
     // METODOS
 
@@ -65,6 +73,8 @@ public class AlhajaDTO extends PiezaDTO {
      * @param incremento El incremento por las condiciones físicas de la prenda.
      * @param desplazamiento El desplazamiento comercial.
      * @param valorExperto El valor experto para la pieza en particular.
+     * @param avaluoComplementario Monto del avalúo complementario
+     * @param subramo Abreviatura del subramo
      */
     public AlhajaDTO(String metal,
                      String color,
@@ -73,7 +83,9 @@ public class AlhajaDTO extends PiezaDTO {
                      BigDecimal peso,
                      BigDecimal incremento,
                      BigDecimal desplazamiento,
-                     ValorExperto valorExperto) {
+                     ValorExperto valorExperto,
+                     BigDecimal avaluoComplementario,
+                     String subramo) {
         super();
         this.metal = metal;
         this.color = color;
@@ -83,6 +95,8 @@ public class AlhajaDTO extends PiezaDTO {
         this.incremento = incremento;
         this.desplazamiento = desplazamiento;
         this.valorExperto = valorExperto;
+        this.avaluoComplementario = avaluoComplementario;
+        this.subramo = subramo;
     }
 
 
@@ -145,6 +159,22 @@ public class AlhajaDTO extends PiezaDTO {
         this.desplazamiento = desplazamiento;
     }
 
+    public BigDecimal getAvaluoComplementario() {
+        return avaluoComplementario;
+    }
+
+    public void setAvaluoComplementario(BigDecimal avaluoComplementario) {
+        this.avaluoComplementario = avaluoComplementario;
+    }
+
+    public String getSubramo() {
+        return subramo;
+    }
+
+    public void setSubramo(String subramo) {
+        this.subramo = subramo;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -160,6 +190,8 @@ public class AlhajaDTO extends PiezaDTO {
             ", incremento=" + ((incremento != null) ? incremento.toString() : "null") +
             ", desplazamiento=" + ((desplazamiento != null) ? desplazamiento.toString() : "null") +
             ", valorExperto='" + ((valorExperto != null) ? valorExperto.toString() : "null") +
+            ", avaluoComplementario='" + ((avaluoComplementario != null) ? avaluoComplementario.toString() : "null") +
+            ", subramo='" + subramo + '\'' +
             '}';
     }
 
@@ -182,6 +214,8 @@ public class AlhajaDTO extends PiezaDTO {
         if (!peso.equals(that.peso)) return false;
         if (!rango.equals(that.rango)) return false;
         if (!valorExperto.equals(that.valorExperto)) return false;
+        if (!avaluoComplementario.equals(that.avaluoComplementario)) return false;
+        if (!subramo.equals(that.subramo)) return false;
 
         return true;
     }
@@ -199,6 +233,8 @@ public class AlhajaDTO extends PiezaDTO {
         result = 31 * result + incremento.hashCode();
         result = 31 * result + desplazamiento.hashCode();
         result = 31 * result + valorExperto.hashCode();
+        result = 31 * result + avaluoComplementario.hashCode();
+        result = 31 * result + subramo.hashCode();
         return result;
     }
 

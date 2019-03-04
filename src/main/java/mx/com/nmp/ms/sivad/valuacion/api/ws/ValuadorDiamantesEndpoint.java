@@ -13,6 +13,7 @@ import mx.com.nmp.ms.sivad.valuacion.dominio.factory.ComplementarioFactory;
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.DiamanteFactory;
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.PrendaFactory;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Complementario;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.SubramoEnum;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto.AlhajaDTO;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto.ComplementarioDTO;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.dto.DiamanteDTO;
@@ -222,7 +223,7 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
                 }
 
                 mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Alhaja alhaja =
-                    crearAlhaja(pieza.getAlhaja());
+                    crearAlhaja(pieza.getAlhaja(), prenda.getSubramo());
                 relacionPiezas.put(pieza, alhaja);
                 piezas.add(alhaja);
             } else if (!ObjectUtils.isEmpty(pieza.getDiamante())) {
@@ -247,9 +248,11 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
      * con base en la información del argumento recibido.
      *
      * @param alhaja La información de la pieza de tipo alhaja.
+     * @param subramo Abreviatura del subramo
      * @return El objeto {@link mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Alhaja} creado.
      */
-    private mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Alhaja crearAlhaja(Alhaja alhaja) {
+    private mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Alhaja crearAlhaja(Alhaja alhaja,
+                                                                            String subramo) {
         LOGGER.debug(">> crearAlhaja({}).", alhaja);
 
         AlhajaDTO alhajaDTO = new AlhajaDTO(
@@ -262,7 +265,9 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
             ((!ObjectUtils.isEmpty(alhaja.getDesplazamiento()) &&
                 (alhaja.getDesplazamiento().compareTo(BigDecimal.ZERO) > 0))
                 ? alhaja.getDesplazamiento() : null),
-            crearValorExperto(alhaja.getValorExperto()));
+            crearValorExperto(alhaja.getValorExperto()),
+            alhaja.getAvaluoComplementario(),
+            subramo);
 
         mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Alhaja alhajaValuable;
 
@@ -407,6 +412,26 @@ public class ValuadorDiamantesEndpoint implements ValuadorDiamantesService {
                 avaluoPoliticas.setValorPromedio(piezaValuada.getAvaluoPoliticas().valorPromedio());
                 avaluoPoliticas.setValorMaximo(piezaValuada.getAvaluoPoliticas().valorMaximo());
                 pieza.setAvaluoPoliticas(avaluoPoliticas);
+            }
+
+            //ASIGNAR AVALUOS TECNICO Y COMERCIAL
+            if (prenda.getSubramo().equals(SubramoEnum.ALHAJAS.getAbr())) {
+                if (piezaValuada.getAvaluoComercial() != null) {
+                    pieza.setAvaluoComercial(piezaValuada.getAvaluoComercial());
+                }
+                if (piezaValuada.getAvaluoTecnico() != null) {
+                    pieza.setAvaluoTecnico(piezaValuada.getAvaluoTecnico());
+                }
+
+                //SE AGREGA EL IMPORTE GRAMO PARA EL CASO DE LA ALHAJA
+                if (piezaValuada instanceof mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Alhaja) {
+                    BigDecimal importeGramo =
+                        ((mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Alhaja) piezaValuada).getImporteGramo();
+
+                    if (importeGramo != null) {
+                        pieza.getAlhaja().setImporteGramo(importeGramo);
+                    }
+                }
             }
         }
 

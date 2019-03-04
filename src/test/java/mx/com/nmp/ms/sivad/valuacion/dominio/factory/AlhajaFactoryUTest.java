@@ -33,6 +33,7 @@ public class AlhajaFactoryUTest {
     private static final String METAL_ORO = "AU";
     private static final String METAL_PLATA = "AG";
     private static final String RANGO = "F1";
+    private static final String SUBRAMO = "DI";
 
     private static final BigDecimal DESPLAZAMIENTO =
         new BigDecimal(1.10D).setScale(2, BigDecimal.ROUND_HALF_UP);
@@ -83,11 +84,14 @@ public class AlhajaFactoryUTest {
      * INCREMENTO - NO NULO
      * DESPLAZAMIENTO - NO NULO
      * VALOR EXPERTO - NO NULO
+     * AVALUO COMPLEMENTARIO - NULO
+     * SUBRAMO - NO NULO
      */
     @Test
     public void crearAlhajaTest01() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO);
+            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO,
+                VALOR_EXPERTO,null, SUBRAMO);
 
         Alhaja alhaja = alhajaFactory.create(alhajaDTO);
         assertNotNull(alhaja);
@@ -108,11 +112,13 @@ public class AlhajaFactoryUTest {
      * INCREMENTO - NO NULO
      * DESPLAZAMIENTO - NO NULO
      * VALOR EXPERTO - NO NULO
+     * AVALUO COMPLEMENTARIO - NULO
+     * SUBRAMO - NO NULO
      */
     @Test
     public void crearAlhajaTest02() {
         Alhaja alhaja =
-            alhajaFactory.create(getBuilder(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO));
+            alhajaFactory.create(getBuilder(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO, null, SUBRAMO));
 
         assertNotNull(alhaja);
         assertEquals(METAL_PLATA, alhaja.getMetal());
@@ -132,11 +138,13 @@ public class AlhajaFactoryUTest {
      * INCREMENTO - NO NULO
      * DESPLAZAMIENTO - NO NULO
      * VALOR EXPERTO - NO NULO
+     * AVALUO COMPLEMENTARIO - NULO
+     * SUBRAMO - NO NULO
      */
     @Test(expected = IllegalArgumentException.class)
     public void crearAlhajaTest03() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(null, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO);
+            new AlhajaDTO(null, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO, null, SUBRAMO);
 
         alhajaFactory.create(alhajaDTO);
     }
@@ -152,11 +160,13 @@ public class AlhajaFactoryUTest {
      * INCREMENTO - NO NULO
      * DESPLAZAMIENTO - NO NULO
      * VALOR EXPERTO - NO NULO
+     * AVALUO COMPLEMENTARIO - NULO
+     * SUBRAMO - NO NULO
      */
     @Test(expected = IllegalArgumentException.class)
     public void crearAlhajaTest04() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, null, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO);
+            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, null, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO, null,SUBRAMO);
 
         alhajaFactory.create(alhajaDTO);
     }
@@ -172,11 +182,13 @@ public class AlhajaFactoryUTest {
      * INCREMENTO - NO NULO
      * DESPLAZAMIENTO - NO NULO
      * VALOR EXPERTO - NO NULO
+     * AVALUO COMPLEMENTARIO - NULO
+     * SUBRAMO - NO NULO
      */
     @Test(expected = IllegalArgumentException.class)
     public void crearAlhajaTest05() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL_ORO, null, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO);
+            new AlhajaDTO(METAL_ORO, null, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO, null,SUBRAMO);
 
         alhajaFactory.create(alhajaDTO);
     }
@@ -192,11 +204,13 @@ public class AlhajaFactoryUTest {
      * INCREMENTO - NO NULO
      * DESPLAZAMIENTO - NO NULO
      * VALOR EXPERTO - NO NULO
+     * AVALUO COMPLEMENTARIO - NULO
+     * SUBRAMO - NO NULO
      */
     @Test(expected = IllegalArgumentException.class)
     public void crearAlhajaTest06() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL_ORO, COLOR, null, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO);
+            new AlhajaDTO(METAL_ORO, COLOR, null, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO, null, SUBRAMO);
 
         alhajaFactory.create(alhajaDTO);
     }
@@ -212,11 +226,13 @@ public class AlhajaFactoryUTest {
      * INCREMENTO - NO NULO
      * DESPLAZAMIENTO - NO NULO
      * VALOR EXPERTO - NO NULO
+     * AVALUO COMPLEMENTARIO - NULO
+     * SUBRAMO - NO NULO
      */
     @Test(expected = IllegalArgumentException.class)
     public void crearAlhajaTest07() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, VALOR_ZERO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO);
+            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, VALOR_ZERO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO, null,SUBRAMO);
 
         alhajaFactory.create(alhajaDTO);
     }
@@ -232,11 +248,13 @@ public class AlhajaFactoryUTest {
      * INCREMENTO - NO NULO
      * DESPLAZAMIENTO - NO NULO
      * VALOR EXPERTO - NO NULO
+     * AVALUO COMPLEMENTARIO - NULO
+     * SUBRAMO - NO NULO
      */
     @Test(expected = IllegalArgumentException.class)
     public void crearAlhajaTest08() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, VALOR_MENOR_ZERO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO);
+            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, VALOR_MENOR_ZERO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO, null,SUBRAMO);
 
         alhajaFactory.create(alhajaDTO);
     }
@@ -252,11 +270,13 @@ public class AlhajaFactoryUTest {
      * INCREMENTO - NULO
      * DESPLAZAMIENTO - NO NULO
      * VALOR EXPERTO - NO NULO
+     * AVALUO COMPLEMENTARIO - NULO
+     * SUBRAMO - NO NULO
      */
     @Test
     public void crearAlhajaTest09() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, null, DESPLAZAMIENTO, VALOR_EXPERTO);
+            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, null, DESPLAZAMIENTO, VALOR_EXPERTO, null,SUBRAMO);
 
         Alhaja alhaja = alhajaFactory.create(alhajaDTO);
         assertNotNull(alhaja);
@@ -277,11 +297,13 @@ public class AlhajaFactoryUTest {
      * INCREMENTO - NO NULO CON VALOR CERO
      * DESPLAZAMIENTO - NO NULO
      * VALOR EXPERTO - NO NULO
+     * AVALUO COMPLEMENTARIO - NULO
+     * SUBRAMO - NO NULO
      */
     @Test(expected = IllegalArgumentException.class)
     public void crearAlhajaTest10() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, VALOR_ZERO, VALOR_ZERO, VALOR_EXPERTO);
+            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, VALOR_ZERO, VALOR_ZERO, VALOR_EXPERTO, null,SUBRAMO);
 
         alhajaFactory.create(alhajaDTO);
     }
@@ -297,11 +319,13 @@ public class AlhajaFactoryUTest {
      * INCREMENTO - NO NULO CON VALOR MENOR CERO
      * DESPLAZAMIENTO - NO NULO
      * VALOR EXPERTO - NO NULO
+     * AVALUO COMPLEMENTARIO - NULO
+     * SUBRAMO - NO NULO
      */
     @Test(expected = IllegalArgumentException.class)
     public void crearAlhajaTest11() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, VALOR_MENOR_ZERO, VALOR_MENOR_ZERO, VALOR_EXPERTO);
+            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, VALOR_MENOR_ZERO, VALOR_MENOR_ZERO, VALOR_EXPERTO, null,SUBRAMO);
 
         alhajaFactory.create(alhajaDTO);
     }
@@ -317,11 +341,13 @@ public class AlhajaFactoryUTest {
      * INCREMENTO - NO NULO
      * DESPLAZAMIENTO - NULO
      * VALOR EXPERTO - NO NULO
+     * AVALUO COMPLEMENTARIO - NULO
+     * SUBRAMO - NO NULO
      */
     @Test
     public void crearAlhajaTest12() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, null, VALOR_EXPERTO);
+            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, null, VALOR_EXPERTO, null,SUBRAMO);
 
         Alhaja alhaja = alhajaFactory.create(alhajaDTO);
         assertNotNull(alhaja);
@@ -342,11 +368,13 @@ public class AlhajaFactoryUTest {
      * INCREMENTO - NO NULO
      * DESPLAZAMIENTO - NO NULO CON VALOR CERO
      * VALOR EXPERTO - NO NULO
+     * AVALUO COMPLEMENTARIO - NULO
+     * SUBRAMO - NO NULO
      */
     @Test(expected = IllegalArgumentException.class)
     public void crearAlhajaTest13() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, VALOR_ZERO, VALOR_EXPERTO);
+            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, VALOR_ZERO, VALOR_EXPERTO, null,SUBRAMO);
 
         alhajaFactory.create(alhajaDTO);
     }
@@ -362,11 +390,13 @@ public class AlhajaFactoryUTest {
      * INCREMENTO - NO NULO
      * DESPLAZAMIENTO - NO NULO CON VALOR MENOR A CERO
      * VALOR EXPERTO - NO NULO
+     * AVALUO COMPLEMENTARIO - NULO
+     * SUBRAMO - NO NULO
      */
     @Test(expected = IllegalArgumentException.class)
     public void crearAlhajaTest14() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, VALOR_MENOR_ZERO, VALOR_EXPERTO);
+            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, VALOR_MENOR_ZERO, VALOR_EXPERTO, null,SUBRAMO);
 
         alhajaFactory.create(alhajaDTO);
     }
@@ -382,11 +412,13 @@ public class AlhajaFactoryUTest {
      * INCREMENTO - NO NULO
      * DESPLAZAMIENTO - NO NULO
      * VALOR EXPERTO - NULO
+     * AVALUO COMPLEMENTARIO - NULO
+     * SUBRAMO - NO NULO
      */
     @Test
     public void crearAlhajaTest15() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, null);
+            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, null, null,SUBRAMO);
 
         Alhaja alhaja = alhajaFactory.create(alhajaDTO);
         assertNotNull(alhaja);
@@ -407,11 +439,13 @@ public class AlhajaFactoryUTest {
      * INCREMENTO - NO NULO
      * DESPLAZAMIENTO - NO NULO
      * VALOR EXPERTO - NO NULO SIN VALOR
+     * AVALUO COMPLEMENTARIO - NULO
+     * SUBRAMO - NO NULO
      */
     @Test
     public void crearAlhajaTest16() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO_TIPO_UNITARIO);
+            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO_TIPO_UNITARIO, null,SUBRAMO);
 
         Alhaja alhaja = alhajaFactory.create(alhajaDTO);
         assertNotNull(alhaja);
@@ -432,11 +466,13 @@ public class AlhajaFactoryUTest {
      * INCREMENTO - NO NULO
      * DESPLAZAMIENTO - NO NULO
      * VALOR EXPERTO - NO NULO CON VALOR CERO
+     * AVALUO COMPLEMENTARIO - NULO
+     * SUBRAMO - NO NULO
      */
     @Test(expected = IllegalArgumentException.class)
     public void crearAlhajaTest17() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO_VALOR_CERO);
+            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO_VALOR_CERO, null,SUBRAMO);
 
         alhajaFactory.create(alhajaDTO);
     }
@@ -452,11 +488,13 @@ public class AlhajaFactoryUTest {
      * INCREMENTO - NO NULO
      * DESPLAZAMIENTO - NO NULO
      * VALOR EXPERTO - NO NULO CON VALOR MENOR A CERO
+     * AVALUO COMPLEMENTARIO - NULO
+     * SUBRAMO - NO NULO
      */
     @Test(expected = IllegalArgumentException.class)
     public void crearAlhajaTest18() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO_VALOR_MENOR_CERO);
+            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, DESPLAZAMIENTO, VALOR_EXPERTO_VALOR_MENOR_CERO, null,SUBRAMO);
 
         alhajaFactory.create(alhajaDTO);
     }
@@ -472,11 +510,13 @@ public class AlhajaFactoryUTest {
      * INCREMENTO - NO NULO
      * DESPLAZAMIENTO - NO NULO
      * VALOR EXPERTO - NO NULO (Tipo "UNITARIO" - No soportado)
+     * AVALUO COMPLEMENTARIO - NULO
+     * SUBRAMO - NO NULO
      */
     @Test(expected = IllegalArgumentException.class)
     public void crearAlhajaTest19() {
         AlhajaDTO alhajaDTO =
-            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, VALOR_MENOR_ZERO, VALOR_EXPERTO_TIPO_UNITARIO);
+            new AlhajaDTO(METAL_PLATA, COLOR, CALIDAD, RANGO, PESO, INCREMENTO, VALOR_MENOR_ZERO, VALOR_EXPERTO_TIPO_UNITARIO, null,SUBRAMO);
 
         alhajaFactory.create(alhajaDTO);
     }
@@ -492,6 +532,8 @@ public class AlhajaFactoryUTest {
      * @param incremento El incremento por condiciones físicas de la prenda.
      * @param desplazamiento El desplazamiento comercial.
      * @param valorExperto El valor experto para la pieza en particular.
+     * @param avaluoComplementario Monto de avalúo complementario
+     * @param subramo Abreviatura del subramo
      * @return El builder creado.
      */
     private Alhaja.Builder getBuilder(final String metal,
@@ -501,7 +543,9 @@ public class AlhajaFactoryUTest {
                                       final BigDecimal peso,
                                       final BigDecimal incremento,
                                       final BigDecimal desplazamiento, final
-                                      ValorExperto valorExperto) {
+                                      ValorExperto valorExperto,
+                                      final BigDecimal avaluoComplementario,
+                                      final String subramo) {
         return new Alhaja.Builder() {
 
             @Override
@@ -544,6 +588,15 @@ public class AlhajaFactoryUTest {
                 return valorExperto;
             }
 
+            @Override
+            public BigDecimal getAvaluoComplementario() {
+                return avaluoComplementario;
+            }
+
+            @Override
+            public String getSubramo() {
+                return subramo;
+            }
         };
     }
 

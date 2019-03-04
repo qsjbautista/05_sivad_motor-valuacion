@@ -123,6 +123,15 @@ public class AlhajaFactoryImpl implements AlhajaFactory {
                 return alhajaDTO.getValorExperto();
             }
 
+            @Override
+            public BigDecimal getAvaluoComplementario() {
+                return alhajaDTO.getAvaluoComplementario();
+            }
+
+            @Override
+            public String getSubramo() {
+                return alhajaDTO.getSubramo();
+            }
         };
     }
 

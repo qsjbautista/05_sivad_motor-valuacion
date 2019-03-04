@@ -75,6 +75,8 @@
             <s:element name="cantidad" type="s:int" nillable="false" default="1" />
             <s:element name="avaluo" type="Avaluo" />
             <s:element name="avaluoPoliticas" type="Avaluo" />
+            <s:element name="avaluoTecnico" type="s:decimal" default="0.0" />
+            <s:element name="avaluoComercial" type="s:decimal" default="0.0" />
             <s:choice>
                 <s:element name="diamante" type="Diamante" />
                 <s:element name="alhaja" type="Alhaja" />
@@ -111,6 +113,8 @@
             <s:element name="valorExperto" type="ValorExperto" />
             <s:element name="incremento" type="s:decimal" default="0.0" />
             <s:element name="desplazamiento" type="s:decimal" default="0.0" />
+            <s:element name="avaluoComplementario" type="s:decimal" default="0.0" />
+            <s:element name="importeGramo" type="s:decimal" default="0.0" />
         </s:sequence>
     </s:complexType>
 

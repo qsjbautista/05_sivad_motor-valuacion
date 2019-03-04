@@ -6,6 +6,8 @@ package mx.com.nmp.ms.sivad.valuacion.dominio.modelo;
 
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.Avaluo;
 
+import java.math.BigDecimal;
+
 /**
  * Clase abstracta que implementa la interface {@link PiezaValuable}, la cual encapsula las operaciones y
  * atributos comunes de las piezas.
@@ -29,7 +31,15 @@ public abstract class Pieza implements PiezaValuable {
      */
     protected Avaluo avaluoPoliticas;
 
+    /**
+     * Avalúo técnico o costo del metal
+     */
+    protected BigDecimal avaluoTecnico;
 
+    /**
+     * Avalúo comercial o valor comercial
+     */
+    protected BigDecimal avaluoComercial;
 
     // GETTERS
 
@@ -51,5 +61,21 @@ public abstract class Pieza implements PiezaValuable {
 
     public Avaluo getAvaluoPoliticas() {
         return avaluoPoliticas;
+    }
+
+    public void setAvaluoTecnico(BigDecimal avaluoTecnico) {
+        this.avaluoTecnico = avaluoTecnico;
+    }
+
+    public BigDecimal getAvaluoTecnico() {
+        return avaluoTecnico;
+    }
+
+    public void setAvaluoComercial(BigDecimal avaluoComercial) {
+        this.avaluoComercial = avaluoComercial;
+    }
+
+    public BigDecimal getAvaluoComercial() {
+        return avaluoComercial;
     }
 }

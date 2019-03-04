@@ -21,6 +21,7 @@ import mx.com.nmp.ms.sivad.valuacion.dominio.exception.ValuacionException;
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.AlhajaFactory;
 import mx.com.nmp.ms.sivad.valuacion.dominio.factory.AvaluoFactory;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.Alhaja;
+import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.SubramoEnum;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.TipoMetalEnum;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.Avaluo;
 import mx.com.nmp.ms.sivad.valuacion.dominio.modelo.vo.ValorExperto;
@@ -94,7 +95,30 @@ public class AlhajaUTest {
         Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
 
         Alhaja test = fabrica.create(getBuilder(TipoMetalEnum.ORO.getTipo(), "AU_AM", "10_Q", null,
-            BigDecimal.valueOf(2.12), null, null, null));
+            BigDecimal.valueOf(2.12), null, null, null, null, "DI"));
+
+        assertNotNull(test);
+
+        Avaluo avaluo = test.valuar();
+
+        assertNotNull(avaluo);
+        assertEquals(resultado, avaluo);
+        assertEquals(test.avaluo(), avaluo);
+        assertTrue(avaluo == test.valuar());
+    }
+
+    /**
+     * (non-Javadoc)
+     * @see Alhaja#valuar()
+     */
+    @Test
+    public void valuarMetalOroPesoSubramoAlhajasTest() {
+        addComportamientoGramoOro(BigDecimal.valueOf(312.500));
+        BigDecimal valor = redondearEntero(BigDecimal.valueOf(662.5));
+        Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
+
+        Alhaja test = fabrica.create(getBuilder(TipoMetalEnum.ORO.getTipo(), "AU_AM", "10_Q", null,
+            BigDecimal.valueOf(2.12), null, null, null, null, SubramoEnum.ALHAJAS.getAbr()));
 
         assertNotNull(test);
 
@@ -113,12 +137,37 @@ public class AlhajaUTest {
     @Test
     public void valuarMetalOroPesoFactorTest() {
         addComportamientoGramoOro(BigDecimal.valueOf(312.500));
-        addComportamientoFactor(BigDecimal.valueOf(1.25));
-        BigDecimal valor = BigDecimal.valueOf(828.125);
+        //No aplica el factor para el avalúo normal o valor monte
+        //addComportamientoFactor(BigDecimal.valueOf(1.25));
+        BigDecimal valor = BigDecimal.valueOf(662.5);
         Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
 
         Alhaja test = fabrica.create(getBuilder(TipoMetalEnum.ORO.getTipo(), "AU_AM", "10_Q", "F2",
-            BigDecimal.valueOf(2.12), null, null, null));
+            BigDecimal.valueOf(2.12), null, null, null, null, "DI"));
+
+        assertNotNull(test);
+
+        Avaluo avaluo = test.valuar();
+
+        assertNotNull(avaluo);
+        assertEquals(resultado, avaluo);
+        assertEquals(test.avaluo(), avaluo);
+        assertTrue(avaluo == test.valuar());
+    }
+
+    /**
+     * (non-Javadoc)
+     * @see Alhaja#valuar()
+     */
+    @Test
+    public void valuarMetalOroPesoFactorSubramoAlhajasTest() {
+        addComportamientoGramoOro(BigDecimal.valueOf(312.500));
+        addComportamientoFactor(BigDecimal.valueOf(1.25));
+        BigDecimal valor = redondearEntero(BigDecimal.valueOf(662.5));
+        Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
+
+        Alhaja test = fabrica.create(getBuilder(TipoMetalEnum.ORO.getTipo(), "AU_AM", "10_Q", "F2",
+            BigDecimal.valueOf(2.12), null, null, null, null, SubramoEnum.ALHAJAS.getAbr()));
 
         assertNotNull(test);
 
@@ -137,12 +186,39 @@ public class AlhajaUTest {
     @Test
     public void valuarMetalOroPesoFactorIncrementoTest() {
         addComportamientoGramoOro(BigDecimal.valueOf(312.500));
-        addComportamientoFactor(BigDecimal.valueOf(1.25));
-        BigDecimal valor = BigDecimal.valueOf(838.890625);
+        //No aplica el factor para el avalúo normal o valor monte
+        //addComportamientoFactor(BigDecimal.valueOf(1.25));
+        BigDecimal valor = BigDecimal.valueOf(671.1125);
         Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
 
         Alhaja test = fabrica.create(getBuilder(TipoMetalEnum.ORO.getTipo(), "AU_AM", "10_Q", "F2",
-            BigDecimal.valueOf(2.12), BigDecimal.valueOf(1.30), null, null));
+            BigDecimal.valueOf(2.12), BigDecimal.valueOf(1.30), null, null, null,
+            "DI"));
+
+        assertNotNull(test);
+
+        Avaluo avaluo = test.valuar();
+
+        assertNotNull(avaluo);
+        assertEquals(resultado, avaluo);
+        assertEquals(test.avaluo(), avaluo);
+        assertTrue(avaluo == test.valuar());
+    }
+
+    /**
+     * (non-Javadoc)
+     * @see Alhaja#valuar()
+     */
+    @Test
+    public void valuarMetalOroPesoFactorIncrementoSubramoAlhajasTest() {
+        addComportamientoGramoOro(BigDecimal.valueOf(312.500));
+        addComportamientoFactor(BigDecimal.valueOf(1.25));
+        BigDecimal valor = redondearEntero(BigDecimal.valueOf(671.1125));
+        Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
+
+        Alhaja test = fabrica.create(getBuilder(TipoMetalEnum.ORO.getTipo(), "AU_AM", "10_Q", "F2",
+            BigDecimal.valueOf(2.12), BigDecimal.valueOf(1.30), null, null, null,
+            SubramoEnum.ALHAJAS.getAbr()));
 
         assertNotNull(test);
 
@@ -161,12 +237,39 @@ public class AlhajaUTest {
     @Test
     public void valuarMetalOroPesoFactorIncrementoDesplazamientoTest() {
         addComportamientoGramoOro(BigDecimal.valueOf(312.500));
-        addComportamientoFactor(BigDecimal.valueOf(1.25));
-        BigDecimal valor = BigDecimal.valueOf(869.53125);
+        //No aplica el factor para el avalúo normal o valor monte
+        //addComportamientoFactor(BigDecimal.valueOf(1.25));
+        BigDecimal valor = BigDecimal.valueOf(695.625);
         Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
 
         Alhaja test = fabrica.create(getBuilder(TipoMetalEnum.ORO.getTipo(), "AU_AM", "10_Q", "F2",
-            BigDecimal.valueOf(2.12), BigDecimal.valueOf(5), null, null));
+            BigDecimal.valueOf(2.12), BigDecimal.valueOf(5), null, null, null,
+            "DI"));
+
+        assertNotNull(test);
+
+        Avaluo avaluo = test.valuar();
+
+        assertNotNull(avaluo);
+        assertEquals(resultado, avaluo);
+        assertEquals(test.avaluo(), avaluo);
+        assertTrue(avaluo == test.valuar());
+    }
+
+    /**
+     * (non-Javadoc)
+     * @see Alhaja#valuar()
+     */
+    @Test
+    public void valuarMetalOroPesoFactorIncrementoDesplazamientoSubramoAlhajasTest() {
+        addComportamientoGramoOro(BigDecimal.valueOf(312.500));
+        addComportamientoFactor(BigDecimal.valueOf(1.25));
+        BigDecimal valor = redondearEntero(BigDecimal.valueOf(697));
+        Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
+
+        Alhaja test = fabrica.create(getBuilder(TipoMetalEnum.ORO.getTipo(), "AU_AM", "10_Q", "F2",
+            BigDecimal.valueOf(2.12), BigDecimal.valueOf(5), null, null, null,
+            SubramoEnum.ALHAJAS.getAbr()));
 
         assertNotNull(test);
 
@@ -188,7 +291,33 @@ public class AlhajaUTest {
         BigDecimal valor = BigDecimal.valueOf(1272);
         Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
 
-        Alhaja test = fabrica.create(getBuilder("PT", null, null, null, BigDecimal.valueOf(2.12), null, null, null));
+        Alhaja test = fabrica.create(getBuilder("PT", null, null, null,
+            BigDecimal.valueOf(2.12), null, null, null, null,
+            "DI"));
+
+        assertNotNull(test);
+
+        Avaluo avaluo = test.valuar();
+
+        assertNotNull(avaluo);
+        assertEquals(resultado, avaluo);
+        assertEquals(test.avaluo(), avaluo);
+        assertTrue(avaluo == test.valuar());
+    }
+
+    /**
+     * (non-Javadoc)
+     * @see Alhaja#valuar()
+     */
+    @Test
+    public void valuarMetalPlataPesoSubramoAlhajasTest() {
+        addComportamientoGramoMetal(BigDecimal.valueOf(600.000));
+        BigDecimal valor = redondearEntero(BigDecimal.valueOf(1272));
+        Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
+
+        Alhaja test = fabrica.create(getBuilder("PT", null, null, null,
+            BigDecimal.valueOf(2.12), null, null, null, null,
+            SubramoEnum.ALHAJAS.getAbr()));
 
         assertNotNull(test);
 
@@ -211,7 +340,30 @@ public class AlhajaUTest {
         Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
 
         Alhaja test = fabrica.create(getBuilder("PT", null, null, null, BigDecimal.valueOf(2.12),
-            BigDecimal.valueOf(1.30), null, null));
+            BigDecimal.valueOf(1.30), null, null, null, "DI"));
+
+        assertNotNull(test);
+
+        Avaluo avaluo = test.valuar();
+
+        assertNotNull(avaluo);
+        assertEquals(resultado, avaluo);
+        assertEquals(test.avaluo(), avaluo);
+        assertTrue(avaluo == test.valuar());
+    }
+
+    /**
+     * (non-Javadoc)
+     * @see Alhaja#valuar()
+     */
+    @Test
+    public void valuarMetalPlataPesoIncrementoSubramoAlhajasTest() {
+        addComportamientoGramoMetal(BigDecimal.valueOf(600.000));
+        BigDecimal valor = redondearEntero(BigDecimal.valueOf(1288.536));
+        Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
+
+        Alhaja test = fabrica.create(getBuilder("PT", null, null, null, BigDecimal.valueOf(2.12),
+            BigDecimal.valueOf(1.30), null, null, null, SubramoEnum.ALHAJAS.getAbr()));
 
         assertNotNull(test);
 
@@ -234,7 +386,56 @@ public class AlhajaUTest {
         Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
 
         Alhaja test = fabrica.create(getBuilder("PT", null, null, null, BigDecimal.valueOf(2.12),
-            BigDecimal.valueOf(1.30), BigDecimal.valueOf(1.25), null));
+            BigDecimal.valueOf(1.30), BigDecimal.valueOf(1.25), null, null,
+            "DI"));
+
+        assertNotNull(test);
+
+        Avaluo avaluo = test.valuar();
+
+        assertNotNull(avaluo);
+        assertEquals(resultado, avaluo);
+        assertEquals(test.avaluo(), avaluo);
+        assertTrue(avaluo == test.valuar());
+    }
+
+    /**
+     * (non-Javadoc)
+     * @see Alhaja#valuar()
+     */
+    @Test
+    public void valuarMetalPlataPesoIncrementoDesplazamientoSubramoAlhajasTest() {
+        addComportamientoGramoMetal(BigDecimal.valueOf(600.000));
+        BigDecimal valor = redondearEntero(BigDecimal.valueOf(1304.436));
+        Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
+
+        Alhaja test = fabrica.create(getBuilder("PT", null, null, null, BigDecimal.valueOf(2.12),
+            BigDecimal.valueOf(1.30), BigDecimal.valueOf(1.25), null, null,
+            SubramoEnum.ALHAJAS.getAbr()));
+
+        assertNotNull(test);
+
+        Avaluo avaluo = test.valuar();
+
+        assertNotNull(avaluo);
+        assertEquals(resultado, avaluo);
+        assertEquals(test.avaluo(), avaluo);
+        assertTrue(avaluo == test.valuar());
+    }
+
+    /**
+     * (non-Javadoc)
+     * @see Alhaja#valuar()
+     */
+    @Test
+    public void valuarMetalPlataPesoIncrementoDesplazamientoComplementarioSubramoAlhajasTest() {
+        addComportamientoGramoMetal(BigDecimal.valueOf(600.000));
+        BigDecimal valor = redondearEntero(BigDecimal.valueOf(1304.436).add(new BigDecimal(100)));
+        Avaluo resultado = AvaluoFactory.crearCon(valor, valor, valor);
+
+        Alhaja test = fabrica.create(getBuilder("PT", null, null, null, BigDecimal.valueOf(2.12),
+            BigDecimal.valueOf(1.30), BigDecimal.valueOf(1.25), null, new BigDecimal(100),
+            SubramoEnum.ALHAJAS.getAbr()));
 
         assertNotNull(test);
 
@@ -258,7 +459,8 @@ public class AlhajaUTest {
 
         Alhaja test = fabrica.create(getBuilder("OT", null, null, null, BigDecimal.valueOf(2.12),
             null, null,
-            new ValorExperto(BigDecimal.valueOf(1000), ValorExperto.TipoEnum.TOTAL)));
+            new ValorExperto(BigDecimal.valueOf(1000), ValorExperto.TipoEnum.TOTAL), null,
+            "DI"));
 
         assertNotNull(test);
 
@@ -282,7 +484,8 @@ public class AlhajaUTest {
 
         Alhaja test = fabrica.create(getBuilder("AG", null, "CL_999", null, BigDecimal.valueOf(2.12),
             BigDecimal.valueOf(1.30), BigDecimal.valueOf(1.25),
-            new ValorExperto(BigDecimal.valueOf(30), ValorExperto.TipoEnum.TOTAL)));
+            new ValorExperto(BigDecimal.valueOf(30), ValorExperto.TipoEnum.TOTAL), null,
+            "DI"));
 
         assertNotNull(test);
 
@@ -299,13 +502,13 @@ public class AlhajaUTest {
      * @see Alhaja#valuar()
      */
     @Test(expected = ValuacionException.class)
-    public void valuarMetalAGFactorTest() {
+    public void valuarMetalAGFactorSubramoAlhajasTest() {
         addComportamientoGramoMetal(BigDecimal.valueOf(8.000));
         addComportamientoFactorError();
 
         Alhaja test = fabrica.create(getBuilder("AG", null, "CL_999", "F1", BigDecimal.valueOf(2.12),
             BigDecimal.valueOf(1.30), BigDecimal.valueOf(1.25),
-            null));
+            null, null, SubramoEnum.ALHAJAS.getAbr()));
 
         assertNotNull(test);
 
@@ -357,8 +560,20 @@ public class AlhajaUTest {
         return falla;
     }
 
+    /**
+     * Aplica el redondeo con la función Math.ceil, que redondea al
+     * entero mas pequeño mayor o igual al número dado.
+     *
+     * @param monto Monto a redondear
+     * @return Monto redondeado
+     */
+    private BigDecimal redondearEntero(BigDecimal monto) {
+        return new BigDecimal(Math.ceil(monto.doubleValue()));
+    }
+
     private static Alhaja.Builder getBuilder(final String met, final String col, final String cal, final String ran,
-            final BigDecimal pes, final BigDecimal inc, final BigDecimal des, final ValorExperto ve) {
+                                             final BigDecimal pes, final BigDecimal inc, final BigDecimal des, final ValorExperto ve,
+                                             final BigDecimal avaluoComplementario, final String subramo) {
         return new Alhaja.Builder() {
             @Override
             public String getMetal() {
@@ -398,6 +613,16 @@ public class AlhajaUTest {
             @Override
             public ValorExperto getValorExperto() {
                 return ve;
+            }
+
+            @Override
+            public BigDecimal getAvaluoComplementario() {
+                return avaluoComplementario;
+            }
+
+            @Override
+            public String getSubramo() {
+                return subramo;
             }
         };
     }

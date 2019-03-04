@@ -76,6 +76,21 @@ public class Alhaja extends Pieza implements CaracteristicasGramoOroProveedor, M
     private ValorExperto valorExperto;
 
     /**
+     * Importe del gramo
+     */
+    private BigDecimal importeGramo;
+
+    /**
+     * Monto del avalúo complementario
+     */
+    private BigDecimal avaluoComplementario;
+
+    /**
+     * Abreviatura del subramo
+     */
+    private String subramo;
+
+    /**
      * Representa la interface publica usada para crear objetos tipo {@link Alhaja}
      * Nos brinda el contrato que se debe cumplir para crear una instancia de la clase {@link Alhaja}
      */
@@ -135,6 +150,20 @@ public class Alhaja extends Pieza implements CaracteristicasGramoOroProveedor, M
          * @return El valor experto para la pieza en particular.
          */
         ValorExperto getValorExperto();
+
+        /**
+         * Recupera el monto del avalúo complementario.
+         *
+         * @return Monto del avalúo complementario
+         */
+        BigDecimal getAvaluoComplementario();
+
+        /**
+         * Recupera la abreviatura del subramo de la alhaja
+         *
+         * @return Abreviatura del subramo
+         */
+        String getSubramo();
     }
 
     /**
@@ -156,6 +185,9 @@ public class Alhaja extends Pieza implements CaracteristicasGramoOroProveedor, M
         desplazamiento = builder.getDesplazamiento();
         valorExperto = builder.getValorExperto();
 
+        avaluoComplementario = builder.getAvaluoComplementario();
+        subramo = builder.getSubramo();
+
         this.conector = conector;
     }
 
@@ -169,7 +201,11 @@ public class Alhaja extends Pieza implements CaracteristicasGramoOroProveedor, M
         LOGGER.info(">> valuar()");
 
         if (ObjectUtils.isEmpty(avaluo)) {
-            realizarValuacion();
+            if (subramo.equals(SubramoEnum.ALHAJAS.getAbr())) {
+                realizarValuacionAlhaja();
+            } else {
+                realizarValuacion();
+            }
         }
 
         LOGGER.debug("<< {}", avaluo);
@@ -215,6 +251,13 @@ public class Alhaja extends Pieza implements CaracteristicasGramoOroProveedor, M
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public BigDecimal getImporteGramo() {
+        return importeGramo;
+    }
+
+    /**
      * Realiza el cálculo para obtener el precio de ésta alhaja.
      */
     private void realizarValuacion() {
@@ -240,13 +283,69 @@ public class Alhaja extends Pieza implements CaracteristicasGramoOroProveedor, M
             BigDecimal conIncDes = precioMetal.multiply(fac_inc_des);
             LOGGER.debug("Aplicando incremento desplazamiento {} = {}", fac_inc_des, conIncDes);
 
-            BigDecimal factor = recuperarFactor();
-            avaluoAlhaja = conIncDes.multiply(factor);
-            LOGGER.debug("Aplicando factor {} = {}", factor, avaluoAlhaja);
+            // EN EL CASO DE AVALÚO NORMAL O VALOR MONTE, NO APLICA EL FACTOR, SOLO APLICA PARA EL AVALÚO COMERCIAL
+            //BigDecimal factor = recuperarFactor();
+            //avaluoAlhaja = conIncDes.multiply(factor);
+            //LOGGER.debug("Aplicando factor {} = {}", factor, avaluoAlhaja);
+
+            avaluoAlhaja = conIncDes;
         } else {
             avaluoAlhaja = recuperarValorExperto();
             LOGGER.debug("No se valua se usa valor experto {}", avaluoAlhaja);
         }
+
+        avaluo = AvaluoFactory.crearCon(avaluoAlhaja, avaluoAlhaja, avaluoAlhaja);
+    }
+
+    /**
+     * Realiza el cálculo para obtener el precio de está alhaja
+     * para el subramo Alhajas.
+     */
+    private void realizarValuacionAlhaja() {
+
+        BigDecimal precioGramo = recuperarPrecioGramoMetal();
+        LOGGER.debug("Valor por gramo de {} = {}", metal, precioGramo);
+
+        //PRECIO DE 1 GRAMO DE ORO (NO APLICA REDONDEO)
+        importeGramo = precioGramo;
+
+
+        BigDecimal precioOro = redondearEntero(precioGramo.multiply(peso));
+        LOGGER.debug("Aplicando peso {}gr = {}", peso, precioOro);
+
+        // EL PRECIO APLICADO AL GRAMAJE NOS DA EL AVALÚO TÉCNICO
+        avaluoTecnico = precioOro;
+
+
+        BigDecimal inc = recuperarIncremento();
+        LOGGER.debug("Incremento a aplicar {}", inc);
+
+        BigDecimal desp = recuperarDesplazamiento();
+        LOGGER.debug("Desplazamiento a aplicar {}", desp);
+
+        BigDecimal inc_desp = inc.add(desp);
+        BigDecimal div_inc_desp = inc_desp
+            .divide(FACTOR, 4, BigDecimal.ROUND_HALF_UP);
+        BigDecimal precioMetal = BigDecimal.ONE.add(div_inc_desp);
+
+        LOGGER.debug("Aplicando incremento desplazamiento {} = {}", div_inc_desp, precioMetal);
+
+        // EL AVALUO SE OBTIENE MULTIPLICANDO EL AVALUO TECNICO YA REDONDEADO
+        precioMetal = redondearEntero(precioOro.multiply(precioMetal));
+
+
+        BigDecimal avaluoComplementario = recuperarAvaluoComplementario();
+
+        // SE SUMA EL AVALUO COMPLEMENTARIO AL PRECIO METAL, PARA OBTENER EL AVALUO
+        int avaluoSinRedondeo = precioMetal.intValue() + avaluoComplementario.intValue();
+        BigDecimal avaluoAlhaja = redondearEntero(new BigDecimal(avaluoSinRedondeo));
+        LOGGER.debug("Aplicando avaluo complementario {} = {}", avaluoComplementario, avaluoAlhaja);
+
+
+        // SE APLICA EL FACTOR PARA OBTENER EL AVALÚO COMERCIAL
+        BigDecimal factor = recuperarFactor();
+        avaluoComercial = redondearEntero(avaluoAlhaja.multiply(factor));
+        LOGGER.debug("Aplicando factor {} = {}", factor, avaluoComercial);
 
         avaluo = AvaluoFactory.crearCon(avaluoAlhaja, avaluoAlhaja, avaluoAlhaja);
     }
@@ -332,5 +431,29 @@ public class Alhaja extends Pieza implements CaracteristicasGramoOroProveedor, M
         } else {
             return desplazamiento;
         }
+    }
+
+    /**
+     * Recupera el monto del avalúo complementario a aplicar
+     *
+     * @return Avalúo complementario a aplicar
+     */
+    private BigDecimal recuperarAvaluoComplementario() {
+        if (ObjectUtils.isEmpty(avaluoComplementario)) {
+            return BigDecimal.ZERO;
+        } else {
+            return avaluoComplementario;
+        }
+    }
+
+    /**
+     * Aplica el redondeo con la función Math.ceil, que redondea al
+     * entero mas pequeño mayor o igual al número dado.
+     *
+     * @param monto Monto a redondear
+     * @return Monto redondeado
+     */
+    private BigDecimal redondearEntero(BigDecimal monto) {
+        return new BigDecimal(Math.ceil(monto.doubleValue()));
     }
 }
